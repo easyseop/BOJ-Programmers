@@ -74,6 +74,11 @@
   .en{color:var(--muted);font-size:13px}
   .todo{color:var(--muted);font-size:13px;background:var(--mark);border:1px dashed var(--line);
         border-radius:8px;padding:10px 12px;margin-top:8px;opacity:.8}
+  .tip{background:linear-gradient(135deg,#fff7e0,#fdeccb);border:1px solid #f0d089;
+       border-radius:10px;padding:11px 14px;margin-top:12px;font-size:14px;color:#7a5a12}
+  [data-theme="dark"] .tip{background:#3a3320;border-color:#6b5a2a;color:#e9d59b}
+  .tip b{color:#b8860b}
+  [data-theme="dark"] .tip b{color:#e8b53d}
   .quiz{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:28px 20px;margin-top:14px;text-align:center}
   .quiz .q{font-size:88px;font-family:"Yu Mincho",serif;margin:4px 0 14px}
   .quiz .prompt{color:var(--muted);font-size:14px;margin-bottom:14px}
@@ -212,7 +217,8 @@ function showDetail(char){
       <li><span class="mark">훈독</span><span class="jp">${k.kun.join("、")||"—"}</span>${k.kun.length?`<button class="spk" onclick="speak('${k.kun[0].replace(/\\..*/,'')}')">🔊</button>`:""}</li>
     </ul></div>
     <div class="sec"><h2>2. 한자 모양 해설</h2>
-      ${rich?k.shape.map(s=>`<p class="note">${s}</p>`).join(""):`<div class="todo">이 한자의 어원 해설은 준비 중입니다.</div>`}</div>
+      ${rich?k.shape.map(s=>`<p class="note">${s}</p>`).join(""):`<div class="todo">이 한자의 어원 해설은 준비 중입니다.</div>`}
+      ${k.tip?`<div class="tip">💡 <b>암기 꿀팁</b> · ${k.tip}</div>`:""}</div>
     <div class="sec"><h2>3. 음독 상세</h2>
       <p class="note">음독은 <span class="jp">${k.on.join("、")||"—"}</span>입니다. ${rich?(k.onNote||""):""}</p>
       ${rich&&k.onWords.length?`<div class="sub">음독 대표단어</div><ul>${wordsBlock(k.onWords)}</ul>`:`<div class="todo">대표단어는 준비 중입니다.</div>`}</div>

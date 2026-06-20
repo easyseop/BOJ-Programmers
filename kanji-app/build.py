@@ -3,6 +3,10 @@
 import json
 from ko import KO
 from rich import RICH
+try:
+    from tips import TIPS
+except ImportError:
+    TIPS = {}
 
 facts = json.load(open('facts.json', encoding='utf-8'))
 
@@ -21,6 +25,9 @@ for ch, f in facts.items():
         e['onWords'] = r['onWords']
         e['kunNote'] = r.get('kunNote', '')
         e['kunWords'] = r['kunWords']
+    tip = TIPS.get(ch)
+    if tip:
+        e['tip'] = tip
     items.append(e)
 
 items.sort(key=lambda e: (order[e['level']], -(e['strokes'] or 0), e['char']))
