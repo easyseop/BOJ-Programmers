@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>N5 한자 공부</title>
+<style>
+  :root{
+    --accent:#8b7fc4; --accent-d:#6b5fae; --line:#e6e3f0;
+    --bg:#f4f4f6; --card:#fff; --ink:#222; --muted:#777; --mark:#e9e6f3;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;font-family:"Apple SD Gothic Neo","Noto Sans KR","Malgun Gothic",sans-serif;
+       background:var(--bg);color:var(--ink);line-height:1.6}
+  ruby rt{font-size:.55em;color:#666}
+  .wrap{max-width:760px;margin:0 auto;padding:0 18px 80px}
+  header{position:sticky;top:0;z-index:10;background:rgba(244,244,246,.92);
+         backdrop-filter:blur(6px);padding:14px 18px;border-bottom:1px solid var(--line)}
+  header .inner{max-width:760px;margin:0 auto;display:flex;align-items:center;gap:12px}
+  h1{font-size:18px;margin:0}
+  .tabs{margin-left:auto;display:flex;gap:6px}
+  .tab{border:1px solid var(--line);background:#fff;color:var(--muted);
+       padding:6px 12px;border-radius:20px;font-size:13px;cursor:pointer}
+  .tab.active{background:var(--accent);color:#fff;border-color:var(--accent)}
+  /* 목록 */
+  .search{width:100%;padding:11px 14px;margin:16px 0;border:1px solid var(--line);
+          border-radius:10px;font-size:15px;background:#fff}
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(92px,1fr));gap:10px}
+  .cell{background:var(--card);border:1px solid var(--line);border-radius:12px;
+        padding:12px 6px;text-align:center;cursor:pointer;transition:.15s}
+  .cell:hover{transform:translateY(-2px);box-shadow:0 6px 16px rgba(110,95,174,.15);border-color:var(--accent)}
+  .cell .k{font-size:34px;font-family:"Yu Mincho","Hiragino Mincho ProN",serif}
+  .cell .m{font-size:11px;color:var(--muted);margin-top:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  /* 상세 */
+  .back{display:inline-block;margin:16px 0;color:var(--accent-d);cursor:pointer;font-size:14px;font-weight:600}
+  .title{font-size:26px;font-weight:800;margin:6px 0 4px}
+  .bigk{font-size:120px;line-height:1.1;text-align:center;font-family:"Yu Mincho","Hiragino Mincho ProN",serif;margin:10px 0}
+  .meta{text-align:center;color:var(--muted);font-size:13px;margin-bottom:8px}
+  .sec{margin-top:34px}
+  .sec h2{font-size:21px;color:var(--accent-d);margin:0 0 4px;padding:6px 0 6px 14px;
+          border-left:6px solid var(--accent);border-bottom:1px solid var(--line);padding-bottom:14px}
+  .sub{font-weight:700;color:var(--accent-d);font-size:16px;border-left:5px solid var(--accent);
+       padding-left:10px;margin:22px 0 12px}
+  .mark{background:var(--mark);padding:1px 7px;border-radius:5px;font-weight:700;margin-right:8px}
+  ul{margin:10px 0;padding-left:20px}
+  li{margin:6px 0}
+  .ko{margin-left:6px}
+  .note{color:#555}
+  .jp{font-family:"Yu Mincho","Hiragino Mincho ProN",serif;font-size:19px}
+  /* 퀴즈 */
+  .quiz{background:#fff;border:1px solid var(--line);border-radius:16px;padding:30px 22px;margin-top:24px;text-align:center}
+  .quiz .q{font-size:90px;font-family:"Yu Mincho",serif;margin:6px 0 18px}
+  .quiz .prompt{color:var(--muted);font-size:14px;margin-bottom:18px}
+  .opts{display:grid;gap:10px;max-width:420px;margin:0 auto}
+  .opt{padding:13px;border:1px solid var(--line);border-radius:10px;background:#fafafa;cursor:pointer;font-size:15px}
+  .opt:hover{border-color:var(--accent)}
+  .opt.ok{background:#e3f5e8;border-color:#5bbb72}
+  .opt.no{background:#fbe6e6;border-color:#d97a7a}
+  .score{margin-top:16px;color:var(--muted);font-size:13px}
+  .hide{display:none}
+</style>
+</head>
+<body>
+<header><div class="inner">
+  <h1>🇯🇵 N5 한자 공부</h1>
+  <div class="tabs">
+    <button class="tab active" data-view="list">목록</button>
+    <button class="tab" data-view="quiz">퀴즈</button>
+  </div>
+</div></header>
+
+<div class="wrap">
+  <div id="view-list">
+    <input class="search" id="search" placeholder="한자 · 의미 · 읽기로 검색 (예: 日, 날, ニチ)">
+    <div class="grid" id="grid"></div>
+  </div>
+
+  <div id="view-detail" class="hide"></div>
+
+  <div id="view-quiz" class="hide"></div>
+</div>
+
+<script>
+/* ===== 데이터 (facts: KANJIDIC2/JMdict 기반 · 한국어 해설: 직접 작성) ===== */
+const KANJI = [
+ {char:"日",strokes:4,meaning:'"날 일". 하루, 날, 태양',on:["ニチ","ジツ"],kun:["ひ","か"],
+  shape:["日는 “태양”의 모습을 본떠 그린 상형문자입니다.","“해가 뜨고 지다” → “하루, 태양”이라는 의미입니다."],
+  onNote:"특별한 구분법은 없습니다.",
+  onWords:[{r:"ニチ",words:[["一","いち","日","にち","하루"],["毎","まい","日","にち","매일"]]},
+           {r:"ジツ",words:[["休","きゅう","日","じつ","휴일"],["平","へい","日","じつ","평일"]]}],
+  kunNote:"~日는 날수/날짜를 셀 때 쓰는 접미사입니다.",
+  kunWords:[{r:"ひ",words:[["月","つき","日","ひ","세월"],["朝","あさ","日","ひ","아침해"],["夕","ゆう","日","ひ","석양"]]},
+            {r:"か",words:[["三","みっ","日","か","사흘/3일"],["七","なの","日","か","이레/7일"],["二","ふつ","日","か","이틀/2일"]]}]},
+ {char:"月",strokes:4,meaning:'"달 월". 달, 한 달',on:["ゲツ","ガツ"],kun:["つき"],
+  shape:["月은 초승달의 모습을 본떠 그린 상형문자입니다.","이지러진 달의 모양에서 “달, 한 달”의 의미가 되었습니다."],
+  onNote:"요일·달(月)을 셀 때는 ガツ, 그 외에는 주로 ゲツ를 씁니다.",
+  onWords:[{r:"ゲツ",words:[["月","げつ","曜日","ようび","월요일"],["来","らい","月","げつ","다음 달"]]},
+           {r:"ガツ",words:[["一","いち","月","がつ","1월"],["正","しょう","月","がつ","설날"]]}],
+  kunNote:"",
+  kunWords:[{r:"つき",words:[["三日","みか","月","づき","초승달"],["月","つき","夜","よ","달밤"]]}]},
+ {char:"火",strokes:4,meaning:'"불 화". 불',on:["カ"],kun:["ひ"],
+  shape:["火는 타오르는 불꽃의 모습을 본떠 그린 상형문자입니다."],
+  onNote:"",
+  onWords:[{r:"カ",words:[["火","か","曜日","ようび","화요일"],["火","か","事","じ","화재"]]}],
+  kunNote:"",
+  kunWords:[{r:"ひ",words:[["火","ひ","花","ばな","불꽃"],["花","はな","火","び","불꽃놀이"]]}]},
+ {char:"水",strokes:4,meaning:'"물 수". 물',on:["スイ"],kun:["みず"],
+  shape:["水는 흐르는 물줄기의 모습을 본떠 그린 상형문자입니다."],
+  onNote:"",
+  onWords:[{r:"スイ",words:[["水","すい","曜日","ようび","수요일"],["水","すい","道","どう","수도"]]}],
+  kunNote:"",
+  kunWords:[{r:"みず",words:[["水","みず","着","ぎ","수영복"],["水","みず","色","いろ","물색/하늘색"]]}]},
+ {char:"木",strokes:4,meaning:'"나무 목". 나무',on:["モク","ボク"],kun:["き","こ"],
+  shape:["木는 가지와 뿌리가 있는 나무의 모습을 본떠 그린 상형문자입니다."],
+  onNote:"일상 단어는 대부분 モク를 씁니다.",
+  onWords:[{r:"モク",words:[["木","もく","曜日","ようび","목요일"],["木","もく","材","ざい","목재"]]},
+           {r:"ボク",words:[["大","たい","木","ぼく","큰 나무"]]}],
+  kunNote:"",
+  kunWords:[{r:"き",words:[["並","なみ","木","き","가로수"]]},
+            {r:"こ",words:[["木","こ","陰","かげ","나무 그늘"],["木の","この","葉","は","나뭇잎"]]}]},
+ {char:"金",strokes:8,meaning:'"쇠 금". 금, 돈, 금속',on:["キン","コン"],kun:["かね"],
+  shape:["金은 흙(土) 속에 묻힌 금속 알갱이를 나타낸 글자로, “금속·돈”의 의미입니다."],
+  onNote:"대부분 キン으로 읽습니다.",
+  onWords:[{r:"キン",words:[["金","きん","曜日","ようび","금요일"],["金","きん","属","ぞく","금속"]]},
+           {r:"コン",words:[["金","こん","色","じき","금색"]]}],
+  kunNote:"",
+  kunWords:[{r:"かね",words:[["お","お","金","かね","돈"],["金","かね","持ち","もち","부자"]]}]},
+ {char:"土",strokes:3,meaning:'"흙 토". 흙, 땅',on:["ド","ト"],kun:["つち"],
+  shape:["土는 땅 위에 쌓인 흙더미의 모습을 나타낸 글자입니다."],
+  onNote:"",
+  onWords:[{r:"ド",words:[["土","ど","曜日","ようび","토요일"]]},
+           {r:"ト",words:[["土","と","地","ち","토지"]]}],
+  kunNote:"",
+  kunWords:[{r:"つち",words:[["土","つち","","","흙"]]}]},
+ {char:"人",strokes:2,meaning:'"사람 인". 사람',on:["ジン","ニン"],kun:["ひと"],
+  shape:["人은 사람이 서 있는 옆모습을 본떠 그린 상형문자입니다."],
+  onNote:"나라·직업 등에는 ジン, 수·상태에는 ニン을 자주 씁니다.",
+  onWords:[{r:"ジン",words:[["日本","にほん","人","じん","일본인"],["外国","がいこく","人","じん","외국인"]]},
+           {r:"ニン",words:[["人","にん","気","き","인기"],["人","にん","形","ぎょう","인형"]]}],
+  kunNote:"",
+  kunWords:[{r:"ひと",words:[["人","ひと","々","びと","사람들"],["旅","たび","人","びと","나그네"]]}]},
+ {char:"山",strokes:3,meaning:'"메 산". 산',on:["サン"],kun:["やま"],
+  shape:["山은 봉우리가 솟은 산의 모습을 본떠 그린 상형문자입니다."],
+  onNote:"",
+  onWords:[{r:"サン",words:[["火","か","山","ざん","화산"],["富士","ふじ","山","さん","후지산"]]}],
+  kunNote:"",
+  kunWords:[{r:"やま",words:[["山","やま","道","みち","산길"],["山","やま","登り","のぼり","등산"]]}]},
+ {char:"川",strokes:3,meaning:'"내 천". 강, 시내',on:["セン"],kun:["かわ"],
+  shape:["川은 흐르는 물줄기를 본떠 그린 상형문자입니다."],
+  onNote:"",
+  onWords:[{r:"セン",words:[["河","か","川","せん","하천"]]}],
+  kunNote:"",
+  kunWords:[{r:"かわ",words:[["川","かわ","上","かみ","상류"],["小","お","川","がわ","시냇물"]]}]},
+ {char:"大",strokes:3,meaning:'"큰 대". 크다',on:["ダイ","タイ"],kun:["おお"],
+  shape:["大는 사람이 팔다리를 크게 벌린 모습으로 “크다”를 나타냅니다."],
+  onNote:"",
+  onWords:[{r:"ダイ",words:[["大","だい","学","がく","대학"],["大","だい","切","せつ","소중함"]]},
+           {r:"タイ",words:[["大","たい","変","へん","큰일/매우"]]}],
+  kunNote:"",
+  kunWords:[{r:"おお",words:[["大","おお","きい","きい","크다"],["大","おお","雨","あめ","큰비"]]}]},
+ {char:"小",strokes:3,meaning:'"작을 소". 작다',on:["ショウ"],kun:["ちい","こ"],
+  shape:["小는 작은 점 세 개로 “작다”를 나타낸 글자입니다."],
+  onNote:"",
+  onWords:[{r:"ショウ",words:[["小","しょう","学校","がっこう","초등학교"],["小","しょう","説","せつ","소설"]]}],
+  kunNote:"",
+  kunWords:[{r:"ちい",words:[["小","ちい","さい","さい","작다"]]},
+            {r:"こ",words:[["小","こ","鳥","とり","작은 새"]]}]},
+ {char:"中",strokes:4,meaning:'"가운데 중". 안, 가운데',on:["チュウ"],kun:["なか"],
+  shape:["中는 사물의 한가운데를 세로로 관통하는 모습으로 “가운데”를 나타냅니다."],
+  onNote:"",
+  onWords:[{r:"チュウ",words:[["中","ちゅう","国","ごく","중국"],["中","ちゅう","学","がく","중학"]]}],
+  kunNote:"",
+  kunWords:[{r:"なか",words:[["中","なか","","","안/속"],["真ん","まん","中","なか","한가운데"]]}]},
+ {char:"上",strokes:3,meaning:'"위 상". 위, 오르다',on:["ジョウ"],kun:["うえ","のぼ","あ"],
+  shape:["上는 기준선 위에 획을 더해 “위”를 나타낸 지사문자입니다."],
+  onNote:"",
+  onWords:[{r:"ジョウ",words:[["以","い","上","じょう","이상"],["屋","おく","上","じょう","옥상"]]}],
+  kunNote:"동사로 쓰일 때 읽기가 달라집니다.",
+  kunWords:[{r:"うえ",words:[["上","うえ","","","위"]]},
+            {r:"のぼ",words:[["上","のぼ","る","る","오르다"]]},
+            {r:"あ",words:[["上","あ","がる","がる","올라가다"]]}]},
+ {char:"下",strokes:3,meaning:'"아래 하". 아래, 내리다',on:["カ","ゲ"],kun:["した","さ","くだ"],
+  shape:["下는 기준선 아래에 획을 더해 “아래”를 나타낸 지사문자입니다."],
+  onNote:"",
+  onWords:[{r:"カ",words:[["地","ち","下","か","지하"]]},
+           {r:"ゲ",words:[["下","げ","車","しゃ","하차"]]}],
+  kunNote:"동사로 쓰일 때 읽기가 달라집니다.",
+  kunWords:[{r:"した",words:[["下","した","","","아래"]]},
+            {r:"さ",words:[["下","さ","がる","がる","내려가다"]]},
+            {r:"くだ",words:[["下","くだ","る","る","내려가다"]]}]}
+];
+
+/* ===== 헬퍼 ===== */
+const $=s=>document.querySelector(s);
+function ruby(base,read){ return read? `<ruby>${base}<rt>${read}</rt></ruby>` : base; }
+// word = [base1, read1, base2, read2, 한국어뜻]
+function wordHTML(w){
+  const jp = `<span class="jp">${ruby(w[0],w[1])}${ruby(w[2],w[3])}</span>`;
+  return `${jp} <span class="ko">${w[4]}</span>`;
+}
+
+/* ===== 목록 ===== */
+function renderList(filter=""){
+  const f=filter.trim().toLowerCase();
+  const items=KANJI.filter(k=>!f|| k.char.includes(f)||k.meaning.toLowerCase().includes(f)||
+      k.on.join("").toLowerCase().includes(f)||k.kun.join("").toLowerCase().includes(f));
+  $("#grid").innerHTML=items.map(k=>`
+    <div class="cell" onclick="showDetail('${k.char}')">
+      <div class="k">${k.char}</div>
+      <div class="m">${k.meaning.replace(/^"|".*$/g,'').trim()||k.meaning}</div>
+    </div>`).join("") || `<p style="color:#999">검색 결과가 없습니다.</p>`;
+}
+
+/* ===== 상세 ===== */
+function wordsBlock(groups){
+  return groups.map(g=>`<li><span class="mark">${g.r}</span>${g.words.map(wordHTML).join(' , ')}</li>`).join("");
+}
+function showDetail(char){
+  const k=KANJI.find(x=>x.char===char);
+  setView("detail");
+  $("#view-detail").innerHTML=`
+    <span class="back" onclick="setView('list')">← 목록으로</span>
+    <div class="title">「${k.char}」</div>
+    <div class="bigk">${k.char}</div>
+    <div class="meta">JLPT ${"N5"} · ${k.strokes}획</div>
+
+    <div class="sec"><h2>1. 기본 정보</h2>
+      <ul>
+        <li><span class="mark">의미</span>${k.meaning}</li>
+        <li><span class="mark">음독</span><span class="jp">${k.on.join("、")}</span></li>
+        <li><span class="mark">훈독</span><span class="jp">${k.kun.join("、")}</span></li>
+      </ul>
+    </div>
+
+    <div class="sec"><h2>2. 한자 모양 해설</h2>
+      ${k.shape.map(s=>`<p class="note">${s}</p>`).join("")}
+    </div>
+
+    <div class="sec"><h2>3. 음독 상세</h2>
+      <p class="note">음독은 <span class="jp">${k.on.join("、")}</span>입니다. ${k.onNote||""}</p>
+      <div class="sub">음독 대표단어</div>
+      <ul>${wordsBlock(k.onWords)}</ul>
+    </div>
+
+    <div class="sec"><h2>4. 훈독 상세</h2>
+      <p class="note">훈독은 <span class="jp">${k.kun.join("、")}</span>입니다. ${k.kunNote||""}</p>
+      <div class="sub">훈독 대표단어</div>
+      <ul>${wordsBlock(k.kunWords)}</ul>
+    </div>`;
+  window.scrollTo(0,0);
+}
+
+/* ===== 퀴즈 ===== */
+let qScore=0,qTotal=0;
+function newQuiz(){
+  const correct=KANJI[Math.floor(Math.random()*KANJI.length)];
+  const askMeaning=Math.random()<0.5;
+  const pool=[...KANJI].filter(k=>k!==correct).sort(()=>Math.random()-0.5).slice(0,3);
+  const opts=[correct,...pool].sort(()=>Math.random()-0.5);
+  const label=k=> askMeaning? k.meaning : `<span class="jp">${k.on.concat(k.kun).join("、")}</span>`;
+  $("#view-quiz").innerHTML=`
+    <div class="quiz">
+      <div class="prompt">${askMeaning?"이 한자의 뜻은?":"이 한자의 읽기는?"}</div>
+      <div class="q">${correct.char}</div>
+      <div class="opts">
+        ${opts.map(o=>`<div class="opt" data-c="${o===correct?1:0}" onclick="answer(this)">${label(o)}</div>`).join("")}
+      </div>
+      <div class="score" id="score">맞힘 ${qScore} / 푼 문제 ${qTotal}</div>
+    </div>`;
+}
+function answer(el){
+  if(el.dataset.done)return;
+  qTotal++;
+  const ok=el.dataset.c==="1";
+  document.querySelectorAll(".opt").forEach(o=>{o.dataset.done=1;
+    if(o.dataset.c==="1")o.classList.add("ok");});
+  if(ok)qScore++; else el.classList.add("no");
+  $("#score").textContent=`맞힘 ${qScore} / 푼 문제 ${qTotal}`;
+  setTimeout(newQuiz,900);
+}
+
+/* ===== 뷰 전환 ===== */
+function setView(v){
+  $("#view-list").classList.toggle("hide",v!=="list");
+  $("#view-detail").classList.toggle("hide",v!=="detail");
+  $("#view-quiz").classList.toggle("hide",v!=="quiz");
+  document.querySelectorAll(".tab").forEach(t=>t.classList.toggle("active",t.dataset.view===v||(v==="detail"&&t.dataset.view==="list")));
+  if(v==="quiz")newQuiz();
+}
+document.querySelectorAll(".tab").forEach(t=>t.onclick=()=>setView(t.dataset.view));
+$("#search").addEventListener("input",e=>renderList(e.target.value));
+
+renderList();
+</script>
+</body>
+</html>
