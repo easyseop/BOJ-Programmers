@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>일본어 한자 공부 · N5 N4 N3</title>
+<style>
+  :root{--accent:#8b7fc4;--accent-d:#6b5fae;--line:#e6e3f0;--bg:#f4f4f6;
+        --card:#fff;--ink:#222;--muted:#777;--mark:#e9e6f3;}
+  *{box-sizing:border-box}
+  body{margin:0;font-family:"Apple SD Gothic Neo","Noto Sans KR","Malgun Gothic",sans-serif;
+       background:var(--bg);color:var(--ink);line-height:1.6}
+  ruby rt{font-size:.55em;color:#666}
+  .wrap{max-width:780px;margin:0 auto;padding:0 18px 90px}
+  header{position:sticky;top:0;z-index:10;background:rgba(244,244,246,.93);
+         backdrop-filter:blur(6px);padding:12px 18px;border-bottom:1px solid var(--line)}
+  header .inner{max-width:780px;margin:0 auto;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+  h1{font-size:17px;margin:0}
+  .tabs{margin-left:auto;display:flex;gap:6px}
+  .tab{border:1px solid var(--line);background:#fff;color:var(--muted);
+       padding:6px 12px;border-radius:20px;font-size:13px;cursor:pointer}
+  .tab.active{background:var(--accent);color:#fff;border-color:var(--accent)}
+  .filters{display:flex;gap:6px;margin:14px 0 0}
+  .chip{border:1px solid var(--line);background:#fff;color:var(--muted);
+        padding:5px 14px;border-radius:18px;font-size:13px;cursor:pointer}
+  .chip.active{background:var(--accent-d);color:#fff;border-color:var(--accent-d)}
+  .search{width:100%;padding:11px 14px;margin:12px 0 4px;border:1px solid var(--line);
+          border-radius:10px;font-size:15px;background:#fff}
+  .count{color:var(--muted);font-size:12px;margin:6px 2px 12px}
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(96px,1fr));gap:10px}
+  .cell{background:var(--card);border:1px solid var(--line);border-radius:12px;
+        padding:12px 6px 10px;text-align:center;cursor:pointer;transition:.15s;position:relative}
+  .cell:hover{transform:translateY(-2px);box-shadow:0 6px 16px rgba(110,95,174,.15);border-color:var(--accent)}
+  .cell .k{font-size:34px;font-family:"Yu Mincho","Hiragino Mincho ProN",serif}
+  .cell .m{font-size:11px;color:var(--muted);margin-top:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .cell .lv{position:absolute;top:6px;right:7px;font-size:9px;color:#aaa}
+  .back{display:inline-block;margin:14px 0;color:var(--accent-d);cursor:pointer;font-size:14px;font-weight:600}
+  .title{font-size:25px;font-weight:800;margin:4px 0 2px}
+  .bigk{font-size:120px;line-height:1.05;text-align:center;font-family:"Yu Mincho","Hiragino Mincho ProN",serif;margin:8px 0}
+  .meta{text-align:center;color:var(--muted);font-size:13px;margin-bottom:6px}
+  .sec{margin-top:30px}
+  .sec h2{font-size:20px;color:var(--accent-d);margin:0;padding:6px 0 12px 14px;
+          border-left:6px solid var(--accent);border-bottom:1px solid var(--line)}
+  .sub{font-weight:700;color:var(--accent-d);font-size:15px;border-left:5px solid var(--accent);
+       padding-left:10px;margin:20px 0 10px}
+  .mark{background:var(--mark);padding:1px 7px;border-radius:5px;font-weight:700;margin-right:8px}
+  ul{margin:10px 0;padding-left:20px}
+  li{margin:6px 0}
+  .ko{margin-left:6px}
+  .note{color:#555}
+  .jp{font-family:"Yu Mincho","Hiragino Mincho ProN",serif;font-size:19px}
+  .en{color:#888;font-size:13px}
+  .todo{color:#b0a8d0;font-size:13px;background:#faf9fd;border:1px dashed var(--line);
+        border-radius:8px;padding:10px 12px;margin-top:8px}
+  .quiz{background:#fff;border:1px solid var(--line);border-radius:16px;padding:28px 20px;margin-top:20px;text-align:center}
+  .quiz .q{font-size:88px;font-family:"Yu Mincho",serif;margin:4px 0 14px}
+  .quiz .prompt{color:var(--muted);font-size:14px;margin-bottom:14px}
+  .opts{display:grid;gap:10px;max-width:440px;margin:0 auto}
+  .opt{padding:13px;border:1px solid var(--line);border-radius:10px;background:#fafafa;cursor:pointer;font-size:15px}
+  .opt:hover{border-color:var(--accent)}
+  .opt.ok{background:#e3f5e8;border-color:#5bbb72}
+  .opt.no{background:#fbe6e6;border-color:#d97a7a}
+  .score{margin-top:14px;color:var(--muted);font-size:13px}
+  .hide{display:none}
+</style>
+</head>
+<body>
+<header><div class="inner">
+  <h1>🇯🇵 일본어 한자 공부</h1>
+  <div class="tabs">
+    <button class="tab active" data-view="list">목록</button>
+    <button class="tab" data-view="quiz">퀴즈</button>
+  </div>
+</div></header>
+
+<div class="wrap">
+  <div id="view-list">
+    <div class="filters" id="filters"></div>
+    <input class="search" id="search" placeholder="한자 · 뜻 · 읽기 검색 (예: 日, 날, ニチ, day)">
+    <div class="count" id="count"></div>
+    <div class="grid" id="grid"></div>
+  </div>
+  <div id="view-detail" class="hide"></div>
+  <div id="view-quiz" class="hide"></div>
+</div>
+
+<script>
+/*__DATA__*/
+const $=s=>document.querySelector(s);
+let curLevel="ALL";
+
+function ruby(b,r){return r?`<ruby>${b}<rt>${r}</rt></ruby>`:b;}
+function wordHTML(w){return `<span class="jp">${ruby(w[0],w[1])}${ruby(w[2],w[3])}</span> <span class="ko">${w[4]}</span>`;}
+function shortMeaning(k){return k.ko || (k.en[0]||"");}
+
+/* 필터 칩 */
+const LEVELS=[["ALL","전체"],["N5","N5"],["N4","N4"],["N3","N3"]];
+$("#filters").innerHTML=LEVELS.map(([v,l])=>
+  `<button class="chip ${v==='ALL'?'active':''}" data-lv="${v}">${l}</button>`).join("");
+document.querySelectorAll(".chip").forEach(c=>c.onclick=()=>{
+  curLevel=c.dataset.lv;
+  document.querySelectorAll(".chip").forEach(x=>x.classList.toggle("active",x===c));
+  renderList($("#search").value);
+});
+
+/* 목록 */
+function filtered(f){
+  f=f.trim().toLowerCase();
+  return KANJI.filter(k=>(curLevel==="ALL"||k.level===curLevel) && (!f ||
+    k.char.includes(f)||k.ko.toLowerCase().includes(f)||
+    k.on.join("").toLowerCase().includes(f)||k.kun.join("").toLowerCase().includes(f)||
+    k.en.join(" ").toLowerCase().includes(f)));
+}
+function renderList(f=""){
+  const list=filtered(f);
+  $("#count").textContent=`${list.length}자`;
+  $("#grid").innerHTML=list.map((k,i)=>`
+    <div class="cell" onclick="showDetail('${k.char}')">
+      <span class="lv">${k.level}</span>
+      <div class="k">${k.char}</div>
+      <div class="m">${shortMeaning(k)}</div>
+    </div>`).join("")||`<p style="color:#999">검색 결과가 없습니다.</p>`;
+}
+
+/* 상세 */
+function wordsBlock(g){return g.map(x=>`<li><span class="mark">${x.r}</span>${x.words.map(wordHTML).join(' , ')}</li>`).join("");}
+function showDetail(char){
+  const k=KANJI.find(x=>x.char===char);
+  setView("detail");
+  const hasRich=!!k.shape;
+  $("#view-detail").innerHTML=`
+    <span class="back" onclick="setView('list')">← 목록으로</span>
+    <div class="title">「${k.char}」</div>
+    <div class="bigk">${k.char}</div>
+    <div class="meta">JLPT ${k.level} · ${k.strokes}획</div>
+
+    <div class="sec"><h2>1. 기본 정보</h2>
+      <ul>
+        <li><span class="mark">의미</span><b>${k.ko}</b> <span class="en">${k.en.join(", ")}</span></li>
+        <li><span class="mark">음독</span><span class="jp">${k.on.join("、")||"—"}</span></li>
+        <li><span class="mark">훈독</span><span class="jp">${k.kun.join("、")||"—"}</span></li>
+      </ul>
+    </div>
+
+    <div class="sec"><h2>2. 한자 모양 해설</h2>
+      ${hasRich?k.shape.map(s=>`<p class="note">${s}</p>`).join("")
+        :`<div class="todo">이 한자의 어원 해설은 준비 중입니다.</div>`}
+    </div>
+
+    <div class="sec"><h2>3. 음독 상세</h2>
+      <p class="note">음독은 <span class="jp">${k.on.join("、")||"—"}</span>입니다. ${hasRich?(k.onNote||""):""}</p>
+      ${hasRich&&k.onWords.length?`<div class="sub">음독 대표단어</div><ul>${wordsBlock(k.onWords)}</ul>`
+        :`<div class="todo">대표단어는 준비 중입니다.</div>`}
+    </div>
+
+    <div class="sec"><h2>4. 훈독 상세</h2>
+      <p class="note">훈독은 <span class="jp">${k.kun.join("、")||"—"}</span>입니다. ${hasRich?(k.kunNote||""):""}</p>
+      ${hasRich&&k.kunWords.length?`<div class="sub">훈독 대표단어</div><ul>${wordsBlock(k.kunWords)}</ul>`
+        :`<div class="todo">대표단어는 준비 중입니다.</div>`}
+    </div>`;
+  window.scrollTo(0,0);
+}
+
+/* 퀴즈 (현재 선택 등급 기준) */
+let qScore=0,qTotal=0;
+function quizPool(){const p=KANJI.filter(k=>curLevel==="ALL"||k.level===curLevel);return p.length>=4?p:KANJI;}
+function newQuiz(){
+  const pool=quizPool();
+  const correct=pool[Math.floor(Math.random()*pool.length)];
+  const ask=Math.random()<0.5;
+  const others=KANJI.filter(k=>k!==correct).sort(()=>Math.random()-0.5).slice(0,3);
+  const opts=[correct,...others].sort(()=>Math.random()-0.5);
+  const label=k=>ask?shortMeaning(k):`<span class="jp">${k.on.concat(k.kun).join("、")||"—"}</span>`;
+  $("#view-quiz").innerHTML=`
+    <div class="filters" style="justify-content:center">${LEVELS.map(([v,l])=>
+      `<button class="chip ${v===curLevel?'active':''}" onclick="setQuizLevel('${v}')">${l}</button>`).join("")}</div>
+    <div class="quiz">
+      <div class="prompt">${ask?"이 한자의 뜻은?":"이 한자의 읽기는?"}</div>
+      <div class="q">${correct.char}</div>
+      <div class="opts">${opts.map(o=>`<div class="opt" data-c="${o===correct?1:0}" onclick="answer(this)">${label(o)}</div>`).join("")}</div>
+      <div class="score" id="score">맞힘 ${qScore} / 푼 문제 ${qTotal}</div>
+    </div>`;
+}
+function setQuizLevel(v){curLevel=v;newQuiz();}
+function answer(el){
+  if(el.dataset.done)return;
+  qTotal++;
+  const ok=el.dataset.c==="1";
+  document.querySelectorAll(".opt").forEach(o=>{o.dataset.done=1;if(o.dataset.c==="1")o.classList.add("ok");});
+  if(ok)qScore++;else el.classList.add("no");
+  $("#score").textContent=`맞힘 ${qScore} / 푼 문제 ${qTotal}`;
+  setTimeout(newQuiz,950);
+}
+
+/* 뷰 전환 */
+function setView(v){
+  $("#view-list").classList.toggle("hide",v!=="list");
+  $("#view-detail").classList.toggle("hide",v!=="detail");
+  $("#view-quiz").classList.toggle("hide",v!=="quiz");
+  document.querySelectorAll(".tab").forEach(t=>t.classList.toggle("active",t.dataset.view===v||(v==="detail"&&t.dataset.view==="list")));
+  if(v==="quiz")newQuiz();
+}
+document.querySelectorAll(".tab").forEach(t=>t.onclick=()=>setView(t.dataset.view));
+$("#search").addEventListener("input",e=>renderList(e.target.value));
+renderList();
+</script>
+</body>
+</html>
