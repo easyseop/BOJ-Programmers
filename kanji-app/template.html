@@ -100,6 +100,11 @@
   .face .en{color:var(--muted);font-size:13px;margin:0 0 6px}
   .fc-label{font-size:11px;font-weight:700;color:#fff;background:var(--accent);
         border-radius:10px;padding:2px 10px;margin:10px 0 6px;letter-spacing:1px}
+  .fc-read{margin:9px 0 0;text-align:center}
+  .fc-tag{font-size:10px;font-weight:700;color:#fff;border-radius:9px;padding:2px 8px;margin-right:6px}
+  .fc-tag.on{background:var(--accent-d)} .fc-tag.kun{background:var(--ok)}
+  .fc-ex{font-size:14px;margin-top:3px;color:var(--ink)}
+  .fc-ex .jp{font-size:17px}
   .fc .hint{color:var(--muted);font-size:12px;margin-top:10px;text-align:center}
   .fcbtns{display:flex;gap:12px;max-width:420px;margin:14px auto 0}
   .fcbtns button{flex:1;padding:14px;border-radius:12px;border:1px solid var(--line);font-size:15px;cursor:pointer;background:var(--card);color:var(--ink)}
@@ -238,6 +243,14 @@ function loadStroke(char){fetch(`https://cdn.jsdelivr.net/gh/KanjiVG/kanjivg@mas
 /* 플래시카드 */
 let fcPool=[],fcIdx=0,fcFlip=false;
 function startCard(){fcPool=KANJI.filter(k=>inLevel(k)&&stOK(k)).sort(()=>Math.random()-0.5);fcIdx=0;fcFlip=false;renderCard();}
+function fcRead(label,readings,groups,speakTxt,cls){
+  const rd=readings.length?readings.join("、"):"—";
+  let ex="";
+  for(const g of (groups||[])){ if(g.words&&g.words.length){ ex=wordHTML(g.words[0]); break; } }
+  return `<div class="fc-read"><span class="fc-tag ${cls}">${label}</span> <span class="jp">${rd}</span>`
+    +(readings.length&&speakTxt?` <button class="spk" onclick="event.stopPropagation();speak('${speakTxt}')">🔊</button>`:"")
+    +(ex?`<div class="fc-ex">예) ${ex}</div>`:"")+`</div>`;
+}
 function renderCard(){
   const head=`<div class="filters" style="justify-content:center">${LEVELS.map(([v,l])=>`<button class="chip ${v===curLevel?'active':''}" onclick="cardLv('${v}')">${l}</button>`).join("")}</div>
     <div class="filters" style="justify-content:center">${STS.map(([v,l])=>`<button class="chip ${v===stMode?'active':''}" onclick="cardSt('${v}')">${l}</button>`).join("")}</div>`;
@@ -252,9 +265,8 @@ function renderCard(){
         <div class="fc-label">뜻</div>
         <p class="ko">${k.ko}</p>
         <p class="en">${k.en.join(", ")}</p>
-        <div class="fc-label">읽기</div>
-        <p class="jp">음 ${k.on.join("、")||"—"} <button class="spk" onclick="event.stopPropagation();speak('${k.on[0]||k.char}')">🔊</button></p>
-        <p class="jp">훈 ${k.kun.join("、")||"—"}</p>
+        ${fcRead("음독",k.on,k.onWords,k.on[0]||k.char,"on")}
+        ${fcRead("훈독",k.kun,k.kunWords,(k.kun[0]||"").split(".")[0],"kun")}
       </div>
     </div></div>
     <div class="fcbtns">
