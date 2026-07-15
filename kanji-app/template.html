@@ -96,7 +96,10 @@
         border-radius:18px;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:20px;text-align:center}
   .face.b{transform:rotateY(180deg)}
   .face .big{font-size:130px;font-family:"Yu Mincho",serif;line-height:1}
-  .face .ko{font-size:26px;font-weight:800;margin:0 0 10px}
+  .face .ko{font-size:26px;font-weight:800;margin:2px 0 4px}
+  .face .en{color:var(--muted);font-size:13px;margin:0 0 6px}
+  .fc-label{font-size:11px;font-weight:700;color:#fff;background:var(--accent);
+        border-radius:10px;padding:2px 10px;margin:10px 0 6px;letter-spacing:1px}
   .fc .hint{color:var(--muted);font-size:12px;margin-top:10px;text-align:center}
   .fcbtns{display:flex;gap:12px;max-width:420px;margin:14px auto 0}
   .fcbtns button{flex:1;padding:14px;border-radius:12px;border:1px solid var(--line);font-size:15px;cursor:pointer;background:var(--card);color:var(--ink)}
@@ -246,10 +249,12 @@ function renderCard(){
     <div class="fc"><div class="fcard ${fcFlip?'flip':''}" onclick="this.classList.toggle('flip')">
       <div class="face f"><div class="big">${k.char}</div><div class="hint">탭하면 뜻 보기</div></div>
       <div class="face b">
+        <div class="fc-label">뜻</div>
         <p class="ko">${k.ko}</p>
+        <p class="en">${k.en.join(", ")}</p>
+        <div class="fc-label">읽기</div>
         <p class="jp">음 ${k.on.join("、")||"—"} <button class="spk" onclick="event.stopPropagation();speak('${k.on[0]||k.char}')">🔊</button></p>
         <p class="jp">훈 ${k.kun.join("、")||"—"}</p>
-        <p class="en">${k.en.join(", ")}</p>
       </div>
     </div></div>
     <div class="fcbtns">
