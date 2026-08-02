@@ -131,7 +131,7 @@
     <div class="filters" id="lvFilters"></div>
     <div class="filters" id="stFilters"></div>
     <div class="progress" id="progress"></div>
-    <input class="search" id="search" placeholder="한자 · 뜻 · 읽기 검색 (예: 日, 날, ニチ, day)">
+    <input class="search" id="search" placeholder="한자·뜻·읽기·로마자 검색 (예: 日, 날, ニチ, nichi, day)">
     <div class="count" id="count"></div>
     <div class="grid" id="grid"></div>
   </div>
@@ -180,11 +180,41 @@ document.querySelectorAll("[data-lv]").forEach(c=>c.onclick=()=>{curLevel=c.data
 document.querySelectorAll("[data-st]").forEach(c=>c.onclick=()=>{stMode=c.dataset.st;
   document.querySelectorAll("[data-st]").forEach(x=>x.classList.toggle("active",x===c));renderList($("#search").value);});
 
+/* 로마자(영문) 발음 검색 */
+const _t=(s,n)=>Object.fromEntries(s.split(",").map(x=>[x.slice(0,n),x.slice(n)]));
+const RJ1=_t("あa,いi,うu,えe,おo,かka,きki,くku,けke,こko,さsa,しshi,すsu,せse,そso,たta,ちchi,つtsu,てte,とto,なna,にni,ぬnu,ねne,のno,はha,ひhi,ふfu,へhe,ほho,まma,みmi,むmu,めme,もmo,やya,ゆyu,よyo,らra,りri,るru,れre,ろro,わwa,をo,んn,がga,ぎgi,ぐgu,げge,ごgo,ざza,じji,ずzu,ぜze,ぞzo,だda,ぢji,づzu,でde,どdo,ばba,びbi,ぶbu,べbe,ぼbo,ぱpa,ぴpi,ぷpu,ぺpe,ぽpo,ぁa,ぃi,ぅu,ぇe,ぉo,ゃya,ゅyu,ょyo,ゐi,ゑe",1);
+const RJ2=_t("きゃkya,きゅkyu,きょkyo,しゃsha,しゅshu,しょsho,ちゃcha,ちゅchu,ちょcho,にゃnya,にゅnyu,にょnyo,ひゃhya,ひゅhyu,ひょhyo,みゃmya,みゅmyu,みょmyo,りゃrya,りゅryu,りょryo,ぎゃgya,ぎゅgyu,ぎょgyo,じゃja,じゅju,じょjo,ぢゃja,ぢゅju,ぢょjo,びゃbya,びゅbyu,びょbyo,ぴゃpya,ぴゅpyu,ぴょpyo",2);
+const KUN1=_t("しsi,ちti,つtu,ふhu,じzi,ぢdi,づdu",1);
+const KUN2=_t("しゃsya,しゅsyu,しょsyo,ちゃtya,ちゅtyu,ちょtyo,じゃzya,じゅzyu,じょzyo",2);
+function kanaToRomaji(str,kunrei){
+  let s="";
+  for(const ch of str){const c=ch.codePointAt(0);
+    s+=(c>=0x30A1&&c<=0x30F6)?String.fromCodePoint(c-0x60):ch;}
+  let out="",i=0;
+  while(i<s.length){
+    const two=s.substr(i,2);
+    if(s[i]==="っ"){const nx=RJ2[s.substr(i+1,2)]||RJ1[s[i+1]]||"";if(nx)out+=nx[0];i++;continue;}
+    if(RJ2[two]){out+=(kunrei&&KUN2[two])||RJ2[two];i+=2;continue;}
+    if(RJ1[s[i]]){out+=(kunrei&&KUN1[s[i]])||RJ1[s[i]];i++;continue;}
+    if(s[i]!=="ー"&&s[i]!==".")out+=s[i];
+    i++;
+  }
+  return out;
+}
+function romajiOf(k){
+  if(k._rj===undefined){
+    const all=k.on.concat(k.kun).map(r=>r.split(".").join("")).join(" ");
+    k._rj=kanaToRomaji(all,false)+" "+kanaToRomaji(all,true);
+  }
+  return k._rj;
+}
+
 /* 목록 */
 let curView=[];
 function filtered(f){f=f.trim().toLowerCase();
   return KANJI.filter(k=>inLevel(k)&&stOK(k)&&(!f||k.char.includes(f)||k.ko.toLowerCase().includes(f)
-    ||k.on.join("").toLowerCase().includes(f)||k.kun.join("").toLowerCase().includes(f)||k.en.join(" ").toLowerCase().includes(f)));}
+    ||k.on.join("").toLowerCase().includes(f)||k.kun.join("").toLowerCase().includes(f)||k.en.join(" ").toLowerCase().includes(f)
+    ||romajiOf(k).includes(f)));}
 function updateProgress(){const pool=KANJI.filter(inLevel);const done=pool.filter(k=>LEARNED.has(k.char)).length;
   const pct=pool.length?Math.round(done/pool.length*100):0;
   $("#progress").innerHTML=`암기 진도 (${curLevel==="ALL"?"전체":curLevel}) · ${done} / ${pool.length} (${pct}%)<div class="bar"><i style="width:${pct}%"></i></div>`;}
