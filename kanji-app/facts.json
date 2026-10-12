@@ -16845,5 +16845,109 @@
    "Arrows",
    "One Of A Pair"
   ]
+ },
+ "分": {
+  "level": "N5",
+  "strokes": 4,
+  "on": [
+   "ブン",
+   "フン",
+   "ブ"
+  ],
+  "kun": [
+   "わ.ける",
+   "わ.け",
+   "わ.かれる",
+   "わ.かる",
+   "わ.かつ"
+  ],
+  "meanings": [
+   "Part",
+   "Minute Of Time",
+   "Segment",
+   "Share",
+   "Degree",
+   "One's Lot",
+   "Duty",
+   "Understand",
+   "Know",
+   "Rate",
+   "1%",
+   "Chances",
+   "Shaku/100"
+  ]
+ },
+ "身": {
+  "level": "N3",
+  "strokes": 7,
+  "on": [
+   "シン"
+  ],
+  "kun": [
+   "み"
+  ],
+  "meanings": [
+   "Somebody",
+   "Person",
+   "One's Station In Life"
+  ]
+ },
+ "丈": {
+  "level": "N2",
+  "strokes": 3,
+  "on": [
+   "ジョウ"
+  ],
+  "kun": [
+   "たけ",
+   "だけ"
+  ],
+  "meanings": [
+   "Length",
+   "Ten Shaku",
+   "Measure",
+   "Mr.",
+   "Ms.",
+   "Height",
+   "Stature",
+   "All (one Has)",
+   "Only",
+   "That's All",
+   "Merely"
+  ]
+ },
+ "寿": {
+  "level": "N2",
+  "strokes": 7,
+  "on": [
+   "ジュ",
+   "ス",
+   "シュウ"
+  ],
+  "kun": [
+   "ことぶき",
+   "ことぶ.く",
+   "ことほ.ぐ"
+  ],
+  "meanings": [
+   "Longevity",
+   "Congratulations",
+   "One's Natural Life"
+  ]
+ },
+ "叱": {
+  "level": "N2",
+  "strokes": 5,
+  "on": [
+   "シツ",
+   "シチ"
+  ],
+  "kun": [
+   "しか.る"
+  ],
+  "meanings": [
+   "Scold",
+   "Reprove"
+  ]
  }
 }
