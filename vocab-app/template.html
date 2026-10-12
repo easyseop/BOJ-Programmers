@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>일본어 단어장</title>
+<style>
+  :root{--accent:#4a9d8f;--accent-d:#357d70;--line:#e2ebe9;--bg:#f4f7f6;
+        --card:#fff;--ink:#222;--muted:#777;--mark:#e3f1ee;--gold:#e8b53d;--ok:#5bbb72;}
+  [data-theme="dark"]{--line:#2d3b39;--bg:#151b1a;--card:#1e2726;--ink:#e8f0ee;
+        --muted:#92a5a1;--mark:#27413c;--accent:#5bb5a5;--accent-d:#7fcfc0;}
+  *{box-sizing:border-box}
+  body{margin:0;font-family:"Apple SD Gothic Neo","Noto Sans KR","Malgun Gothic",sans-serif;
+       background:var(--bg);color:var(--ink);line-height:1.6;transition:background .2s,color .2s}
+  ruby rt{font-size:.5em;color:var(--muted);font-weight:400}
+  .wrap{max-width:780px;margin:0 auto;padding:0 18px 90px}
+  header{position:sticky;top:0;z-index:10;background:var(--bg);opacity:.98;
+         padding:12px 18px;border-bottom:1px solid var(--line)}
+  header .inner{max-width:780px;margin:0 auto;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+  h1{font-size:16px;margin:0}
+  .tabs{margin-left:auto;display:flex;gap:6px}
+  .tab,.ic{border:1px solid var(--line);background:var(--card);color:var(--muted);
+       padding:6px 11px;border-radius:20px;font-size:13px;cursor:pointer}
+  .tab.active{background:var(--accent);color:#fff;border-color:var(--accent)}
+  .ic{padding:6px 10px}
+  .filters{display:flex;gap:6px;margin:14px 0 0;flex-wrap:wrap}
+  .chip{border:1px solid var(--line);background:var(--card);color:var(--muted);
+        padding:5px 13px;border-radius:18px;font-size:13px;cursor:pointer}
+  .chip.active{background:var(--accent-d);color:#fff;border-color:var(--accent-d)}
+  .progress{margin:14px 2px 0;font-size:12px;color:var(--muted)}
+  .bar{height:8px;background:var(--mark);border-radius:6px;overflow:hidden;margin-top:5px}
+  .bar>i{display:block;height:100%;background:linear-gradient(90deg,var(--accent),var(--ok));width:0}
+  .search{width:100%;padding:11px 14px;margin:12px 0 4px;border:1px solid var(--line);
+          border-radius:10px;font-size:15px;background:var(--card);color:var(--ink)}
+  .count{color:var(--muted);font-size:12px;margin:6px 2px 12px}
+  .list{display:flex;flex-direction:column;gap:8px}
+  .row{background:var(--card);border:1px solid var(--line);border-radius:12px;
+       padding:12px 14px;display:flex;align-items:center;gap:12px;position:relative}
+  .row.learned{border-color:var(--ok);background:linear-gradient(var(--card),var(--card)) padding-box}
+  .row .jp{font-family:"Yu Mincho","Hiragino Mincho ProN",serif;font-size:24px;line-height:1.5}
+  .row .mean{margin-left:auto;text-align:right;font-size:15px;font-weight:600}
+  .row .tagc{font-size:10px;color:var(--muted);display:block;font-weight:400;margin-top:2px}
+  .row .acts{display:flex;gap:4px;align-items:center}
+  .mini{border:none;background:none;cursor:pointer;font-size:17px;opacity:.5;padding:2px}
+  .mini:hover{opacity:1}
+  .mini.on{opacity:1}
+  .empty{color:var(--muted);text-align:center;padding:40px}
+  /* 카드 */
+  .fc{perspective:1200px;max-width:430px;margin:8px auto 0}
+  .fcard{position:relative;height:300px;cursor:pointer;transition:transform .5s;transform-style:preserve-3d}
+  .fcard.flip{transform:rotateY(180deg)}
+  .face{position:absolute;inset:0;backface-visibility:hidden;background:var(--card);border:1px solid var(--line);
+        border-radius:18px;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:24px;text-align:center}
+  .face.b{transform:rotateY(180deg)}
+  .face .big{font-family:"Yu Mincho","Hiragino Mincho ProN",serif;font-size:46px;line-height:1.5}
+  .face .kr{font-size:30px;font-weight:800;margin:6px 0}
+  .face .rd{font-size:20px;color:var(--muted);font-family:"Yu Mincho",serif;margin-top:6px}
+  .fc .hint{color:var(--muted);font-size:12px;margin-top:10px;text-align:center}
+  .fcbtns{display:flex;gap:12px;max-width:430px;margin:14px auto 0}
+  .fcbtns button{flex:1;padding:14px;border-radius:12px;border:1px solid var(--line);font-size:15px;cursor:pointer;background:var(--card);color:var(--ink)}
+  .fcbtns .know{border-color:var(--ok);color:#2e7d46}
+  .fcbtns .dunno{border-color:#d99;color:#b35}
+  .navline{display:flex;justify-content:space-between;align-items:center;margin:14px 0 2px;max-width:430px;margin-left:auto;margin-right:auto}
+  .navline button{border:1px solid var(--line);background:var(--card);color:var(--accent-d);
+       border-radius:20px;padding:6px 14px;font-size:13px;cursor:pointer;font-weight:600}
+  .navline button:disabled{opacity:.3;cursor:default}
+  /* 퀴즈 */
+  .quiz{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:26px 20px;margin-top:14px;text-align:center}
+  .quiz .q{font-family:"Yu Mincho",serif;font-size:40px;margin:6px 0 14px;line-height:1.5}
+  .quiz .prompt{color:var(--muted);font-size:14px;margin-bottom:10px}
+  .opts{display:grid;gap:10px;max-width:440px;margin:0 auto}
+  .opt{padding:13px;border:1px solid var(--line);border-radius:10px;background:var(--bg);color:var(--ink);cursor:pointer;font-size:15px}
+  .opt:hover{border-color:var(--accent)}
+  .opt.ok{background:#e3f5e8;border-color:var(--ok);color:#1c1c1c}
+  .opt.no{background:#fbe6e6;border-color:#d97a7a;color:#1c1c1c}
+  .score{margin-top:14px;color:var(--muted);font-size:13px}
+  .spk{cursor:pointer;border:none;background:none;font-size:16px;opacity:.55}
+  .spk:hover{opacity:1}
+  .hide{display:none}
+</style>
+</head>
+<body>
+<header><div class="inner">
+  <h1>📖 일본어 단어장</h1>
+  <div class="tabs">
+    <button class="tab active" data-view="list">목록</button>
+    <button class="tab" data-view="card">카드</button>
+    <button class="tab" data-view="quiz">퀴즈</button>
+    <button class="ic" id="theme" title="다크 모드">🌙</button>
+  </div>
+</div></header>
+
+<div class="wrap">
+  <div id="view-list">
+    <div class="filters" id="typeFilters"></div>
+    <div class="filters" id="stFilters"></div>
+    <div class="progress" id="progress"></div>
+    <input class="search" id="search" placeholder="단어·읽기·뜻·로마자 검색 (예: 写真, しゃしん, 사진, shashin)">
+    <div class="count" id="count"></div>
+    <div class="list" id="list"></div>
+  </div>
+  <div id="view-card" class="hide"></div>
+  <div id="view-quiz" class="hide"></div>
+</div>
+
+<script>
+/*__DATA__*/
+const $=s=>document.querySelector(s);
+const STS=[["all","모두"],["fav","즐겨찾기 ★"],["unlearned","미암기"]];
+let curType="ALL", stMode="all";
+
+/* 저장 */
+const store={get(k){try{return new Set(JSON.parse(localStorage.getItem(k)||"[]"))}catch(e){return new Set()}},
+  set(k,s){localStorage.setItem(k,JSON.stringify([...s]))}};
+let FAV=store.get("vocab_fav"), LEARNED=store.get("vocab_learned");
+const idOf=w=>w.w+"|"+w.r;
+function toggleSet(set,key,id){set.has(id)?set.delete(id):set.add(id);store.set(key,set);}
+function setLearned(id,v){v?LEARNED.add(id):LEARNED.delete(id);store.set("vocab_learned",LEARNED);}
+
+/* 다크모드 */
+if(localStorage.getItem("vocab_theme")==="dark")document.documentElement.dataset.theme="dark";
+$("#theme").onclick=()=>{const d=document.documentElement.dataset.theme==="dark";
+  document.documentElement.dataset.theme=d?"":"dark";localStorage.setItem("vocab_theme",d?"light":"dark");
+  $("#theme").textContent=d?"🌙":"☀️";};
+$("#theme").textContent=document.documentElement.dataset.theme==="dark"?"☀️":"🌙";
+
+/* TTS */
+function speak(t){try{speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(t);u.lang="ja-JP";u.rate=.9;speechSynthesis.speak(u);}catch(e){}}
+
+/* 로마자 */
+const _t=(s,n)=>Object.fromEntries(s.split(",").map(x=>[x.slice(0,n),x.slice(n)]));
+const RJ1=_t("あa,いi,うu,えe,おo,かka,きki,くku,けke,こko,さsa,しshi,すsu,せse,そso,たta,ちchi,つtsu,てte,とto,なna,にni,ぬnu,ねne,のno,はha,ひhi,ふfu,へhe,ほho,まma,みmi,むmu,めme,もmo,やya,ゆyu,よyo,らra,りri,るru,れre,ろro,わwa,をo,んn,がga,ぎgi,ぐgu,げge,ごgo,ざza,じji,ずzu,ぜze,ぞzo,だda,ぢji,づzu,でde,どdo,ばba,びbi,ぶbu,べbe,ぼbo,ぱpa,ぴpi,ぷpu,ぺpe,ぽpo,ぁa,ぃi,ぅu,ぇe,ぉo,ゃya,ゅyu,ょyo",1);
+const RJ2=_t("きゃkya,きゅkyu,きょkyo,しゃsha,しゅshu,しょsho,ちゃcha,ちゅchu,ちょcho,にゃnya,にゅnyu,にょnyo,ひゃhya,ひゅhyu,ひょhyo,みゃmya,みゅmyu,みょmyo,りゃrya,りゅryu,りょryo,ぎゃgya,ぎゅgyu,ぎょgyo,じゃja,じゅju,じょjo,びゃbya,びゅbyu,びょbyo,ぴゃpya,ぴゅpyu,ぴょpyo",2);
+const KUN1=_t("しsi,ちti,つtu,ふhu,じzi",1);
+const KUN2=_t("しゃsya,しゅsyu,しょsyo,ちゃtya,ちゅtyu,ちょtyo,じゃzya,じゅzyu,じょzyo",2);
+function kanaToRomaji(s,kunrei){
+  let out="",i=0;
+  while(i<s.length){
+    const two=s.substr(i,2);
+    if(s[i]==="っ"){const nx=RJ2[s.substr(i+1,2)]||RJ1[s[i+1]]||"";if(nx)out+=nx[0];i++;continue;}
+    if(RJ2[two]){out+=(kunrei&&KUN2[two])||RJ2[two];i+=2;continue;}
+    if(RJ1[s[i]]){out+=(kunrei&&KUN1[s[i]])||RJ1[s[i]];i++;continue;}
+    if(s[i]!=="ー")out+=s[i];
+    i++;
+  }
+  return out;
+}
+function romajiOf(w){
+  if(w._rj===undefined)w._rj=kanaToRomaji(w.r,false)+" "+kanaToRomaji(w.r,true);
+  return w._rj;
+}
+
+/* 필터 UI */
+const TYPES=["ALL",...[...new Set(WORDS.map(w=>w.t))]];
+$("#typeFilters").innerHTML=TYPES.map(t=>`<button class="chip ${t==='ALL'?'active':''}" data-ty="${t}">${t==='ALL'?'전체':t}</button>`).join("");
+$("#stFilters").innerHTML=STS.map(([v,l])=>`<button class="chip ${v==='all'?'active':''}" data-st="${v}">${l}</button>`).join("");
+document.querySelectorAll("[data-ty]").forEach(c=>c.onclick=()=>{curType=c.dataset.ty;
+  document.querySelectorAll("[data-ty]").forEach(x=>x.classList.toggle("active",x===c));renderList($("#search").value);});
+document.querySelectorAll("[data-st]").forEach(c=>c.onclick=()=>{stMode=c.dataset.st;
+  document.querySelectorAll("[data-st]").forEach(x=>x.classList.toggle("active",x===c));renderList($("#search").value);});
+
+/* 공통 */
+function inType(w){return curType==="ALL"||w.t===curType;}
+function stOK(w){const id=idOf(w);return stMode==="all"||(stMode==="fav"&&FAV.has(id))||(stMode==="unlearned"&&!LEARNED.has(id));}
+function pool(){return WORDS.filter(w=>inType(w)&&stOK(w));}
+function rubyJP(w){return `<ruby>${w.w}<rt>${w.r}</rt></ruby>`;}
+
+/* 목록 */
+function filtered(f){f=f.trim().toLowerCase();
+  return WORDS.filter(w=>inType(w)&&stOK(w)&&(!f||w.w.includes(f)||w.r.includes(f)
+    ||w.ko.toLowerCase().includes(f)||romajiOf(w).includes(f)));}
+function updateProgress(){const p=WORDS.filter(inType);const done=p.filter(w=>LEARNED.has(idOf(w))).length;
+  const pct=p.length?Math.round(done/p.length*100):0;
+  $("#progress").innerHTML=`암기 진도 (${curType==="ALL"?"전체":curType}) · ${done} / ${p.length} (${pct}%)<div class="bar"><i style="width:${pct}%"></i></div>`;}
+function renderList(f=""){const L=filtered(f);updateProgress();$("#count").textContent=`${L.length}개`;
+  $("#list").innerHTML=L.length?L.map(w=>{const id=idOf(w);return `
+    <div class="row ${LEARNED.has(id)?'learned':''}">
+      <span class="jp">${rubyJP(w)}</span>
+      <button class="spk" onclick="speak('${w.r}')">🔊</button>
+      <span class="mean">${w.ko}<span class="tagc">${w.t} · ${w.ch}</span></span>
+      <span class="acts">
+        <button class="mini ${FAV.has(id)?'on':''}" onclick="tFav('${id}',this)">${FAV.has(id)?'★':'☆'}</button>
+        <button class="mini ${LEARNED.has(id)?'on':''}" onclick="tLearn('${id}',this)">${LEARNED.has(id)?'✅':'⬜'}</button>
+      </span>
+    </div>`}).join(""):`<p class="empty">조건에 맞는 단어가 없습니다.</p>`;}
+function tFav(id,el){toggleSet(FAV,"vocab_fav",id);el.textContent=FAV.has(id)?'★':'☆';el.classList.toggle("on",FAV.has(id));if(stMode==="fav")renderList($("#search").value);}
+function tLearn(id,el){toggleSet(LEARNED,"vocab_learned",id);el.textContent=LEARNED.has(id)?'✅':'⬜';
+  el.classList.toggle("on",LEARNED.has(id));el.closest(".row").classList.toggle("learned",LEARNED.has(id));
+  updateProgress();if(stMode==="unlearned")renderList($("#search").value);}
+
+/* 카드 */
+let fcPool=[],fcIdx=0,fcDir="jp";
+function startCard(){fcPool=pool().slice().sort(()=>Math.random()-0.5);fcIdx=0;renderCard();}
+function renderCard(){
+  const head=`<div class="filters" style="justify-content:center">${TYPES.map(t=>`<button class="chip ${t===curType?'active':''}" onclick="cardTy('${t}')">${t==='ALL'?'전체':t}</button>`).join("")}</div>
+    <div class="filters" style="justify-content:center">${STS.map(([v,l])=>`<button class="chip ${v===stMode?'active':''}" onclick="cardSt('${v}')">${l}</button>`).join("")}
+      <button class="chip" onclick="flipDir()">${fcDir==="jp"?"일→한":"한→일"} ⇄</button></div>`;
+  if(!fcPool.length){$("#view-card").innerHTML=head+`<p class="empty">해당 조건의 단어가 없습니다.</p>`;return;}
+  if(fcIdx>=fcPool.length){$("#view-card").innerHTML=head+`<p class="empty">🎉 ${fcPool.length}개 학습 완료!<br><br><button class="chip" onclick="startCard()">다시 섞기</button></p>`;return;}
+  const w=fcPool[fcIdx];
+  const front=fcDir==="jp"?`<div class="big">${w.w}</div><div class="hint">탭하면 뜻 보기</div>`
+                          :`<div class="kr">${w.ko}</div><div class="hint">탭하면 단어 보기</div>`;
+  const back =fcDir==="jp"?`<div class="kr">${w.ko}</div><div class="rd">${w.r}</div>
+                            <button class="spk" onclick="event.stopPropagation();speak('${w.r}')">🔊 듣기</button>`
+                          :`<div class="big">${rubyJP(w)}</div>
+                            <button class="spk" onclick="event.stopPropagation();speak('${w.r}')">🔊 듣기</button>`;
+  $("#view-card").innerHTML=head+`
+    <div class="navline">
+      <button onclick="cardMove(-1)" ${fcIdx===0?'disabled':''}>◀ 이전</button>
+      <span class="count" style="margin:0">${fcIdx+1} / ${fcPool.length}</span>
+      <button onclick="cardMove(1)">다음 ▶</button>
+    </div>
+    <div class="fc"><div class="fcard" onclick="this.classList.toggle('flip')">
+      <div class="face f">${front}</div>
+      <div class="face b">${back}</div>
+    </div></div>
+    <div class="fcbtns">
+      <button class="dunno" onclick="cardNext(false)">✗ 모름</button>
+      <button class="know" onclick="cardNext(true)">✓ 외움</button>
+    </div>`;
+}
+function cardNext(known){const w=fcPool[fcIdx];if(known)setLearned(idOf(w),true);fcIdx++;renderCard();}
+function cardMove(d){fcIdx=Math.max(0,Math.min(fcPool.length,fcIdx+d));renderCard();}
+function cardTy(t){curType=t;startCard();}
+function cardSt(v){stMode=v;startCard();}
+function flipDir(){fcDir=fcDir==="jp"?"ko":"jp";renderCard();}
+
+/* 퀴즈 */
+let qScore=0,qTotal=0;
+function quizHead(){return `<div class="filters" style="justify-content:center">${TYPES.map(t=>`<button class="chip ${t===curType?'active':''}" onclick="quizTy('${t}')">${t==='ALL'?'전체':t}</button>`).join("")}</div>
+  <div class="filters" style="justify-content:center">${STS.map(([v,l])=>`<button class="chip ${v===stMode?'active':''}" onclick="quizSt('${v}')">${l}</button>`).join("")}</div>`;}
+function newQuiz(){const P=pool();
+  if(P.length<4){$("#view-quiz").innerHTML=quizHead()+`<p class="empty">단어가 4개 이상이어야 퀴즈를 낼 수 있어요.</p>`;return;}
+  const correct=P[Math.floor(Math.random()*P.length)];
+  const ask=Math.random()<0.5;  // true: 뜻 맞추기, false: 읽기 맞추기
+  const others=WORDS.filter(w=>w!==correct).sort(()=>Math.random()-0.5).slice(0,3);
+  const opts=[correct,...others].sort(()=>Math.random()-0.5);
+  const label=w=>ask?w.ko:`<span style="font-family:'Yu Mincho',serif">${w.r}</span>`;
+  $("#view-quiz").innerHTML=quizHead()+`<div class="quiz">
+    <div class="prompt">${ask?"이 단어의 뜻은?":"이 단어의 읽기는?"}</div>
+    <div class="q">${correct.w}</div>
+    <div class="opts">${opts.map(o=>`<div class="opt" data-c="${o===correct?1:0}" onclick="answer(this,'${correct.r}')">${label(o)}</div>`).join("")}</div>
+    <div class="score" id="score">맞힘 ${qScore} / 푼 문제 ${qTotal}</div></div>`;}
+function quizTy(t){curType=t;newQuiz();}
+function quizSt(v){stMode=v;newQuiz();}
+function answer(el,reading){if(el.dataset.done)return;qTotal++;const ok=el.dataset.c==="1";
+  document.querySelectorAll(".opt").forEach(o=>{o.dataset.done=1;if(o.dataset.c==="1")o.classList.add("ok");});
+  if(ok){qScore++;speak(reading);}else el.classList.add("no");
+  $("#score").textContent=`맞힘 ${qScore} / 푼 문제 ${qTotal}`;setTimeout(newQuiz,1100);}
+
+/* 뷰 전환 */
+function setView(v){
+  ["list","card","quiz"].forEach(x=>$("#view-"+x).classList.toggle("hide",x!==v));
+  document.querySelectorAll(".tab").forEach(t=>t.classList.toggle("active",t.dataset.view===v));
+  if(v==="list")renderList($("#search").value);
+  if(v==="card")startCard();
+  if(v==="quiz")newQuiz();
+}
+document.querySelectorAll(".tab").forEach(t=>t.onclick=()=>setView(t.dataset.view));
+$("#search").addEventListener("input",e=>renderList(e.target.value));
+renderList();
+</script>
+</body>
+</html>
