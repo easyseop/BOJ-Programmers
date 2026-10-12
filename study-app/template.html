@@ -256,7 +256,7 @@ function setMode(m){
 document.querySelectorAll(".mode").forEach(b=>b.onclick=()=>setMode(b.dataset.mode));
 
 /* ══════════ 한자 ══════════ */
-const LEVELS=[["ALL","전체"],["N5","N5"],["N4","N4"],["N3","N3"],["N2","N2"]];
+const LEVELS=[["ALL","전체"],["N5","N5"],["N4","N4"],["N3","N3"],["N2","N2"],["N1","N1(일부)"]];
 let kLevel="ALL", kSt="all", kView=[], kBackToVocab=false;
 let FAV=store.get("kanji_fav"), LEARNED=store.get("kanji_learned");
 
@@ -530,7 +530,7 @@ function vQuizCh(c){vCh=c;vNewQuiz();}
 function vQuizSt(v){vSt=v;vNewQuiz();}
 function vAnswer(el,reading){if(el.dataset.done)return;vTotal++;const ok=el.dataset.c==="1";
   document.querySelectorAll("#v-quiz .opt").forEach(o=>{o.dataset.done=1;if(o.dataset.c==="1")o.classList.add("ok");});
-  if(ok){vScore++;speak(reading);}else el.classList.add("no");
+  if(ok)vScore++;else el.classList.add("no");
   $("#vScoreBox").textContent=`맞힘 ${vScore} / 푼 문제 ${vTotal}`;setTimeout(vNewQuiz,1100);}
 
 function vSetView(v){

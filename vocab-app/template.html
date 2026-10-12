@@ -272,7 +272,7 @@ function quizTy(t){curType=t;newQuiz();}
 function quizSt(v){stMode=v;newQuiz();}
 function answer(el,reading){if(el.dataset.done)return;qTotal++;const ok=el.dataset.c==="1";
   document.querySelectorAll(".opt").forEach(o=>{o.dataset.done=1;if(o.dataset.c==="1")o.classList.add("ok");});
-  if(ok){qScore++;speak(reading);}else el.classList.add("no");
+  if(ok)qScore++;else el.classList.add("no");
   $("#score").textContent=`맞힘 ${qScore} / 푼 문제 ${qTotal}`;setTimeout(newQuiz,1100);}
 
 /* 뷰 전환 */

@@ -16949,5 +16949,307 @@
    "Scold",
    "Reprove"
   ]
+ },
+ "渋": {
+  "level": "N1",
+  "strokes": 11,
+  "on": [
+   "ジュウ",
+   "シュウ"
+  ],
+  "kun": [
+   "しぶ",
+   "しぶ.い",
+   "しぶ.る"
+  ],
+  "meanings": [
+   "Astringent",
+   "Hesitate",
+   "Reluctant",
+   "Have Diarrhea"
+  ]
+ },
+ "滞": {
+  "level": "N1",
+  "strokes": 13,
+  "on": [
+   "タイ",
+   "テイ"
+  ],
+  "kun": [
+   "とどこお.る"
+  ],
+  "meanings": [
+   "Stagnate",
+   "Be Delayed",
+   "Overdue",
+   "Arrears"
+  ]
+ },
+ "張": {
+  "level": "N1",
+  "strokes": 11,
+  "on": [
+   "チョウ"
+  ],
+  "kun": [
+   "は.る",
+   "は.り",
+   "ば.り"
+  ],
+  "meanings": [
+   "Lengthen",
+   "Counter For Bows & Stringed Instruments",
+   "Stretch",
+   "Spread",
+   "Put Up (tent)"
+  ]
+ },
+ "典": {
+  "level": "N1",
+  "strokes": 8,
+  "on": [
+   "テン",
+   "デン"
+  ],
+  "kun": [],
+  "meanings": [
+   "Code",
+   "Ceremony",
+   "Law",
+   "Rule"
+  ]
+ },
+ "邪": {
+  "level": "N1",
+  "strokes": 8,
+  "on": [
+   "ジャ"
+  ],
+  "kun": [
+   "よこし.ま"
+  ],
+  "meanings": [
+   "Wicked",
+   "Injustice",
+   "Wrong"
+  ]
+ },
+ "魔": {
+  "level": "N1",
+  "strokes": 21,
+  "on": [
+   "マ"
+  ],
+  "kun": [],
+  "meanings": [
+   "Witch",
+   "Demon",
+   "Evil Spirit"
+  ]
+ },
+ "姿": {
+  "level": "N1",
+  "strokes": 9,
+  "on": [
+   "シ"
+  ],
+  "kun": [
+   "すがた"
+  ],
+  "meanings": [
+   "Figure",
+   "Form",
+   "Shape"
+  ]
+ },
+ "修": {
+  "level": "N1",
+  "strokes": 10,
+  "on": [
+   "シュウ",
+   "シュ"
+  ],
+  "kun": [
+   "おさ.める",
+   "おさ.まる"
+  ],
+  "meanings": [
+   "Discipline",
+   "Conduct Oneself Well",
+   "Study",
+   "Master"
+  ]
+ },
+ "請": {
+  "level": "N1",
+  "strokes": 15,
+  "on": [
+   "セイ",
+   "シン",
+   "ショウ"
+  ],
+  "kun": [
+   "こ.う",
+   "う.ける"
+  ],
+  "meanings": [
+   "Solicit",
+   "Invite",
+   "Ask"
+  ]
+ },
+ "授": {
+  "level": "N1",
+  "strokes": 11,
+  "on": [
+   "ジュ"
+  ],
+  "kun": [
+   "さず.ける",
+   "さず.かる"
+  ],
+  "meanings": [
+   "Impart",
+   "Instruct",
+   "Grant",
+   "Confer"
+  ]
+ },
+ "染": {
+  "level": "N1",
+  "strokes": 9,
+  "on": [
+   "セン"
+  ],
+  "kun": [
+   "そ.める",
+   "ぞ.め",
+   "ぞめ",
+   "そ.まる",
+   "し.みる",
+   "じ.みる",
+   "し.み",
+   "し.める"
+  ],
+  "meanings": [
+   "Dye",
+   "Color",
+   "Paint",
+   "Stain",
+   "Print"
+  ]
+ },
+ "締": {
+  "level": "N1",
+  "strokes": 15,
+  "on": [
+   "テイ"
+  ],
+  "kun": [
+   "し.まる",
+   "し.まり",
+   "し.める",
+   "し.め",
+   "じ.め"
+  ],
+  "meanings": [
+   "Tighten",
+   "Tie",
+   "Shut",
+   "Lock",
+   "Fasten"
+  ]
+ },
+ "滑": {
+  "level": "N1",
+  "strokes": 13,
+  "on": [
+   "カツ",
+   "コツ"
+  ],
+  "kun": [
+   "すべ.る",
+   "なめ.らか"
+  ],
+  "meanings": [
+   "Slippery",
+   "Slide",
+   "Slip",
+   "Flunk"
+  ]
+ },
+ "騒": {
+  "level": "N1",
+  "strokes": 18,
+  "on": [
+   "ソウ"
+  ],
+  "kun": [
+   "さわ.ぐ",
+   "うれい",
+   "さわ.がしい"
+  ],
+  "meanings": [
+   "Boisterous",
+   "Make Noise",
+   "Clamor",
+   "Disturb",
+   "Excite"
+  ]
+ },
+ "絞": {
+  "level": "N1",
+  "strokes": 12,
+  "on": [
+   "コウ"
+  ],
+  "kun": [
+   "しぼ.る",
+   "し.める",
+   "し.まる"
+  ],
+  "meanings": [
+   "Strangle",
+   "Constrict",
+   "Wring"
+  ]
+ },
+ "寂": {
+  "level": "N1",
+  "strokes": 11,
+  "on": [
+   "ジャク",
+   "セキ"
+  ],
+  "kun": [
+   "さび",
+   "さび.しい",
+   "さび.れる",
+   "さみ.しい"
+  ],
+  "meanings": [
+   "Loneliness",
+   "Quietly",
+   "Mellow",
+   "Mature",
+   "Death Of A Priest"
+  ]
+ },
+ "剣": {
+  "level": "N1",
+  "strokes": 10,
+  "on": [
+   "ケン"
+  ],
+  "kun": [
+   "つるぎ"
+  ],
+  "meanings": [
+   "Sabre",
+   "Sword",
+   "Blade",
+   "Clock Hand"
+  ]
  }
 }

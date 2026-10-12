@@ -14,7 +14,7 @@ from words import WORDS
 
 # ── 한자 ──
 facts = json.load(open(os.path.join(KA, 'facts.json'), encoding='utf-8'))
-order = {'N5': 0, 'N4': 1, 'N3': 2, 'N2': 3}
+order = {'N5': 0, 'N4': 1, 'N3': 2, 'N2': 3, 'N1': 4}
 kanji, missing = [], []
 for ch, f in facts.items():
     ko = KO.get(ch)
