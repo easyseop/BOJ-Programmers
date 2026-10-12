@@ -17251,5 +17251,262 @@
    "Blade",
    "Clock Hand"
   ]
+ },
+ "源": {
+  "level": "N1",
+  "strokes": 13,
+  "on": [
+   "ゲン"
+  ],
+  "kun": [
+   "みなもと"
+  ],
+  "meanings": [
+   "Source",
+   "Origin"
+  ]
+ },
+ "糖": {
+  "level": "N1",
+  "strokes": 16,
+  "on": [
+   "トウ"
+  ],
+  "kun": [],
+  "meanings": [
+   "Sugar"
+  ]
+ },
+ "至": {
+  "level": "N1",
+  "strokes": 6,
+  "on": [
+   "シ"
+  ],
+  "kun": [
+   "いた.る"
+  ],
+  "meanings": [
+   "Climax",
+   "Arrive",
+   "Proceed",
+   "Reach",
+   "Attain",
+   "Result In"
+  ]
+ },
+ "故": {
+  "level": "N1",
+  "strokes": 9,
+  "on": [
+   "コ"
+  ],
+  "kun": [
+   "ゆえ",
+   "ふる.い",
+   "もと"
+  ],
+  "meanings": [
+   "Happenstance",
+   "Especially",
+   "Intentionally",
+   "Reason",
+   "Cause",
+   "Circumstances",
+   "The Late",
+   "Therefore",
+   "Consequently"
+  ]
+ },
+ "障": {
+  "level": "N1",
+  "strokes": 14,
+  "on": [
+   "ショウ"
+  ],
+  "kun": [
+   "さわ.る"
+  ],
+  "meanings": [
+   "Hinder",
+   "Hurt",
+   "Harm"
+  ]
+ },
+ "義": {
+  "level": "N1",
+  "strokes": 13,
+  "on": [
+   "ギ"
+  ],
+  "kun": [],
+  "meanings": [
+   "Righteousness",
+   "Justice",
+   "Morality",
+   "Honor",
+   "Loyalty",
+   "Meaning"
+  ]
+ },
+ "司": {
+  "level": "N1",
+  "strokes": 5,
+  "on": [
+   "シ"
+  ],
+  "kun": [
+   "つかさど.る"
+  ],
+  "meanings": [
+   "Director",
+   "Official",
+   "Govt Office",
+   "Rule",
+   "Administer"
+  ]
+ },
+ "頃": {
+  "level": "N1",
+  "strokes": 11,
+  "on": [
+   "ケイ",
+   "キョウ"
+  ],
+  "kun": [
+   "ころ",
+   "ごろ",
+   "しばら.く"
+  ],
+  "meanings": [
+   "Time",
+   "About",
+   "Toward"
+  ]
+ },
+ "壊": {
+  "level": "N1",
+  "strokes": 16,
+  "on": [
+   "カイ",
+   "エ"
+  ],
+  "kun": [
+   "こわ.す",
+   "こわ.れる",
+   "やぶ.る"
+  ],
+  "meanings": [
+   "Demolition",
+   "Break",
+   "Destroy"
+  ]
+ },
+ "頑": {
+  "level": "N1",
+  "strokes": 13,
+  "on": [
+   "ガン"
+  ],
+  "kun": [
+   "かたく"
+  ],
+  "meanings": [
+   "Stubborn",
+   "Foolish",
+   "Firmly"
+  ]
+ },
+ "可": {
+  "level": "N1",
+  "strokes": 5,
+  "on": [
+   "カ",
+   "コク"
+  ],
+  "kun": [
+   "べ.き",
+   "べ.し"
+  ],
+  "meanings": [
+   "Can",
+   "Passable",
+   "Mustn't",
+   "Should Not",
+   "Do Not"
+  ]
+ },
+ "厳": {
+  "level": "N1",
+  "strokes": 17,
+  "on": [
+   "ゲン",
+   "ゴン"
+  ],
+  "kun": [
+   "おごそ.か",
+   "きび.しい",
+   "いか.めしい",
+   "いつくし"
+  ],
+  "meanings": [
+   "Stern",
+   "Strictness",
+   "Severity",
+   "Rigidity"
+  ]
+ },
+ "詳": {
+  "level": "N1",
+  "strokes": 13,
+  "on": [
+   "ショウ"
+  ],
+  "kun": [
+   "くわ.しい",
+   "つまび.らか"
+  ],
+  "meanings": [
+   "Detailed",
+   "Full",
+   "Minute",
+   "Accurate",
+   "Well-informed"
+  ]
+ },
+ "爽": {
+  "level": "N1",
+  "strokes": 11,
+  "on": [
+   "ソウ"
+  ],
+  "kun": [
+   "あき.らか",
+   "さわ.やか",
+   "たがう"
+  ],
+  "meanings": [
+   "Refreshing",
+   "Bracing",
+   "Resonant",
+   "Sweet",
+   "Clear"
+  ]
+ },
+ "徐": {
+  "level": "N1",
+  "strokes": 10,
+  "on": [
+   "ジョ"
+  ],
+  "kun": [
+   "おもむ.ろに"
+  ],
+  "meanings": [
+   "Gradually",
+   "Slowly",
+   "Deliberately",
+   "Gently"
+  ]
  }
 }

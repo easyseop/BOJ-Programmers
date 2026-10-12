@@ -26,6 +26,10 @@
   .mode.active{background:var(--card);color:var(--accent-d);box-shadow:0 1px 3px rgba(0,0,0,.12)}
   .ic{margin-left:auto;border:1px solid var(--line);background:var(--card);color:var(--muted);
       padding:6px 10px;border-radius:20px;font-size:13px;cursor:pointer}
+  .chbar{display:flex;gap:8px;margin:14px 0 0;overflow-x:auto;padding-bottom:2px}
+  .chb{border:2px solid var(--line);background:var(--card);color:var(--muted);padding:8px 16px;border-radius:12px;font-size:15px;font-weight:700;cursor:pointer;white-space:nowrap;line-height:1.3}
+  .chb .n{font-size:11px;font-weight:400;display:block}
+  .chb.active{border-color:var(--accent);color:var(--accent-d);background:var(--mark)}
   .tabs{display:flex;gap:6px;margin:14px 0 0}
   .tab{border:1px solid var(--line);background:var(--card);color:var(--muted);
        padding:6px 14px;border-radius:20px;font-size:13px;cursor:pointer}
@@ -181,13 +185,13 @@
 
   <!-- ════ 단어장 ════ -->
   <div id="m-vocab" class="hide">
+    <div class="chbar" id="vChBar"></div>
     <div class="tabs" id="vTabs">
       <button class="tab active" data-vv="list">목록</button>
       <button class="tab" data-vv="card">카드</button>
       <button class="tab" data-vv="quiz">퀴즈</button>
     </div>
     <div id="v-list">
-      <div class="filters" id="vCh"></div>
       <div class="filters" id="vTy"></div>
       <div class="filters" id="vSt"></div>
       <div class="progress" id="vProg"></div>
@@ -424,8 +428,11 @@ let vType="ALL", vSt="all", vCh="ALL";
 let VFAV=store.get("vocab_fav"), VLEARNED=store.get("vocab_learned");
 const vid=w=>w.w+"|"+w.r;
 const TYPES=["ALL",...[...new Set(WORDS.map(w=>w.t))]];
-const CHS=[...new Set(WORDS.map(w=>w.ch))];
-const MULTI_CH=CHS.length>1;
+const chNum=c=>parseInt(String(c).replace(/\D/g,""))||0;
+const CHS=[...new Set(WORDS.map(w=>w.ch))].sort((a,b)=>chNum(a)-chNum(b));
+const chLabel=c=>c==="ALL"?"전체":"챕터 "+(chNum(c)||c);
+let vCur="list";
+try{const s=localStorage.getItem("vocab_ch");vCh=(s&&(s==="ALL"||CHS.includes(s)))?s:CHS[0];}catch(e){vCh=CHS[0];}
 
 function vRomaji(w){if(w._rj===undefined)w._rj=kanaToRomaji(w.r,false)+" "+kanaToRomaji(w.r,true);return w._rj;}
 function linkify(s){
@@ -435,11 +442,12 @@ function linkify(s){
 function rubyJP(w){return w.w===w.r?w.w:`<ruby>${linkify(w.w)}<rt>${w.r}</rt></ruby>`;}
 function openKanji(ch){ if(!KSET.has(ch))return; kBackToVocab=true; setMode("kanji"); kShow(ch); }
 
-if(MULTI_CH){
-  $("#vCh").innerHTML=["ALL",...CHS].map(c=>`<button class="chip ${c==='ALL'?'active':''}" data-vch="${c}">${c==='ALL'?'전체 챕터':c}</button>`).join("");
-  document.querySelectorAll("[data-vch]").forEach(c=>c.onclick=()=>{vCh=c.dataset.vch;
-    document.querySelectorAll("[data-vch]").forEach(x=>x.classList.toggle("active",x===c));vRenderList($("#vSearch").value);});
+/* 챕터 선택 바: 목록·카드·퀴즈 공통 */
+function renderChBar(){
+  $("#vChBar").innerHTML=[...CHS,"ALL"].map(c=>{const n=c==="ALL"?WORDS.length:WORDS.filter(w=>w.ch===c).length;
+    return `<button class="chb ${c===vCh?'active':''}" onclick="vSelCh('${c}')">${chLabel(c)}<span class="n">${n}단어</span></button>`;}).join("");
 }
+function vSelCh(c){vCh=c;try{localStorage.setItem("vocab_ch",c);}catch(e){}renderChBar();vSetView(vCur);}
 $("#vTy").innerHTML=TYPES.map(t=>`<button class="chip ${t==='ALL'?'active':''}" data-vty="${t}">${t==='ALL'?'전체':t}</button>`).join("");
 $("#vSt").innerHTML=STS.map(([v,l])=>`<button class="chip ${v==='all'?'active':''}" data-vst="${v}">${l}</button>`).join("");
 document.querySelectorAll("[data-vty]").forEach(c=>c.onclick=()=>{vType=c.dataset.vty;
@@ -455,7 +463,7 @@ function vFiltered(f){f=f.trim().toLowerCase();
     ||w.ko.toLowerCase().includes(f)||vRomaji(w).includes(f)));}
 function vProgress(){const p=WORDS.filter(vIn);const done=p.filter(w=>VLEARNED.has(vid(w))).length;
   const pct=p.length?Math.round(done/p.length*100):0;
-  $("#vProg").innerHTML=`암기 진도 (${vCh==="ALL"?"":vCh+" · "}${vType==="ALL"?"전체":vType}) · ${done} / ${p.length} (${pct}%)<div class="bar"><i style="width:${pct}%"></i></div>`;}
+  $("#vProg").innerHTML=`암기 진도 (${chLabel(vCh)} · ${vType==="ALL"?"모든 품사":vType}) · ${done} / ${p.length} (${pct}%)<div class="bar"><i style="width:${pct}%"></i></div>`;}
 function vRenderList(f=""){const L=vFiltered(f);vProgress();$("#vCount").textContent=`${L.length}개`;
   $("#vList").innerHTML=L.length?L.map(w=>{const id=vid(w);return `
     <div class="row ${VLEARNED.has(id)?'learned':''}">
@@ -476,8 +484,7 @@ function vLearn(id,el){toggleSet(VLEARNED,"vocab_learned",id);el.textContent=VLE
 let vfPool=[],vfIdx=0,vfDir="jp";
 function vStartCard(){vfPool=vPool().slice().sort(()=>Math.random()-0.5);vfIdx=0;vRenderCard();}
 function vRenderCard(){
-  const head=`${MULTI_CH?`<div class="filters" style="justify-content:center">${["ALL",...CHS].map(c=>`<button class="chip ${c===vCh?'active':''}" onclick="vCardCh('${c}')">${c==='ALL'?'전체 챕터':c}</button>`).join("")}</div>`:""}
-    <div class="filters" style="justify-content:center">${TYPES.map(t=>`<button class="chip ${t===vType?'active':''}" onclick="vCardTy('${t}')">${t==='ALL'?'전체':t}</button>`).join("")}</div>
+  const head=`<div class="filters" style="justify-content:center">${TYPES.map(t=>`<button class="chip ${t===vType?'active':''}" onclick="vCardTy('${t}')">${t==='ALL'?'전체':t}</button>`).join("")}</div>
     <div class="filters" style="justify-content:center">${STS.map(([v,l])=>`<button class="chip ${v===vSt?'active':''}" onclick="vCardSt('${v}')">${l}</button>`).join("")}
       <button class="chip" onclick="vFlipDir()">${vfDir==="jp"?"일→한":"한→일"} ⇄</button></div>`;
   if(!vfPool.length){$("#v-card").innerHTML=head+`<p class="empty">해당 조건의 단어가 없습니다.</p>`;return;}
@@ -504,20 +511,19 @@ function vRenderCard(){
 function vCardNext(known){const w=vfPool[vfIdx];if(known){VLEARNED.add(vid(w));store.set("vocab_learned",VLEARNED);}vfIdx++;vRenderCard();}
 function vCardMove(d){vfIdx=Math.max(0,Math.min(vfPool.length,vfIdx+d));vRenderCard();}
 function vCardTy(t){vType=t;vStartCard();}
-function vCardCh(c){vCh=c;vStartCard();}
 function vCardSt(v){vSt=v;vStartCard();}
 function vFlipDir(){vfDir=vfDir==="jp"?"ko":"jp";vRenderCard();}
 
 /* 단어 퀴즈 */
 let vScore=0,vTotal=0;
-function vQuizHead(){return `${MULTI_CH?`<div class="filters" style="justify-content:center">${["ALL",...CHS].map(c=>`<button class="chip ${c===vCh?'active':''}" onclick="vQuizCh('${c}')">${c==='ALL'?'전체 챕터':c}</button>`).join("")}</div>`:""}
-  <div class="filters" style="justify-content:center">${TYPES.map(t=>`<button class="chip ${t===vType?'active':''}" onclick="vQuizTy('${t}')">${t==='ALL'?'전체':t}</button>`).join("")}</div>
+function vQuizHead(){return `<div class="filters" style="justify-content:center">${TYPES.map(t=>`<button class="chip ${t===vType?'active':''}" onclick="vQuizTy('${t}')">${t==='ALL'?'전체':t}</button>`).join("")}</div>
   <div class="filters" style="justify-content:center">${STS.map(([v,l])=>`<button class="chip ${v===vSt?'active':''}" onclick="vQuizSt('${v}')">${l}</button>`).join("")}</div>`;}
 function vNewQuiz(){const P=vPool();
   if(P.length<4){$("#v-quiz").innerHTML=vQuizHead()+`<p class="empty">단어가 4개 이상이어야 퀴즈를 낼 수 있어요.</p>`;return;}
   const correct=P[Math.floor(Math.random()*P.length)];
   const ask=Math.random()<0.5;
-  const others=WORDS.filter(w=>w!==correct).sort(()=>Math.random()-0.5).slice(0,3);
+  let base=WORDS.filter(w=>w!==correct&&(vCh==="ALL"||w.ch===vCh));if(base.length<3)base=WORDS.filter(w=>w!==correct);
+  const others=base.sort(()=>Math.random()-0.5).slice(0,3);
   const opts=[correct,...others].sort(()=>Math.random()-0.5);
   const label=w=>ask?w.ko:`<span class="jp">${w.r}</span>`;
   $("#v-quiz").innerHTML=vQuizHead()+`<div class="quiz">
@@ -526,14 +532,13 @@ function vNewQuiz(){const P=vPool();
     <div class="opts">${opts.map(o=>`<div class="opt" data-c="${o===correct?1:0}" onclick="vAnswer(this,'${correct.r}')">${label(o)}</div>`).join("")}</div>
     <div class="score" id="vScoreBox">맞힘 ${vScore} / 푼 문제 ${vTotal}</div></div>`;}
 function vQuizTy(t){vType=t;vNewQuiz();}
-function vQuizCh(c){vCh=c;vNewQuiz();}
 function vQuizSt(v){vSt=v;vNewQuiz();}
 function vAnswer(el,reading){if(el.dataset.done)return;vTotal++;const ok=el.dataset.c==="1";
   document.querySelectorAll("#v-quiz .opt").forEach(o=>{o.dataset.done=1;if(o.dataset.c==="1")o.classList.add("ok");});
   if(ok)vScore++;else el.classList.add("no");
   $("#vScoreBox").textContent=`맞힘 ${vScore} / 푼 문제 ${vTotal}`;setTimeout(vNewQuiz,1100);}
 
-function vSetView(v){
+function vSetView(v){vCur=v;
   ["list","card","quiz"].forEach(x=>$("#v-"+x).classList.toggle("hide",x!==v));
   document.querySelectorAll("[data-vv]").forEach(t=>t.classList.toggle("active",t.dataset.vv===v));
   if(v==="list")vRenderList($("#vSearch").value);
@@ -545,6 +550,7 @@ $("#vSearch").addEventListener("input",e=>vRenderList(e.target.value));
 
 /* ── 시작 ── */
 kRenderList();
+renderChBar();
 vRenderList();
 (function(){
   let q="";
