@@ -3,12 +3,16 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>일본어 한자 공부 · N5 N4 N3 N2</title>
+<title>일본어 한자 공부</title>
 <style>
   :root{--accent:#8b7fc4;--accent-d:#6b5fae;--line:#e6e3f0;--bg:#f4f4f6;
         --card:#fff;--ink:#222;--muted:#777;--mark:#e9e6f3;--gold:#e8b53d;--ok:#5bbb72;}
   [data-theme="dark"]{--line:#33304a;--bg:#16151f;--card:#201e2d;--ink:#e8e6f0;
         --muted:#9a95b5;--mark:#2e2b42;--accent:#9d92d6;--accent-d:#b3a9e6;}
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){--line:#33304a;--bg:#16151f;--card:#201e2d;--ink:#e8e6f0;
+        --muted:#9a95b5;--mark:#2e2b42;--accent:#9d92d6;--accent-d:#b3a9e6;}
+  }
   *{box-sizing:border-box}
   body{margin:0;font-family:"Apple SD Gothic Neo","Noto Sans KR","Malgun Gothic",sans-serif;
        background:var(--bg);color:var(--ink);line-height:1.6;transition:background .2s,color .2s}
@@ -349,6 +353,12 @@ document.addEventListener("keydown",e=>{
   if(e.key==="ArrowRight"&&a[2]&&!a[2].classList.contains("dim"))a[2].click();
 });
 renderList();
+/* 딥링크: ?k=日 또는 #日 로 특정 한자 바로 열기 */
+(function(){
+  let q="";
+  try{ q=new URLSearchParams(location.search).get("k")||(location.hash?decodeURIComponent(location.hash.slice(1)):""); }catch(e){}
+  if(q&&KANJI.some(k=>k.char===q))showDetail(q);
+})();
 </script>
 </body>
 </html>

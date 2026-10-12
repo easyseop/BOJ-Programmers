@@ -13,6 +13,7 @@ JLPT **N5(79) · N4(166) · N3(367) · N2(367) = 979자**를 담은 일본어 �
 
 ## 바로 보기 / 배포
 - 로컬: `index.html` 더블클릭
+- 링크: https://claude.ai/artifact/LgCMubWBk9qs6HyAaMqn16 (`?k=日` 로 특정 한자 바로 열기)
 - 배포 중: https://easyseop.github.io (레포 `easyseop/easyseop.github.io` 의 `index.html`을 덮어쓰면 갱신)
 
 ## 데이터 출처 & 라이선스

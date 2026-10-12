@@ -9,6 +9,10 @@
         --card:#fff;--ink:#222;--muted:#777;--mark:#e3f1ee;--gold:#e8b53d;--ok:#5bbb72;}
   [data-theme="dark"]{--line:#2d3b39;--bg:#151b1a;--card:#1e2726;--ink:#e8f0ee;
         --muted:#92a5a1;--mark:#27413c;--accent:#5bb5a5;--accent-d:#7fcfc0;}
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){--line:#2d3b39;--bg:#151b1a;--card:#1e2726;--ink:#e8f0ee;
+        --muted:#92a5a1;--mark:#27413c;--accent:#5bb5a5;--accent-d:#7fcfc0;}
+  }
   *{box-sizing:border-box}
   body{margin:0;font-family:"Apple SD Gothic Neo","Noto Sans KR","Malgun Gothic",sans-serif;
        background:var(--bg);color:var(--ink);line-height:1.6;transition:background .2s,color .2s}
@@ -74,6 +78,10 @@
   .opt.ok{background:#e3f5e8;border-color:var(--ok);color:#1c1c1c}
   .opt.no{background:#fbe6e6;border-color:#d97a7a;color:#1c1c1c}
   .score{margin-top:14px;color:var(--muted);font-size:13px}
+  .kl{color:inherit;text-decoration:none;border-bottom:1.5px dotted var(--accent);
+       cursor:pointer;transition:.15s}
+  .kl:hover,.kl:active{color:var(--accent-d);background:var(--mark);border-radius:4px}
+  .klhint{color:var(--muted);font-size:11.5px;margin:2px 2px 0}
   .spk{cursor:pointer;border:none;background:none;font-size:16px;opacity:.55}
   .spk:hover{opacity:1}
   .hide{display:none}
@@ -97,6 +105,7 @@
     <div class="filters" id="stFilters"></div>
     <div class="progress" id="progress"></div>
     <input class="search" id="search" placeholder="단어·읽기·뜻·로마자 검색 (예: 写真, しゃしん, 사진, shashin)">
+    <div class="klhint">💡 한자에 밑줄이 있으면 눌러서 한자 상세(어원·꿀팁)를 볼 수 있어요</div>
     <div class="count" id="count"></div>
     <div class="list" id="list"></div>
   </div>
@@ -171,7 +180,13 @@ document.querySelectorAll("[data-st]").forEach(c=>c.onclick=()=>{stMode=c.datase
 function inType(w){return (curType==="ALL"||w.t===curType)&&(curCh==="ALL"||w.ch===curCh);}
 function stOK(w){const id=idOf(w);return stMode==="all"||(stMode==="fav"&&FAV.has(id))||(stMode==="unlearned"&&!LEARNED.has(id));}
 function pool(){return WORDS.filter(w=>inType(w)&&stOK(w));}
-function rubyJP(w){return w.w===w.r?w.w:`<ruby>${w.w}<rt>${w.r}</rt></ruby>`;}
+function rubyJP(w){return w.w===w.r?w.w:`<ruby>${linkify(w.w)}<rt>${w.r}</rt></ruby>`;}
+/* 단어 속 한자를 한자앱 상세로 연결 */
+function linkify(s){
+  return [...s].map(ch=>KSET.has(ch)
+    ? `<a class="kl" href="${KURL}?k=${encodeURIComponent(ch)}" target="_blank" rel="noopener" onclick="event.stopPropagation()" title="${ch} 한자 정보 보기">${ch}</a>`
+    : ch).join("");
+}
 
 /* 목록 */
 function filtered(f){f=f.trim().toLowerCase();
