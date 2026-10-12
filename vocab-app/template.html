@@ -171,7 +171,7 @@ document.querySelectorAll("[data-st]").forEach(c=>c.onclick=()=>{stMode=c.datase
 function inType(w){return (curType==="ALL"||w.t===curType)&&(curCh==="ALL"||w.ch===curCh);}
 function stOK(w){const id=idOf(w);return stMode==="all"||(stMode==="fav"&&FAV.has(id))||(stMode==="unlearned"&&!LEARNED.has(id));}
 function pool(){return WORDS.filter(w=>inType(w)&&stOK(w));}
-function rubyJP(w){return `<ruby>${w.w}<rt>${w.r}</rt></ruby>`;}
+function rubyJP(w){return w.w===w.r?w.w:`<ruby>${w.w}<rt>${w.r}</rt></ruby>`;}
 
 /* 목록 */
 function filtered(f){f=f.trim().toLowerCase();
