@@ -92,6 +92,7 @@
 
 <div class="wrap">
   <div id="view-list">
+    <div class="filters" id="chFilters"></div>
     <div class="filters" id="typeFilters"></div>
     <div class="filters" id="stFilters"></div>
     <div class="progress" id="progress"></div>
@@ -107,7 +108,7 @@
 /*__DATA__*/
 const $=s=>document.querySelector(s);
 const STS=[["all","모두"],["fav","즐겨찾기 ★"],["unlearned","미암기"]];
-let curType="ALL", stMode="all";
+let curType="ALL", stMode="all", curCh="ALL";
 
 /* 저장 */
 const store={get(k){try{return new Set(JSON.parse(localStorage.getItem(k)||"[]"))}catch(e){return new Set()}},
@@ -152,6 +153,13 @@ function romajiOf(w){
 
 /* 필터 UI */
 const TYPES=["ALL",...[...new Set(WORDS.map(w=>w.t))]];
+const CHS=[...new Set(WORDS.map(w=>w.ch))];
+const MULTI_CH=CHS.length>1;
+if(MULTI_CH){
+  $("#chFilters").innerHTML=["ALL",...CHS].map(c=>`<button class="chip ${c==='ALL'?'active':''}" data-ch="${c}">${c==='ALL'?'전체 챕터':c}</button>`).join("");
+  document.querySelectorAll("[data-ch]").forEach(c=>c.onclick=()=>{curCh=c.dataset.ch;
+    document.querySelectorAll("[data-ch]").forEach(x=>x.classList.toggle("active",x===c));renderList($("#search").value);});
+}
 $("#typeFilters").innerHTML=TYPES.map(t=>`<button class="chip ${t==='ALL'?'active':''}" data-ty="${t}">${t==='ALL'?'전체':t}</button>`).join("");
 $("#stFilters").innerHTML=STS.map(([v,l])=>`<button class="chip ${v==='all'?'active':''}" data-st="${v}">${l}</button>`).join("");
 document.querySelectorAll("[data-ty]").forEach(c=>c.onclick=()=>{curType=c.dataset.ty;
@@ -160,7 +168,7 @@ document.querySelectorAll("[data-st]").forEach(c=>c.onclick=()=>{stMode=c.datase
   document.querySelectorAll("[data-st]").forEach(x=>x.classList.toggle("active",x===c));renderList($("#search").value);});
 
 /* 공통 */
-function inType(w){return curType==="ALL"||w.t===curType;}
+function inType(w){return (curType==="ALL"||w.t===curType)&&(curCh==="ALL"||w.ch===curCh);}
 function stOK(w){const id=idOf(w);return stMode==="all"||(stMode==="fav"&&FAV.has(id))||(stMode==="unlearned"&&!LEARNED.has(id));}
 function pool(){return WORDS.filter(w=>inType(w)&&stOK(w));}
 function rubyJP(w){return `<ruby>${w.w}<rt>${w.r}</rt></ruby>`;}
@@ -171,7 +179,7 @@ function filtered(f){f=f.trim().toLowerCase();
     ||w.ko.toLowerCase().includes(f)||romajiOf(w).includes(f)));}
 function updateProgress(){const p=WORDS.filter(inType);const done=p.filter(w=>LEARNED.has(idOf(w))).length;
   const pct=p.length?Math.round(done/p.length*100):0;
-  $("#progress").innerHTML=`암기 진도 (${curType==="ALL"?"전체":curType}) · ${done} / ${p.length} (${pct}%)<div class="bar"><i style="width:${pct}%"></i></div>`;}
+  $("#progress").innerHTML=`암기 진도 (${curCh==="ALL"?"":curCh+" · "}${curType==="ALL"?"전체":curType}) · ${done} / ${p.length} (${pct}%)<div class="bar"><i style="width:${pct}%"></i></div>`;}
 function renderList(f=""){const L=filtered(f);updateProgress();$("#count").textContent=`${L.length}개`;
   $("#list").innerHTML=L.length?L.map(w=>{const id=idOf(w);return `
     <div class="row ${LEARNED.has(id)?'learned':''}">
@@ -192,7 +200,8 @@ function tLearn(id,el){toggleSet(LEARNED,"vocab_learned",id);el.textContent=LEAR
 let fcPool=[],fcIdx=0,fcDir="jp";
 function startCard(){fcPool=pool().slice().sort(()=>Math.random()-0.5);fcIdx=0;renderCard();}
 function renderCard(){
-  const head=`<div class="filters" style="justify-content:center">${TYPES.map(t=>`<button class="chip ${t===curType?'active':''}" onclick="cardTy('${t}')">${t==='ALL'?'전체':t}</button>`).join("")}</div>
+  const head=`${MULTI_CH?`<div class="filters" style="justify-content:center">${["ALL",...CHS].map(c=>`<button class="chip ${c===curCh?'active':''}" onclick="cardCh('${c}')">${c==='ALL'?'전체 챕터':c}</button>`).join("")}</div>`:""}
+    <div class="filters" style="justify-content:center">${TYPES.map(t=>`<button class="chip ${t===curType?'active':''}" onclick="cardTy('${t}')">${t==='ALL'?'전체':t}</button>`).join("")}</div>
     <div class="filters" style="justify-content:center">${STS.map(([v,l])=>`<button class="chip ${v===stMode?'active':''}" onclick="cardSt('${v}')">${l}</button>`).join("")}
       <button class="chip" onclick="flipDir()">${fcDir==="jp"?"일→한":"한→일"} ⇄</button></div>`;
   if(!fcPool.length){$("#view-card").innerHTML=head+`<p class="empty">해당 조건의 단어가 없습니다.</p>`;return;}
@@ -222,13 +231,16 @@ function renderCard(){
 function cardNext(known){const w=fcPool[fcIdx];if(known)setLearned(idOf(w),true);fcIdx++;renderCard();}
 function cardMove(d){fcIdx=Math.max(0,Math.min(fcPool.length,fcIdx+d));renderCard();}
 function cardTy(t){curType=t;startCard();}
+function cardCh(c){curCh=c;startCard();}
 function cardSt(v){stMode=v;startCard();}
 function flipDir(){fcDir=fcDir==="jp"?"ko":"jp";renderCard();}
 
 /* 퀴즈 */
 let qScore=0,qTotal=0;
-function quizHead(){return `<div class="filters" style="justify-content:center">${TYPES.map(t=>`<button class="chip ${t===curType?'active':''}" onclick="quizTy('${t}')">${t==='ALL'?'전체':t}</button>`).join("")}</div>
+function quizHead(){return `${MULTI_CH?`<div class="filters" style="justify-content:center">${["ALL",...CHS].map(c=>`<button class="chip ${c===curCh?'active':''}" onclick="quizCh('${c}')">${c==='ALL'?'전체 챕터':c}</button>`).join("")}</div>`:""}
+  <div class="filters" style="justify-content:center">${TYPES.map(t=>`<button class="chip ${t===curType?'active':''}" onclick="quizTy('${t}')">${t==='ALL'?'전체':t}</button>`).join("")}</div>
   <div class="filters" style="justify-content:center">${STS.map(([v,l])=>`<button class="chip ${v===stMode?'active':''}" onclick="quizSt('${v}')">${l}</button>`).join("")}</div>`;}
+function quizCh(c){curCh=c;newQuiz();}
 function newQuiz(){const P=pool();
   if(P.length<4){$("#view-quiz").innerHTML=quizHead()+`<p class="empty">단어가 4개 이상이어야 퀴즈를 낼 수 있어요.</p>`;return;}
   const correct=P[Math.floor(Math.random()*P.length)];

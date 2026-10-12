@@ -92,6 +92,7 @@
 
 <div class="wrap">
   <div id="view-list">
+    <div class="filters" id="chFilters"></div>
     <div class="filters" id="typeFilters"></div>
     <div class="filters" id="stFilters"></div>
     <div class="progress" id="progress"></div>
@@ -104,10 +105,10 @@
 </div>
 
 <script>
-window.WORDS=[{"w":"指示","r":"しじ","ko":"지시","t":"음독명사","ch":"CH1"},{"w":"自身","r":"じしん","ko":"자신, 자기","t":"음독명사","ch":"CH1"},{"w":"時代","r":"じだい","ko":"시대","t":"음독명사","ch":"CH1"},{"w":"実力","r":"じつりょく","ko":"실력","t":"음독명사","ch":"CH1"},{"w":"市民","r":"しみん","ko":"시민","t":"음독명사","ch":"CH1"},{"w":"社長","r":"しゃちょう","ko":"사장","t":"음독명사","ch":"CH1"},{"w":"渋滞","r":"じゅうたい","ko":"정체","t":"음독명사","ch":"CH1"},{"w":"宿題","r":"しゅくだい","ko":"숙제","t":"음독명사","ch":"CH1"},{"w":"出張","r":"しゅっちょう","ko":"출장","t":"음독명사","ch":"CH1"},{"w":"紹介","r":"しょうかい","ko":"소개","t":"음독명사","ch":"CH1"},{"w":"小説","r":"しょうせつ","ko":"소설","t":"음독명사","ch":"CH1"},{"w":"商品","r":"しょうひん","ko":"상품","t":"음독명사","ch":"CH1"},{"w":"植物","r":"しょくぶつ","ko":"식물","t":"음독명사","ch":"CH1"},{"w":"進学","r":"しんがく","ko":"진학","t":"음독명사","ch":"CH1"},{"w":"心配","r":"しんぱい","ko":"걱정","t":"음독명사","ch":"CH1"},{"w":"辞書","r":"じしょ","ko":"사전","t":"음독명사","ch":"CH1"},{"w":"地震","r":"じしん","ko":"지진","t":"음독명사","ch":"CH1"},{"w":"失業","r":"しつぎょう","ko":"실업","t":"음독명사","ch":"CH1"},{"w":"辞典","r":"じてん","ko":"사전","t":"음독명사","ch":"CH1"},{"w":"社会","r":"しゃかい","ko":"사회","t":"음독명사","ch":"CH1"},{"w":"邪魔","r":"じゃま","ko":"방해","t":"음독명사","ch":"CH1"},{"w":"集中","r":"しゅうちゅう","ko":"집중","t":"음독명사","ch":"CH1"},{"w":"宿泊","r":"しゅくはく","ko":"숙박","t":"음독명사","ch":"CH1"},{"w":"出発","r":"しゅっぱつ","ko":"출발","t":"음독명사","ch":"CH1"},{"w":"正月","r":"しょうがつ","ko":"정월, 설날","t":"음독명사","ch":"CH1"},{"w":"招待","r":"しょうたい","ko":"초대","t":"음독명사","ch":"CH1"},{"w":"将来","r":"しょうらい","ko":"장래","t":"음독명사","ch":"CH1"},{"w":"食料品","r":"しょくりょうひん","ko":"식료품","t":"음독명사","ch":"CH1"},{"w":"人口","r":"じんこう","ko":"인구","t":"음독명사","ch":"CH1"},{"w":"新聞","r":"しんぶん","ko":"신문","t":"음독명사","ch":"CH1"},{"w":"事情","r":"じじょう","ko":"사정","t":"음독명사","ch":"CH1"},{"w":"姿勢","r":"しせい","ko":"자세","t":"음독명사","ch":"CH1"},{"w":"失敗","r":"しっぱい","ko":"실패","t":"음독명사","ch":"CH1"},{"w":"自転車","r":"じてんしゃ","ko":"자전거","t":"음독명사","ch":"CH1"},{"w":"写真","r":"しゃしん","ko":"사진","t":"음독명사","ch":"CH1"},{"w":"習慣","r":"しゅうかん","ko":"습관","t":"음독명사","ch":"CH1"},{"w":"修理","r":"しゅうり","ko":"수리","t":"음독명사","ch":"CH1"},{"w":"手術","r":"しゅじゅつ","ko":"수술","t":"음독명사","ch":"CH1"},{"w":"首都","r":"しゅと","ko":"수도","t":"음독명사","ch":"CH1"},{"w":"小学校","r":"しょうがっこう","ko":"초등학교","t":"음독명사","ch":"CH1"},{"w":"承知","r":"しょうち","ko":"앎, 승낙","t":"음독명사","ch":"CH1"},{"w":"省略","r":"しょうりゃく","ko":"생략","t":"음독명사","ch":"CH1"},{"w":"処理","r":"しょり","ko":"처리","t":"음독명사","ch":"CH1"},{"w":"申請","r":"しんせい","ko":"신청","t":"음독명사","ch":"CH1"},{"w":"新聞社","r":"しんぶんしゃ","ko":"신문사","t":"음독명사","ch":"CH1"},{"w":"自信","r":"じしん","ko":"자신","t":"음독명사","ch":"CH1"},{"w":"自然","r":"しぜん","ko":"자연","t":"음독명사","ch":"CH1"},{"w":"質問","r":"しつもん","ko":"질문","t":"음독명사","ch":"CH1"},{"w":"自動車","r":"じどうしゃ","ko":"자동차","t":"음독명사","ch":"CH1"},{"w":"写真家","r":"しゃしんか","ko":"사진가","t":"음독명사","ch":"CH1"},{"w":"住所","r":"じゅうしょ","ko":"주소","t":"음독명사","ch":"CH1"},{"w":"授業","r":"じゅぎょう","ko":"수업","t":"음독명사","ch":"CH1"},{"w":"出席","r":"しゅっせき","ko":"출석","t":"음독명사","ch":"CH1"},{"w":"寿命","r":"じゅみょう","ko":"수명","t":"음독명사","ch":"CH1"},{"w":"商業","r":"しょうぎょう","ko":"상업","t":"음독명사","ch":"CH1"},{"w":"消費","r":"しょうひ","ko":"소비","t":"음독명사","ch":"CH1"},{"w":"食堂","r":"しょくどう","ko":"식당","t":"음독명사","ch":"CH1"},{"w":"資料","r":"しりょう","ko":"자료","t":"음독명사","ch":"CH1"},{"w":"身長","r":"しんちょう","ko":"신장, 키","t":"음독명사","ch":"CH1"},{"w":"人類","r":"じんるい","ko":"인류","t":"음독명사","ch":"CH1"},{"w":"品物","r":"しなもの","ko":"물품","t":"훈독명사","ch":"CH1"},{"w":"字引","r":"じびき","ko":"사전","t":"훈독명사","ch":"CH1"},{"w":"島","r":"しま","ko":"섬","t":"훈독명사","ch":"CH1"}];const WORDS=window.WORDS;
+window.WORDS=[{"w":"指示","r":"しじ","ko":"지시","t":"음독명사","ch":"CH5"},{"w":"自身","r":"じしん","ko":"자신, 자기","t":"음독명사","ch":"CH5"},{"w":"時代","r":"じだい","ko":"시대","t":"음독명사","ch":"CH5"},{"w":"実力","r":"じつりょく","ko":"실력","t":"음독명사","ch":"CH5"},{"w":"市民","r":"しみん","ko":"시민","t":"음독명사","ch":"CH5"},{"w":"社長","r":"しゃちょう","ko":"사장","t":"음독명사","ch":"CH5"},{"w":"渋滞","r":"じゅうたい","ko":"정체","t":"음독명사","ch":"CH5"},{"w":"宿題","r":"しゅくだい","ko":"숙제","t":"음독명사","ch":"CH5"},{"w":"出張","r":"しゅっちょう","ko":"출장","t":"음독명사","ch":"CH5"},{"w":"紹介","r":"しょうかい","ko":"소개","t":"음독명사","ch":"CH5"},{"w":"小説","r":"しょうせつ","ko":"소설","t":"음독명사","ch":"CH5"},{"w":"商品","r":"しょうひん","ko":"상품","t":"음독명사","ch":"CH5"},{"w":"植物","r":"しょくぶつ","ko":"식물","t":"음독명사","ch":"CH5"},{"w":"進学","r":"しんがく","ko":"진학","t":"음독명사","ch":"CH5"},{"w":"心配","r":"しんぱい","ko":"걱정","t":"음독명사","ch":"CH5"},{"w":"辞書","r":"じしょ","ko":"사전","t":"음독명사","ch":"CH5"},{"w":"地震","r":"じしん","ko":"지진","t":"음독명사","ch":"CH5"},{"w":"失業","r":"しつぎょう","ko":"실업","t":"음독명사","ch":"CH5"},{"w":"辞典","r":"じてん","ko":"사전","t":"음독명사","ch":"CH5"},{"w":"社会","r":"しゃかい","ko":"사회","t":"음독명사","ch":"CH5"},{"w":"邪魔","r":"じゃま","ko":"방해","t":"음독명사","ch":"CH5"},{"w":"集中","r":"しゅうちゅう","ko":"집중","t":"음독명사","ch":"CH5"},{"w":"宿泊","r":"しゅくはく","ko":"숙박","t":"음독명사","ch":"CH5"},{"w":"出発","r":"しゅっぱつ","ko":"출발","t":"음독명사","ch":"CH5"},{"w":"正月","r":"しょうがつ","ko":"정월, 설날","t":"음독명사","ch":"CH5"},{"w":"招待","r":"しょうたい","ko":"초대","t":"음독명사","ch":"CH5"},{"w":"将来","r":"しょうらい","ko":"장래","t":"음독명사","ch":"CH5"},{"w":"食料品","r":"しょくりょうひん","ko":"식료품","t":"음독명사","ch":"CH5"},{"w":"人口","r":"じんこう","ko":"인구","t":"음독명사","ch":"CH5"},{"w":"新聞","r":"しんぶん","ko":"신문","t":"음독명사","ch":"CH5"},{"w":"事情","r":"じじょう","ko":"사정","t":"음독명사","ch":"CH5"},{"w":"姿勢","r":"しせい","ko":"자세","t":"음독명사","ch":"CH5"},{"w":"失敗","r":"しっぱい","ko":"실패","t":"음독명사","ch":"CH5"},{"w":"自転車","r":"じてんしゃ","ko":"자전거","t":"음독명사","ch":"CH5"},{"w":"写真","r":"しゃしん","ko":"사진","t":"음독명사","ch":"CH5"},{"w":"習慣","r":"しゅうかん","ko":"습관","t":"음독명사","ch":"CH5"},{"w":"修理","r":"しゅうり","ko":"수리","t":"음독명사","ch":"CH5"},{"w":"手術","r":"しゅじゅつ","ko":"수술","t":"음독명사","ch":"CH5"},{"w":"首都","r":"しゅと","ko":"수도","t":"음독명사","ch":"CH5"},{"w":"小学校","r":"しょうがっこう","ko":"초등학교","t":"음독명사","ch":"CH5"},{"w":"承知","r":"しょうち","ko":"앎, 승낙","t":"음독명사","ch":"CH5"},{"w":"省略","r":"しょうりゃく","ko":"생략","t":"음독명사","ch":"CH5"},{"w":"処理","r":"しょり","ko":"처리","t":"음독명사","ch":"CH5"},{"w":"申請","r":"しんせい","ko":"신청","t":"음독명사","ch":"CH5"},{"w":"新聞社","r":"しんぶんしゃ","ko":"신문사","t":"음독명사","ch":"CH5"},{"w":"自信","r":"じしん","ko":"자신","t":"음독명사","ch":"CH5"},{"w":"自然","r":"しぜん","ko":"자연","t":"음독명사","ch":"CH5"},{"w":"質問","r":"しつもん","ko":"질문","t":"음독명사","ch":"CH5"},{"w":"自動車","r":"じどうしゃ","ko":"자동차","t":"음독명사","ch":"CH5"},{"w":"写真家","r":"しゃしんか","ko":"사진가","t":"음독명사","ch":"CH5"},{"w":"住所","r":"じゅうしょ","ko":"주소","t":"음독명사","ch":"CH5"},{"w":"授業","r":"じゅぎょう","ko":"수업","t":"음독명사","ch":"CH5"},{"w":"出席","r":"しゅっせき","ko":"출석","t":"음독명사","ch":"CH5"},{"w":"寿命","r":"じゅみょう","ko":"수명","t":"음독명사","ch":"CH5"},{"w":"商業","r":"しょうぎょう","ko":"상업","t":"음독명사","ch":"CH5"},{"w":"消費","r":"しょうひ","ko":"소비","t":"음독명사","ch":"CH5"},{"w":"食堂","r":"しょくどう","ko":"식당","t":"음독명사","ch":"CH5"},{"w":"資料","r":"しりょう","ko":"자료","t":"음독명사","ch":"CH5"},{"w":"身長","r":"しんちょう","ko":"신장, 키","t":"음독명사","ch":"CH5"},{"w":"人類","r":"じんるい","ko":"인류","t":"음독명사","ch":"CH5"},{"w":"品物","r":"しなもの","ko":"물품","t":"훈독명사","ch":"CH5"},{"w":"字引","r":"じびき","ko":"사전","t":"훈독명사","ch":"CH5"},{"w":"島","r":"しま","ko":"섬","t":"훈독명사","ch":"CH5"}];const WORDS=window.WORDS;
 const $=s=>document.querySelector(s);
 const STS=[["all","모두"],["fav","즐겨찾기 ★"],["unlearned","미암기"]];
-let curType="ALL", stMode="all";
+let curType="ALL", stMode="all", curCh="ALL";
 
 /* 저장 */
 const store={get(k){try{return new Set(JSON.parse(localStorage.getItem(k)||"[]"))}catch(e){return new Set()}},
@@ -152,6 +153,13 @@ function romajiOf(w){
 
 /* 필터 UI */
 const TYPES=["ALL",...[...new Set(WORDS.map(w=>w.t))]];
+const CHS=[...new Set(WORDS.map(w=>w.ch))];
+const MULTI_CH=CHS.length>1;
+if(MULTI_CH){
+  $("#chFilters").innerHTML=["ALL",...CHS].map(c=>`<button class="chip ${c==='ALL'?'active':''}" data-ch="${c}">${c==='ALL'?'전체 챕터':c}</button>`).join("");
+  document.querySelectorAll("[data-ch]").forEach(c=>c.onclick=()=>{curCh=c.dataset.ch;
+    document.querySelectorAll("[data-ch]").forEach(x=>x.classList.toggle("active",x===c));renderList($("#search").value);});
+}
 $("#typeFilters").innerHTML=TYPES.map(t=>`<button class="chip ${t==='ALL'?'active':''}" data-ty="${t}">${t==='ALL'?'전체':t}</button>`).join("");
 $("#stFilters").innerHTML=STS.map(([v,l])=>`<button class="chip ${v==='all'?'active':''}" data-st="${v}">${l}</button>`).join("");
 document.querySelectorAll("[data-ty]").forEach(c=>c.onclick=()=>{curType=c.dataset.ty;
@@ -160,7 +168,7 @@ document.querySelectorAll("[data-st]").forEach(c=>c.onclick=()=>{stMode=c.datase
   document.querySelectorAll("[data-st]").forEach(x=>x.classList.toggle("active",x===c));renderList($("#search").value);});
 
 /* 공통 */
-function inType(w){return curType==="ALL"||w.t===curType;}
+function inType(w){return (curType==="ALL"||w.t===curType)&&(curCh==="ALL"||w.ch===curCh);}
 function stOK(w){const id=idOf(w);return stMode==="all"||(stMode==="fav"&&FAV.has(id))||(stMode==="unlearned"&&!LEARNED.has(id));}
 function pool(){return WORDS.filter(w=>inType(w)&&stOK(w));}
 function rubyJP(w){return `<ruby>${w.w}<rt>${w.r}</rt></ruby>`;}
@@ -171,7 +179,7 @@ function filtered(f){f=f.trim().toLowerCase();
     ||w.ko.toLowerCase().includes(f)||romajiOf(w).includes(f)));}
 function updateProgress(){const p=WORDS.filter(inType);const done=p.filter(w=>LEARNED.has(idOf(w))).length;
   const pct=p.length?Math.round(done/p.length*100):0;
-  $("#progress").innerHTML=`암기 진도 (${curType==="ALL"?"전체":curType}) · ${done} / ${p.length} (${pct}%)<div class="bar"><i style="width:${pct}%"></i></div>`;}
+  $("#progress").innerHTML=`암기 진도 (${curCh==="ALL"?"":curCh+" · "}${curType==="ALL"?"전체":curType}) · ${done} / ${p.length} (${pct}%)<div class="bar"><i style="width:${pct}%"></i></div>`;}
 function renderList(f=""){const L=filtered(f);updateProgress();$("#count").textContent=`${L.length}개`;
   $("#list").innerHTML=L.length?L.map(w=>{const id=idOf(w);return `
     <div class="row ${LEARNED.has(id)?'learned':''}">
@@ -192,7 +200,8 @@ function tLearn(id,el){toggleSet(LEARNED,"vocab_learned",id);el.textContent=LEAR
 let fcPool=[],fcIdx=0,fcDir="jp";
 function startCard(){fcPool=pool().slice().sort(()=>Math.random()-0.5);fcIdx=0;renderCard();}
 function renderCard(){
-  const head=`<div class="filters" style="justify-content:center">${TYPES.map(t=>`<button class="chip ${t===curType?'active':''}" onclick="cardTy('${t}')">${t==='ALL'?'전체':t}</button>`).join("")}</div>
+  const head=`${MULTI_CH?`<div class="filters" style="justify-content:center">${["ALL",...CHS].map(c=>`<button class="chip ${c===curCh?'active':''}" onclick="cardCh('${c}')">${c==='ALL'?'전체 챕터':c}</button>`).join("")}</div>`:""}
+    <div class="filters" style="justify-content:center">${TYPES.map(t=>`<button class="chip ${t===curType?'active':''}" onclick="cardTy('${t}')">${t==='ALL'?'전체':t}</button>`).join("")}</div>
     <div class="filters" style="justify-content:center">${STS.map(([v,l])=>`<button class="chip ${v===stMode?'active':''}" onclick="cardSt('${v}')">${l}</button>`).join("")}
       <button class="chip" onclick="flipDir()">${fcDir==="jp"?"일→한":"한→일"} ⇄</button></div>`;
   if(!fcPool.length){$("#view-card").innerHTML=head+`<p class="empty">해당 조건의 단어가 없습니다.</p>`;return;}
@@ -222,13 +231,16 @@ function renderCard(){
 function cardNext(known){const w=fcPool[fcIdx];if(known)setLearned(idOf(w),true);fcIdx++;renderCard();}
 function cardMove(d){fcIdx=Math.max(0,Math.min(fcPool.length,fcIdx+d));renderCard();}
 function cardTy(t){curType=t;startCard();}
+function cardCh(c){curCh=c;startCard();}
 function cardSt(v){stMode=v;startCard();}
 function flipDir(){fcDir=fcDir==="jp"?"ko":"jp";renderCard();}
 
 /* 퀴즈 */
 let qScore=0,qTotal=0;
-function quizHead(){return `<div class="filters" style="justify-content:center">${TYPES.map(t=>`<button class="chip ${t===curType?'active':''}" onclick="quizTy('${t}')">${t==='ALL'?'전체':t}</button>`).join("")}</div>
+function quizHead(){return `${MULTI_CH?`<div class="filters" style="justify-content:center">${["ALL",...CHS].map(c=>`<button class="chip ${c===curCh?'active':''}" onclick="quizCh('${c}')">${c==='ALL'?'전체 챕터':c}</button>`).join("")}</div>`:""}
+  <div class="filters" style="justify-content:center">${TYPES.map(t=>`<button class="chip ${t===curType?'active':''}" onclick="quizTy('${t}')">${t==='ALL'?'전체':t}</button>`).join("")}</div>
   <div class="filters" style="justify-content:center">${STS.map(([v,l])=>`<button class="chip ${v===stMode?'active':''}" onclick="quizSt('${v}')">${l}</button>`).join("")}</div>`;}
+function quizCh(c){curCh=c;newQuiz();}
 function newQuiz(){const P=pool();
   if(P.length<4){$("#view-quiz").innerHTML=quizHead()+`<p class="empty">단어가 4개 이상이어야 퀴즈를 낼 수 있어요.</p>`;return;}
   const correct=P[Math.floor(Math.random()*P.length)];
