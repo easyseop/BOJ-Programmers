@@ -17508,5 +17508,295 @@
    "Deliberately",
    "Gently"
   ]
+ },
+ "創": {
+  "level": "N1",
+  "strokes": 12,
+  "on": [
+   "ソウ",
+   "ショウ"
+  ],
+  "kun": [
+   "つく.る",
+   "はじ.める",
+   "きず",
+   "けず.しける"
+  ],
+  "meanings": [
+   "Genesis",
+   "Wound",
+   "Injury",
+   "Hurt",
+   "Start",
+   "Originate"
+  ]
+ },
+ "功": {
+  "level": "N1",
+  "strokes": 5,
+  "on": [
+   "コウ",
+   "ク"
+  ],
+  "kun": [
+   "いさお"
+  ],
+  "meanings": [
+   "Achievement",
+   "Merits",
+   "Success",
+   "Honor",
+   "Credit"
+  ]
+ },
+ "尋": {
+  "level": "N1",
+  "strokes": 12,
+  "on": [
+   "ジン"
+  ],
+  "kun": [
+   "たず.ねる",
+   "ひろ"
+  ],
+  "meanings": [
+   "Inquire",
+   "Fathom",
+   "Look For"
+  ]
+ },
+ "屈": {
+  "level": "N1",
+  "strokes": 8,
+  "on": [
+   "クツ"
+  ],
+  "kun": [
+   "かが.む",
+   "かが.める"
+  ],
+  "meanings": [
+   "Yield",
+   "Bend",
+   "Flinch",
+   "Submit"
+  ]
+ },
+ "房": {
+  "level": "N1",
+  "strokes": 8,
+  "on": [
+   "ボウ"
+  ],
+  "kun": [
+   "ふさ"
+  ],
+  "meanings": [
+   "Tassel",
+   "Tuft",
+   "Fringe",
+   "Bunch",
+   "Lock (hair)",
+   "Segment (orange)",
+   "House",
+   "Room"
+  ]
+ },
+ "択": {
+  "level": "N1",
+  "strokes": 7,
+  "on": [
+   "タク"
+  ],
+  "kun": [
+   "えら.ぶ"
+  ],
+  "meanings": [
+   "Choose",
+   "Select",
+   "Elect",
+   "Prefer"
+  ]
+ },
+ "暖": {
+  "level": "N1",
+  "strokes": 13,
+  "on": [
+   "ダン",
+   "ノン"
+  ],
+  "kun": [
+   "あたた.か",
+   "あたた.かい",
+   "あたた.まる",
+   "あたた.める"
+  ],
+  "meanings": [
+   "Warmth"
+  ]
+ },
+ "条": {
+  "level": "N1",
+  "strokes": 7,
+  "on": [
+   "ジョウ",
+   "チョウ",
+   "デキ"
+  ],
+  "kun": [
+   "えだ",
+   "すじ"
+  ],
+  "meanings": [
+   "Article",
+   "Clause",
+   "Item",
+   "Stripe",
+   "Streak"
+  ]
+ },
+ "炊": {
+  "level": "N1",
+  "strokes": 8,
+  "on": [
+   "スイ"
+  ],
+  "kun": [
+   "た.く",
+   "だ.き"
+  ],
+  "meanings": [
+   "Cook",
+   "Boil"
+  ]
+ },
+ "狭": {
+  "level": "N1",
+  "strokes": 9,
+  "on": [
+   "キョウ",
+   "コウ"
+  ],
+  "kun": [
+   "せま.い",
+   "せば.める",
+   "せば.まる",
+   "さ"
+  ],
+  "meanings": [
+   "Cramped",
+   "Narrow",
+   "Contract",
+   "Tight"
+  ]
+ },
+ "節": {
+  "level": "N1",
+  "strokes": 13,
+  "on": [
+   "セツ",
+   "セチ"
+  ],
+  "kun": [
+   "ふし",
+   "ぶし",
+   "のっと"
+  ],
+  "meanings": [
+   "Node",
+   "Season",
+   "Period",
+   "Occasion",
+   "Verse",
+   "Clause",
+   "Stanza",
+   "Honor",
+   "Joint",
+   "Knuckle",
+   "Knob",
+   "Knot",
+   "Tune",
+   "Melody"
+  ]
+ },
+ "素": {
+  "level": "N1",
+  "strokes": 10,
+  "on": [
+   "ソ",
+   "ス"
+  ],
+  "kun": [
+   "もと"
+  ],
+  "meanings": [
+   "Elementary",
+   "Principle",
+   "Naked",
+   "Uncovered"
+  ]
+ },
+ "縦": {
+  "level": "N1",
+  "strokes": 16,
+  "on": [
+   "ジュウ"
+  ],
+  "kun": [
+   "たて"
+  ],
+  "meanings": [
+   "Vertical",
+   "Length",
+   "Height",
+   "Self-indulgent",
+   "Wayward"
+  ]
+ },
+ "製": {
+  "level": "N1",
+  "strokes": 14,
+  "on": [
+   "セイ"
+  ],
+  "kun": [],
+  "meanings": [
+   "Made In...",
+   "Manufacture"
+  ]
+ },
+ "誰": {
+  "level": "N1",
+  "strokes": 15,
+  "on": [
+   "スイ"
+  ],
+  "kun": [
+   "だれ",
+   "たれ",
+   "た"
+  ],
+  "meanings": [
+   "Who",
+   "Someone",
+   "Somebody"
+  ]
+ },
+ "鮮": {
+  "level": "N1",
+  "strokes": 17,
+  "on": [
+   "セン"
+  ],
+  "kun": [
+   "あざ.やか"
+  ],
+  "meanings": [
+   "Fresh",
+   "Vivid",
+   "Clear",
+   "Brilliant",
+   "Korea"
+  ]
  }
 }
