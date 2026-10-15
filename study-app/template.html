@@ -180,15 +180,48 @@
   .kb{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--line);background:var(--mark);border-radius:9px;padding:4px 10px;font-size:13px;font-weight:600;color:var(--ink);cursor:pointer}
   .kb b{font-family:"Yu Mincho",serif;font-size:19px;font-weight:400}
   .empty{color:var(--muted);text-align:center;padding:36px}
+  @media (max-width:430px){h1 .t{display:none}}
+  .filters.c5{grid-template-columns:repeat(5,minmax(0,1fr))}
+  /* 문법 */
+  .gbox{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px 16px;margin-top:12px}
+  .gbox h3{margin:0 0 6px;font-size:15px}
+  .gi{padding:9px 0;border-top:1px dashed var(--line)} .gi:first-of-type{border-top:none;padding-top:2px}
+  .gtips{margin:8px 0 0;padding-left:18px;font-size:13px;color:var(--muted)}
+  .gtag{display:inline-block;font-size:11px;font-weight:700;color:#fff;border-radius:8px;padding:2px 8px;margin-right:6px;vertical-align:middle;background:var(--accent);white-space:nowrap}
+  .gtag[data-k="겸양어"]{background:var(--ok)} .gtag[data-k="정중어"]{background:var(--gold)} .gtag[data-k="특별경어"]{background:var(--accent-d)}
+  .gh{display:flex;align-items:center;gap:6px}
+  .gt{font-family:"Yu Mincho","Hiragino Mincho ProN",serif;font-size:24px;flex:1;line-height:1.4}
+  .gm{font-weight:800;margin:4px 0 2px}
+  .gf{font-size:13px;color:var(--muted);margin-bottom:4px}
+  .gex{padding:8px 11px;background:var(--bg);border-radius:10px;margin-top:6px}
+  .gex .jp{font-size:18px;line-height:1.9}
+  .gex .ko{font-size:13px;color:var(--muted)}
+  .gnote{font-size:13px;margin-top:8px;background:var(--mark);border-radius:8px;padding:7px 10px;line-height:1.9}
+  .gtbl{width:100%;border-collapse:collapse;margin-top:10px;table-layout:fixed}
+  .gtbl th{font-size:12px;color:var(--muted);text-align:left;padding:6px 4px;border-bottom:2px solid var(--line)}
+  .gtbl td{padding:7px 4px;border-bottom:1px solid var(--line);vertical-align:top;font-family:"Yu Mincho","Hiragino Mincho ProN",serif;font-size:15px;line-height:1.8;word-break:keep-all}
+  .gtbl .ko{font-family:"Apple SD Gothic Neo","Noto Sans KR",sans-serif;font-size:11px;color:var(--muted);display:block;line-height:1.3}
+  .gtbl .none{color:var(--muted)}
+  .gq{font-family:"Yu Mincho","Hiragino Mincho ProN",serif;font-size:21px;line-height:2.1;margin:4px 0 6px}
+  .gqk{font-size:13px;color:var(--muted);margin-bottom:14px}
+  .blank{display:inline-block;min-width:4.5em;border-bottom:2px solid var(--accent);height:1.1em;vertical-align:baseline}
+  .hl{background:var(--mark);border-radius:4px;padding:0 3px;color:var(--accent-d);font-weight:700}
+  .opt .jp{font-size:17px}
+  .ord-ans{min-height:58px;border-bottom:2px solid var(--line);display:flex;flex-wrap:wrap;gap:6px;justify-content:center;align-items:center;padding:8px 0;margin:6px auto 14px;max-width:460px}
+  .ord-bank{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;max-width:460px;margin:0 auto}
+  .ord-c{border:1px solid var(--line);border-bottom-width:3px;background:var(--card);border-radius:10px;padding:4px 12px;font-family:"Yu Mincho","Hiragino Mincho ProN",serif;font-size:18px;line-height:1.9;cursor:pointer;color:var(--ink)}
+  .ord-c.used{visibility:hidden}
+  .ord-go{margin:16px auto 0;max-width:200px}
   .hide{display:none}
 </style>
 </head>
 <body>
 <header><div class="inner">
-  <h1>🇯🇵 일본어 공부</h1>
+  <h1>🇯🇵 <span class="t">일본어 공부</span></h1>
   <div class="modes">
     <button class="mode active" data-mode="kanji">📚 한자</button>
     <button class="mode" data-mode="vocab">📖 단어장</button>
+    <button class="mode" data-mode="grammar">📝 문법</button>
   </div>
   <button class="ic" id="theme" title="다크 모드">🌙</button>
 </div></header>
@@ -233,6 +266,20 @@
     </div>
     <div id="v-card" class="hide"></div>
     <div id="v-quiz" class="hide"></div>
+  </div>
+
+  <!-- ════ 문법 ════ -->
+  <div id="m-grammar" class="hide">
+    <div class="chbar" id="gTopicBar"></div>
+    <div class="tabs" id="gTabs">
+      <button class="tab active" data-gv="list">설명</button>
+      <button class="tab" data-gv="card">카드</button>
+      <button class="tab" data-gv="quiz">퀴즈</button>
+    </div>
+    <div class="filters c5" id="gKind"></div>
+    <div id="g-list"></div>
+    <div id="g-card" class="hide"></div>
+    <div id="g-quiz" class="hide"></div>
   </div>
 </div>
 
@@ -285,6 +332,7 @@ function setMode(m){
   mode=m;
   $("#m-kanji").classList.toggle("hide",m!=="kanji");
   $("#m-vocab").classList.toggle("hide",m!=="vocab");
+  $("#m-grammar").classList.toggle("hide",m!=="grammar");
   document.querySelectorAll(".mode").forEach(b=>b.classList.toggle("active",b.dataset.mode===m));
   window.scrollTo(0,0);
 }
@@ -339,7 +387,7 @@ function kShow(char){
   const prev=idx>0?kView[idx-1].char:null, next=idx>=0&&idx<kView.length-1?kView[idx+1].char:null;
   kSetView("detail");
   $("#k-detail").innerHTML=`
-    ${kBackToVocab?`<div class="backbar" onclick="kBackVocab()">← 단어장으로 돌아가기</div>`:""}
+    ${kBackToVocab?`<div class="backbar" onclick="kBackVocab()">← ${kBackToVocab==="grammar"?"문법으로":"단어장으로"} 돌아가기</div>`:""}
     <div class="nav">
       <a onclick="kSetView('list')">← 목록</a>
       <span>
@@ -374,7 +422,7 @@ function kShow(char){
 }
 function kLoadStroke(char){fetch(`https://cdn.jsdelivr.net/gh/KanjiVG/kanjivg@master/kanji/${hex(char)}.svg`)
   .then(r=>r.ok?r.text():Promise.reject()).then(svg=>{const el=$("#kStroke");if(el)el.innerHTML=svg;}).catch(()=>{});}
-function kBackVocab(){kBackToVocab=false;setMode("vocab");}
+function kBackVocab(){const m=kBackToVocab;kBackToVocab=false;setMode(m==="grammar"?"grammar":"vocab");}
 
 /* 한자 카드 */
 let kfPool=[],kfIdx=0;
@@ -475,7 +523,7 @@ function linkify(s){
     ? `<span class="kl" onclick="event.stopPropagation();openKanji('${ch}')" title="${ch} 한자 정보">${ch}</span>` : ch).join("");
 }
 function rubyJP(w){return w.w===w.r?w.w:`<ruby>${linkify(w.w)}<rt>${w.r}</rt></ruby>`;}
-function openKanji(ch){ if(!KSET.has(ch))return; kBackToVocab=true; setMode("kanji"); kShow(ch); }
+function openKanji(ch){ if(!KSET.has(ch))return; kBackToVocab=mode==="grammar"?"grammar":"vocab"; setMode("kanji"); kShow(ch); }
 /* 단어 속 한자 풀이: 食事 → [食 먹을 식] [事 일 사] (누르면 한자 상세) */
 const KMAP=Object.fromEntries(KANJI.map(k=>[k.char,k]));
 function kBreak(word){const cs=[...new Set([...word].filter(ch=>KSET.has(ch)))];
@@ -666,17 +714,188 @@ function vSetView(v){vCur=v;
 document.querySelectorAll("[data-vv]").forEach(t=>t.onclick=()=>vSetView(t.dataset.vv));
 $("#vSearch").addEventListener("input",e=>vRenderList(e.target.value));
 
+/* ══════════ 문법 ══════════ */
+const G=window.GRAMMAR;
+const GTOPICS=[...new Set([...Object.keys(G.topics),...G.items.map(i=>i.topic)])];
+let gTopic=GTOPICS[0], gKind="ALL", gCur="list";
+let GLEARNED=store.get("grammar_learned");
+try{const t=localStorage.getItem("grammar_topic");if(GTOPICS.includes(t))gTopic=t;}catch(e){}
+const shuffle=a=>a.slice().sort(()=>Math.random()-0.5);
+/* 표기: 漢字(かな) → 후리가나, '/' 는 배열 퀴즈용 경계라 지움, ＿＿ → 빈칸 */
+function jr(s){
+  return s.replace(/\//g,"")
+    .replace(/([一-鿿々]+)\(([ぁ-ゟー]+)\)/g,(m,b,rd)=>`<ruby>${linkify(b)}<rt>${rd}</rt></ruby>`)
+    .replace(/＿＿/g,'<span class="blank"></span>');
+}
+const jplain=s=>s.replace(/\//g,"").replace(/\(([ぁ-ゟー]+)\)/g,"");
+const jkana=s=>s.replace(/\//g,"").replace(/[一-鿿々]+\(([ぁ-ゟー]+)\)/g,"$1");
+const say=s=>`<button class="spk" onclick="event.stopPropagation();speak('${jkana(s).replace(/'/g,"")}')">🔊</button>`;
+const gItems=()=>G.items.filter(i=>i.topic===gTopic&&(gKind==="ALL"||i.kind===gKind));
+const gKinds=()=>["ALL",...new Set(G.items.filter(i=>i.topic===gTopic).map(i=>i.kind))];
+const gTable=()=>G.tables[gTopic]||null;
+const gUseTable=()=>gTable()&&(gKind==="ALL"||gKind==="특별경어");
+
+function gTableHTML(){
+  const T=gTable();if(!T)return "";
+  const cell=c=>c==="—"?'<span class="none">—</span>':c.split("・").map(jr).join("<br>");
+  return `<table class="gtbl"><tr><th style="width:30%">기본형</th><th>존경어 ↑ (상대)</th><th>겸양어 ↓ (나)</th></tr>
+    ${T.map(r=>`<tr><td>${jr(r[0])}<span class="ko">${r[3]}</span></td><td>${cell(r[1])}</td><td>${cell(r[2])}</td></tr>`).join("")}</table>`;
+}
+function gRenderBar(){
+  $("#gTopicBar").innerHTML=GTOPICS.map(t=>`<button class="chb ${t===gTopic?'active':''}" onclick="gSelTopic('${t}')">${t}<span class="n">${G.items.filter(i=>i.topic===t).length}문형</span></button>`).join("");
+  const K=gKinds();
+  $("#gKind").className="filters c"+Math.min(K.length,5);
+  $("#gKind").innerHTML=K.map(k=>`<button class="chip ${k===gKind?'active':''}" onclick="gSelKind('${k}')">${k==='ALL'?'전체':k}</button>`).join("");
+}
+function gSelTopic(t){gTopic=t;gKind="ALL";try{localStorage.setItem("grammar_topic",t);}catch(e){}gRenderBar();gSetView(gCur);}
+function gSelKind(k){gKind=k;gRenderBar();gSetView(gCur);}
+
+/* 설명(목록) */
+function gRenderList(){
+  const T=G.topics[gTopic]||{};
+  const I=gItems();
+  const done=G.items.filter(i=>i.topic===gTopic&&GLEARNED.has(i.id)).length, all=G.items.filter(i=>i.topic===gTopic).length;
+  const intro=(gKind==="ALL"&&T.intro)?`<div class="gbox"><h3>📌 ${gTopic} 한눈에 보기</h3>
+    ${T.intro.map(([k,d,jp,ko])=>`<div class="gi"><span class="gtag" data-k="${k}">${k}</span>${d}
+      <div class="gex"><div class="jp">${jr(jp)} ${say(jp)}</div><div class="ko">${ko}</div></div></div>`).join("")}
+    ${T.tips?`<ul class="gtips">${T.tips.map(t=>`<li>${jr(t)}</li>`).join("")}</ul>`:""}</div>`:"";
+  $("#g-list").innerHTML=`<div class="progress">이해 체크 ${done} / ${all}<div class="bar"><i style="width:${all?Math.round(done/all*100):0}%"></i></div></div>`
+    +intro+I.map(i=>`<div class="gbox" id="g-${i.id}">
+      <div class="gh"><span class="gtag" data-k="${i.kind}">${i.kind}</span><span class="gt">${jr(i.title)}</span>
+        <button class="mini ${GLEARNED.has(i.id)?'on':''}" onclick="gLearn('${i.id}')" title="이해했어요">${GLEARNED.has(i.id)?'✅':'⬜'}</button></div>
+      <div class="gm">${i.mean}</div>
+      <div class="gf">접속 · ${jr(i.form)}</div>
+      ${i.ex.map(([jp,ko])=>`<div class="gex"><div class="jp">${jr(jp)} ${say(jp)}</div><div class="ko">${ko}</div></div>`).join("")}
+      ${i.note?`<div class="gnote">💡 ${jr(i.note)}</div>`:""}
+      ${i.kind==="특별경어"?gTableHTML():""}
+    </div>`).join("");
+}
+function gLearn(id){toggleSet(GLEARNED,"grammar_learned",id);gRenderList();}
+
+/* 카드: 문형 카드 + 특별 경어 표 카드 */
+let gfPool=[],gfIdx=0;
+function gStartCard(){
+  const P=gItems().map(i=>({id:i.id,item:i}));
+  if(gUseTable())gTable().forEach((r,n)=>P.push({id:`t:${gTopic}:${n}`,row:r}));
+  gfPool=shuffle(P);gfIdx=0;gRenderCard();
+}
+function gRenderCard(){
+  if(!gfPool.length){$("#g-card").innerHTML=`<p class="empty">카드가 없어요.</p>`;return;}
+  if(gfIdx>=gfPool.length){$("#g-card").innerHTML=`<p class="empty">🎉 ${gfPool.length}장 완료!<br><br><button class="chip" onclick="gStartCard()">다시 섞기</button></p>`;return;}
+  const c=gfPool[gfIdx];let front,back;
+  if(c.item){const i=c.item;
+    front=`<span class="gtag" data-k="${i.kind}">${i.kind}</span><div class="bigw" style="font-size:34px;margin-top:8px">${jr(i.title)}</div><div class="fhint">탭하면 뜻·예문 보기</div>`;
+    back=`<div class="fc-label">뜻</div><div class="gm" style="font-size:18px">${i.mean}</div><div class="gf">${jr(i.form)}</div>
+      <div class="gex" style="width:100%"><div class="jp">${jr(i.ex[0][0])} ${say(i.ex[0][0])}</div><div class="ko">${i.ex[0][1]}</div></div>`;
+  }else{const r=c.row,cell=x=>x==="—"?"—":x.split("・").map(jr).join("・");
+    front=`<span class="gtag" data-k="특별경어">특별 경어</span><div class="bigw" style="font-size:36px;margin-top:8px">${jr(r[0])}</div><div class="gm">${r[3]}</div><div class="fhint">존경어 · 겸양어는?</div>`;
+    back=`<div class="gf" style="font-size:15px">${jr(r[0])} · ${r[3]}</div><div class="fc-label">존경어 ↑</div><div class="jp" style="font-size:22px">${cell(r[1])}</div>
+      <div class="fc-label" style="background:var(--ok)">겸양어 ↓</div><div class="jp" style="font-size:22px">${cell(r[2])}</div>`;}
+  $("#g-card").innerHTML=`
+    <div class="navline"><button onclick="gCardMove(-1)" ${gfIdx===0?'disabled':''}>◀ 이전</button>
+      <span class="count" style="margin:0">${gfIdx+1} / ${gfPool.length}</span>
+      <button onclick="gCardMove(1)">다음 ▶</button></div>
+    <div class="fc"><div class="fcard" onclick="this.classList.toggle('flip')">
+      <div class="face f">${front}</div><div class="face b">${back}</div></div></div>
+    <div class="fcbtns"><button class="dunno" onclick="gCardNext(false)">✗ 모름</button>
+      <button class="know" onclick="gCardNext(true)">✓ 외움</button></div>`;
+}
+function gCardNext(k){const c=gfPool[gfIdx];if(k&&c.item){GLEARNED.add(c.id);store.set("grammar_learned",GLEARNED);}gfIdx++;gRenderCard();}
+function gCardMove(d){gfIdx=Math.max(0,Math.min(gfPool.length,gfIdx+d));gRenderCard();}
+
+/* 퀴즈: 빈칸 고르기 / 경어 바꾸기 / ★ 문장 배열 */
+let gQMode="blank",gScore=0,gTotal=0,gQ=null;
+try{const m=localStorage.getItem("grammar_qmode");if(m)gQMode=m;}catch(e){}
+function gQModes(){return [["blank","빈칸 고르기"],...(gUseTable()?[["conv","경어 바꾸기"]]:[]),["order","★ 문장 배열"]];}
+function gQuizHead(){const M=gQModes();if(!M.some(m=>m[0]===gQMode))gQMode=M[0][0];
+  return `<div class="filters c${M.length}">${M.map(([v,l])=>`<button class="chip ${v===gQMode?'active':''}" onclick="gQuizMode('${v}')">${l}</button>`).join("")}</div>`;}
+function gQuizMode(m){gQMode=m;try{localStorage.setItem("grammar_qmode",m);}catch(e){}gNewQuiz();}
+function gPick(P,key){if(P.length>1&&gQ&&gQ.key!==undefined){const Q=P.filter(x=>key(x)!==gQ.key);if(Q.length)P=Q;}return P[Math.floor(Math.random()*P.length)];}
+function gNewQuiz(){
+  const head=gQuizHead();let body="";
+  if(gQMode==="blank"){
+    const P=gItems().flatMap(i=>(i.q||[]).map(q=>({...q,item:i})));
+    if(!P.length){$("#g-quiz").innerHTML=head+`<p class="empty">문제가 없어요.</p>`;return;}
+    const q=gPick(P,x=>x.s);gQ={key:q.s,q};
+    const opts=shuffle([q.a,...q.o]);
+    body=`<div class="prompt">빈칸에 들어갈 말은?</div><div class="gq">${jr(q.s)}</div><div class="gqk">${q.k}</div>
+      <div class="opts">${opts.map(o=>`<div class="opt" data-c="${o===q.a?1:0}" onclick="gAnswer(this)"><span class="jp">${jr(o)}</span></div>`).join("")}</div>`;
+  }else if(gQMode==="conv"){
+    const T=gTable(),cells=[];
+    T.forEach((r,n)=>[1,2].forEach(c=>{if(r[c]!=="—")cells.push({n,c});}));
+    const t=gPick(cells,x=>x.n+":"+x.c);gQ={key:t.n+":"+t.c};
+    const row=T[t.n],ans=row[t.c],parts=new Set(ans.split("・").map(jplain));
+    const clash=x=>x==="—"||x===ans||x.split("・").some(p=>parts.has(jplain(p)));
+    const opp=row[3-t.c];
+    const others=shuffle(T.filter((r,n)=>n!==t.n).map(r=>r[t.c]).filter(x=>!clash(x)));
+    const D=[...(clash(opp)?[]:[opp]),...others].filter((x,i,a)=>a.indexOf(x)===i).slice(0,3);
+    const opts=shuffle([ans,...D]);gQ.q={a:ans,why:`${jplain(row[0])} → 존경어 ${jplain(row[1])} / 겸양어 ${jplain(row[2])}`};
+    body=`<div class="prompt">다음 동사의 <b>${t.c===1?"존경어 ↑":"겸양어 ↓"}</b>는?</div>
+      <div class="qw">${jr(row[0])}</div><div class="gqk">${row[3]} · ${t.c===1?"상대(윗사람)가 할 때":"내가 할 때"}</div>
+      <div class="opts">${opts.map(o=>`<div class="opt" data-c="${o===ans?1:0}" onclick="gAnswer(this)"><span class="jp">${o.split("・").map(jr).join("・")}</span></div>`).join("")}</div>`;
+  }else{
+    const S=gItems().flatMap(i=>i.ex.map(([jp,ko])=>({jp,ko,item:i}))).filter(x=>x.jp.split("/").length>=3);
+    if(!S.length){$("#g-quiz").innerHTML=head+`<p class="empty">문제가 없어요.</p>`;return;}
+    const x=gPick(S,y=>y.jp);
+    const parts=x.jp.split("/");
+    const pool=shuffle(G.items.flatMap(i=>i.ex.flatMap(e=>e[0].split("/"))).filter(c=>!parts.some(p=>jplain(p)===jplain(c))));
+    const chunks=shuffle([...parts.map(t=>({t,ok:1})),...(pool[0]?[{t:pool[0],ok:0}]:[])]);
+    gQ={key:x.jp,x,chunks,pick:[]};
+    body=`<div class="prompt">한국어 뜻에 맞게 순서대로 눌러 문장을 만드세요</div>
+      <div class="qko" style="font-size:20px">${x.ko}</div>
+      <div class="ord-ans" id="gOrdAns"></div>
+      <div class="ord-bank">${chunks.map((c,n)=>`<button class="ord-c" id="gOc${n}" onclick="gOrdPick(${n})">${jr(c.t)}</button>`).join("")}</div>
+      <div class="ord-go"><button class="chip active" style="width:100%;min-height:44px;font-size:15px" onclick="gOrdCheck()">확인</button></div>`;
+  }
+  $("#g-quiz").innerHTML=head+`<div class="quiz">${body}<div id="gFeed"></div>
+    <div class="score" id="gScoreBox">맞힘 ${gScore} / 푼 문제 ${gTotal}</div></div>`;
+}
+function gOrdPick(n){if(gQ.done)return;gQ.pick.push(n);gOrdDraw();}
+function gOrdUnpick(k){if(gQ.done)return;gQ.pick.splice(k,1);gOrdDraw();}
+function gOrdDraw(){
+  gQ.chunks.forEach((c,n)=>$("#gOc"+n).classList.toggle("used",gQ.pick.includes(n)));
+  $("#gOrdAns").innerHTML=gQ.pick.map((n,k)=>`<button class="ord-c" onclick="gOrdUnpick(${k})">${jr(gQ.chunks[n].t)}</button>`).join("");
+}
+function gOrdCheck(){if(gQ.done||!gQ.pick.length)return;
+  const made=gQ.pick.map(n=>jplain(gQ.chunks[n].t)).join(""),ok=made===jplain(gQ.x.jp);
+  gQ.done=1;gResult(ok,`<div class="gq" style="font-size:19px">${jr(gQ.x.jp)} ${say(gQ.x.jp)}</div><div class="gqk" style="margin:0">${gQ.x.ko}</div>`);
+}
+function gAnswer(el){if(el.dataset.done)return;const ok=el.dataset.c==="1";
+  document.querySelectorAll("#g-quiz .opt").forEach(o=>{o.dataset.done=1;if(o.dataset.c==="1")o.classList.add("ok");});
+  if(!ok)el.classList.add("no");
+  const q=gQ.q;let ex="";
+  if(gQMode==="blank"){const full=q.s.replace("＿＿","⟦"+q.a+"⟧");
+    ex=`<div class="gq" style="font-size:19px">${jr(full).replace("⟦",'<span class="hl">').replace("⟧","</span>")} ${say(full.replace(/[⟦⟧]/g,""))}</div>`;}
+  gResult(ok,ex+`<div class="gnote" style="text-align:left">💡 ${jr(q.why)}</div>`);
+}
+function gResult(ok,html){gTotal++;if(ok)gScore++;
+  $("#gScoreBox").textContent=`맞힘 ${gScore} / 푼 문제 ${gTotal}`;
+  $("#gFeed").innerHTML=`<div class="feed ${ok?'good':'bad'}"><div class="fh">${ok?'⭕ 정답!':'❌ 아쉬워요'}</div>${html}
+    <button class="chip active nextb" onclick="gNewQuiz()">다음 문제 ▶</button></div>`;
+}
+
+function gSetView(v){gCur=v;
+  ["list","card","quiz"].forEach(x=>$("#g-"+x).classList.toggle("hide",x!==v));
+  document.querySelectorAll("[data-gv]").forEach(t=>t.classList.toggle("active",t.dataset.gv===v));
+  if(v==="list")gRenderList();
+  if(v==="card")gStartCard();
+  if(v==="quiz")gNewQuiz();
+}
+document.querySelectorAll("[data-gv]").forEach(t=>t.onclick=()=>gSetView(t.dataset.gv));
+
 /* ── 시작 ── */
 kRenderList();
 renderChBar();
 vRenderList();
+gRenderBar();
+gRenderList();
 (function(){
   let q="";
   try{ q=new URLSearchParams(location.search).get("k")||(location.hash?decodeURIComponent(location.hash.slice(1)):""); }catch(e){}
   if(q&&KSET.has(q))kShow(q);
   let m="";
   try{ m=new URLSearchParams(location.search).get("m")||""; }catch(e){}
-  if(m==="vocab")setMode("vocab");
+  if(m==="vocab"||m==="grammar")setMode(m);
 })();
 </script>
 </body>

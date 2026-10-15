@@ -27,12 +27,18 @@
   - 틀리면 정답 + 한자 풀이를 보여주고 `다음 문제` 버튼, 맞히면 자동 진행
   - **✗ 틀린 단어**: 퀴즈에서 틀린 단어만 모아 다시 풀기 (맞히면 목록에서 빠짐, 저장됨)
 
+### 📝 문법 (주제별 · 현재 **경어** 9문형)
+- **설명**: 주제 한눈에 보기(존경어·겸양어·정중어 비교) → 문형별 `뜻 / 접속 / 쉬운 예문(🔊) / 💡 팁`, 특별 경어 표
+- **카드**: 앞면 문형 → 뒷면 뜻·접속·예문 / 특별 경어 표 카드(기본형 → 존경어·겸양어)
+- **퀴즈**: `빈칸 고르기`(JLPT 문법1 유형, 해설 포함) · `경어 바꾸기`(표에서 출제, 반대쪽 경어를 함정 보기로) · `★ 문장 배열`(듀오링고식 조각 맞추기, 함정 조각 1개)
+- 예문 속 한자도 누르면 한자 상세 (`← 문법으로 돌아가기`)
+
 ### 공통
 🔊 발음 듣기(TTS) · 🌙 다크 모드 · 진도 저장(localStorage) · 진도바
 
 ## 빌드
 ```bash
-cd study-app && python3 build.py   # ../kanji-app/*, ../vocab-app/words.py -> index.html
+cd study-app && python3 build.py   # ../kanji-app/*, ../vocab-app/words.py, ../grammar/grammar.py -> index.html
 ```
 데이터는 기존 두 폴더를 그대로 참조합니다. **수정은 원본 데이터 파일에서** 하세요.
 
@@ -43,6 +49,7 @@ cd study-app && python3 build.py   # ../kanji-app/*, ../vocab-app/words.py -> in
 | `../kanji-app/rich.py` | 어원 + 음훈독 대표단어 |
 | `../kanji-app/tips.py` | 암기 꿀팁 |
 | `../vocab-app/words.py` | 단어 `(표기, 읽기, 뜻, 품사, 챕터)` |
+| `../grammar/grammar.py` | 문법 (주제·문형·예문·빈칸문제·특별경어 표) — 형식은 파일 상단 주석 참고 |
 | `study-app/template.html` | 통합 UI 템플릿 |
 
 ## 단어 추가 (다음 챕터)
@@ -63,4 +70,4 @@ cd study-app && python3 build.py   # ../kanji-app/*, ../vocab-app/words.py -> in
 
 ## URL 파라미터
 - `?k=日` — 해당 한자 상세로 바로 열기
-- `?m=vocab` — 단어장 모드로 시작
+- `?m=vocab` / `?m=grammar` — 단어장 / 문법 모드로 시작
