@@ -17798,5 +17798,303 @@
    "Brilliant",
    "Korea"
   ]
+ },
+ "丁": {
+  "level": "N1",
+  "strokes": 2,
+  "on": [
+   "チョウ",
+   "テイ",
+   "チン",
+   "トウ",
+   "チ"
+  ],
+  "kun": [
+   "ひのと"
+  ],
+  "meanings": [
+   "Street",
+   "Ward",
+   "Town",
+   "Counter For Guns, Tools, Leaves Or Cakes Of Something",
+   "Even Number",
+   "4th Calendar Sign"
+  ]
+ },
+ "寧": {
+  "level": "N1",
+  "strokes": 14,
+  "on": [
+   "ネイ"
+  ],
+  "kun": [
+   "むし.ろ"
+  ],
+  "meanings": [
+   "Rather",
+   "Preferably",
+   "Peaceful",
+   "Quiet",
+   "Tranquility"
+  ]
+ },
+ "射": {
+  "level": "N1",
+  "strokes": 10,
+  "on": [
+   "シャ"
+  ],
+  "kun": [
+   "い.る",
+   "さ.す",
+   "う.つ"
+  ],
+  "meanings": [
+   "Shoot",
+   "Shine Into",
+   "Onto",
+   "Archery"
+  ]
+ },
+ "展": {
+  "level": "N1",
+  "strokes": 10,
+  "on": [
+   "テン"
+  ],
+  "kun": [],
+  "meanings": [
+   "Unfold",
+   "Expand"
+  ]
+ },
+ "徴": {
+  "level": "N1",
+  "strokes": 14,
+  "on": [
+   "チョウ",
+   "チ"
+  ],
+  "kun": [
+   "しるし"
+  ],
+  "meanings": [
+   "Indications",
+   "Sign",
+   "Omen",
+   "Symptom",
+   "Collect",
+   "Seek",
+   "Refer To",
+   "Question"
+  ]
+ },
+ "恵": {
+  "level": "N1",
+  "strokes": 10,
+  "on": [
+   "ケイ",
+   "エ"
+  ],
+  "kun": [
+   "めぐ.む",
+   "めぐ.み"
+  ],
+  "meanings": [
+   "Favor",
+   "Blessing",
+   "Grace",
+   "Kindness"
+  ]
+ },
+ "慰": {
+  "level": "N1",
+  "strokes": 15,
+  "on": [
+   "イ"
+  ],
+  "kun": [
+   "なぐさ.める",
+   "なぐさ.む"
+  ],
+  "meanings": [
+   "Consolation",
+   "Amusement",
+   "Seduce",
+   "Cheer",
+   "Make Sport Of",
+   "Comfort",
+   "Console"
+  ]
+ },
+ "撮": {
+  "level": "N1",
+  "strokes": 15,
+  "on": [
+   "サツ"
+  ],
+  "kun": [
+   "と.る",
+   "つま.む",
+   "ど.り"
+  ],
+  "meanings": [
+   "Snapshot",
+   "Take Pictures"
+  ]
+ },
+ "整": {
+  "level": "N1",
+  "strokes": 16,
+  "on": [
+   "セイ"
+  ],
+  "kun": [
+   "ととの.える",
+   "ととの.う"
+  ],
+  "meanings": [
+   "Organize",
+   "Arranging",
+   "Tune",
+   "Tone",
+   "Meter",
+   "Key (music)"
+  ]
+ },
+ "泣": {
+  "level": "N1",
+  "strokes": 8,
+  "on": [
+   "キュウ"
+  ],
+  "kun": [
+   "な.く"
+  ],
+  "meanings": [
+   "Cry",
+   "Weep",
+   "Moan"
+  ]
+ },
+ "無": {
+  "level": "N1",
+  "strokes": 12,
+  "on": [
+   "ム",
+   "ブ"
+  ],
+  "kun": [
+   "な.い"
+  ],
+  "meanings": [
+   "Nothingness",
+   "None",
+   "Ain't",
+   "Nothing",
+   "Nil",
+   "Not"
+  ]
+ },
+ "独": {
+  "level": "N1",
+  "strokes": 9,
+  "on": [
+   "ドク",
+   "トク"
+  ],
+  "kun": [
+   "ひと.り"
+  ],
+  "meanings": [
+   "Single",
+   "Alone",
+   "Spontaneously",
+   "Germany"
+  ]
+ },
+ "納": {
+  "level": "N1",
+  "strokes": 10,
+  "on": [
+   "ノウ",
+   "ナッ",
+   "ナ",
+   "ナン",
+   "トウ"
+  ],
+  "kun": [
+   "おさ.める",
+   "おさ.まる"
+  ],
+  "meanings": [
+   "Settlement",
+   "Obtain",
+   "Reap",
+   "Pay",
+   "Supply",
+   "Store"
+  ]
+ },
+ "覧": {
+  "level": "N1",
+  "strokes": 17,
+  "on": [
+   "ラン"
+  ],
+  "kun": [
+   "み.る"
+  ],
+  "meanings": [
+   "Perusal",
+   "See"
+  ]
+ },
+ "訳": {
+  "level": "N1",
+  "strokes": 11,
+  "on": [
+   "ヤク"
+  ],
+  "kun": [
+   "わけ"
+  ],
+  "meanings": [
+   "Translate",
+   "Reason",
+   "Circumstance",
+   "Case"
+  ]
+ },
+ "隣": {
+  "level": "N1",
+  "strokes": 16,
+  "on": [
+   "リン"
+  ],
+  "kun": [
+   "とな.る",
+   "となり"
+  ],
+  "meanings": [
+   "Neighboring"
+  ]
+ },
+ "駄": {
+  "level": "N1",
+  "strokes": 14,
+  "on": [
+   "ダ",
+   "タ"
+  ],
+  "kun": [],
+  "meanings": [
+   "Burdensome",
+   "Pack Horse",
+   "Horse Load",
+   "Send By Horse",
+   "Trivial",
+   "Worthless"
+  ]
  }
 }
