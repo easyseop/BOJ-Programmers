@@ -18610,5 +18610,312 @@
    "Frightened",
    "Amazed"
   ]
+ },
+ "嘘": {
+  "level": "N1",
+  "strokes": 14,
+  "on": [
+   "キョ",
+   "コ"
+  ],
+  "kun": [
+   "うそ",
+   "ふ.く"
+  ],
+  "meanings": [
+   "Lie",
+   "Falsehood"
+  ]
+ },
+ "坊": {
+  "level": "N1",
+  "strokes": 7,
+  "on": [
+   "ボウ",
+   "ボッ"
+  ],
+  "kun": [],
+  "meanings": [
+   "Boy",
+   "Priest's Residence",
+   "Priest"
+  ]
+ },
+ "奏": {
+  "level": "N1",
+  "strokes": 9,
+  "on": [
+   "ソウ"
+  ],
+  "kun": [
+   "かな.でる"
+  ],
+  "meanings": [
+   "Play Music",
+   "Speak To A Ruler",
+   "Complete"
+  ]
+ },
+ "志": {
+  "level": "N1",
+  "strokes": 7,
+  "on": [
+   "シ"
+  ],
+  "kun": [
+   "こころざ.す",
+   "こころざし"
+  ],
+  "meanings": [
+   "Intention",
+   "Plan",
+   "Resolve",
+   "Aspire",
+   "Motive",
+   "Hopes",
+   "Shilling"
+  ]
+ },
+ "応": {
+  "level": "N1",
+  "strokes": 7,
+  "on": [
+   "オウ",
+   "ヨウ",
+   "ノウ"
+  ],
+  "kun": [
+   "あた.る",
+   "まさに",
+   "こた.える"
+  ],
+  "meanings": [
+   "Apply",
+   "Answer",
+   "Yes",
+   "Ok",
+   "Reply",
+   "Accept"
+  ]
+ },
+ "慮": {
+  "level": "N1",
+  "strokes": 15,
+  "on": [
+   "リョ"
+  ],
+  "kun": [
+   "おもんぱく.る",
+   "おもんぱか.る"
+  ],
+  "meanings": [
+   "Prudence",
+   "Thought",
+   "Concern",
+   "Consider",
+   "Deliberate",
+   "Fear"
+  ]
+ },
+ "憧": {
+  "level": "N1",
+  "strokes": 15,
+  "on": [
+   "ショウ",
+   "トウ",
+   "ドウ"
+  ],
+  "kun": [
+   "あこが.れる"
+  ],
+  "meanings": [
+   "Yearn After",
+   "Long For",
+   "Aspire To",
+   "Admire",
+   "Adore"
+  ]
+ },
+ "懸": {
+  "level": "N1",
+  "strokes": 20,
+  "on": [
+   "ケン",
+   "ケ"
+  ],
+  "kun": [
+   "か.ける",
+   "か.かる"
+  ],
+  "meanings": [
+   "State Of Suspension",
+   "Hang",
+   "Depend",
+   "Consult",
+   "Distant",
+   "Far Apart"
+  ]
+ },
+ "暑": {
+  "level": "N1",
+  "strokes": 12,
+  "on": [
+   "ショ"
+  ],
+  "kun": [
+   "あつ.い"
+  ],
+  "meanings": [
+   "Sultry",
+   "Hot",
+   "Summer Heat"
+  ]
+ },
+ "案": {
+  "level": "N1",
+  "strokes": 10,
+  "on": [
+   "アン"
+  ],
+  "kun": [
+   "つくえ"
+  ],
+  "meanings": [
+   "Plan",
+   "Suggestion",
+   "Draft",
+   "Ponder",
+   "Fear",
+   "Proposition",
+   "Idea",
+   "Expectation",
+   "Worry",
+   "Table",
+   "Bench"
+  ]
+ },
+ "椅": {
+  "level": "N1",
+  "strokes": 12,
+  "on": [
+   "イ"
+  ],
+  "kun": [],
+  "meanings": [
+   "Chair"
+  ]
+ },
+ "溢": {
+  "level": "N1",
+  "strokes": 13,
+  "on": [
+   "イツ"
+  ],
+  "kun": [
+   "こぼ.れる",
+   "あふ.れる",
+   "み.ちる"
+  ],
+  "meanings": [
+   "Overflow",
+   "Inundate",
+   "Spill"
+  ]
+ },
+ "的": {
+  "level": "N1",
+  "strokes": 8,
+  "on": [
+   "テキ"
+  ],
+  "kun": [
+   "まと"
+  ],
+  "meanings": [
+   "Bull's Eye",
+   "Mark",
+   "Target",
+   "Object",
+   "Adjective Ending"
+  ]
+ },
+ "穴": {
+  "level": "N1",
+  "strokes": 5,
+  "on": [
+   "ケツ"
+  ],
+  "kun": [
+   "あな"
+  ],
+  "meanings": [
+   "Hole",
+   "Aperture",
+   "Slit",
+   "Cave",
+   "Den"
+  ]
+ },
+ "謝": {
+  "level": "N1",
+  "strokes": 17,
+  "on": [
+   "シャ"
+  ],
+  "kun": [
+   "あやま.る"
+  ],
+  "meanings": [
+   "Apologize",
+   "Thank",
+   "Refuse"
+  ]
+ },
+ "鉛": {
+  "level": "N1",
+  "strokes": 13,
+  "on": [
+   "エン"
+  ],
+  "kun": [
+   "なまり"
+  ],
+  "meanings": [
+   "Lead"
+  ]
+ },
+ "飴": {
+  "level": "N1",
+  "strokes": 13,
+  "on": [
+   "イ",
+   "シ"
+  ],
+  "kun": [
+   "あめ",
+   "やしな.う"
+  ],
+  "meanings": [
+   "Rice Jelly",
+   "Candy"
+  ]
+ },
+ "養": {
+  "level": "N1",
+  "strokes": 15,
+  "on": [
+   "ヨウ",
+   "リョウ"
+  ],
+  "kun": [
+   "やしな.う"
+  ],
+  "meanings": [
+   "Foster",
+   "Bring Up",
+   "Rear",
+   "Develop",
+   "Nurture"
+  ]
  }
 }
