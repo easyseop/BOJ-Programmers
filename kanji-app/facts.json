@@ -18432,5 +18432,183 @@
    "Inspire",
    "Impel"
   ]
+ },
+ "価": {
+  "level": "N1",
+  "strokes": 8,
+  "on": [
+   "カ",
+   "ケ"
+  ],
+  "kun": [
+   "あたい"
+  ],
+  "meanings": [
+   "Value",
+   "Price"
+  ]
+ },
+ "傘": {
+  "level": "N1",
+  "strokes": 12,
+  "on": [
+   "サン"
+  ],
+  "kun": [
+   "かさ"
+  ],
+  "meanings": [
+   "Umbrella"
+  ]
+ },
+ "呂": {
+  "level": "N1",
+  "strokes": 7,
+  "on": [
+   "ロ",
+   "リョ"
+  ],
+  "kun": [
+   "せぼね"
+  ],
+  "meanings": [
+   "Spine",
+   "Backbone"
+  ]
+ },
+ "壁": {
+  "level": "N1",
+  "strokes": 16,
+  "on": [
+   "ヘキ"
+  ],
+  "kun": [
+   "かべ"
+  ],
+  "meanings": [
+   "Wall",
+   "Lining (stomach)",
+   "Fence"
+  ]
+ },
+ "慢": {
+  "level": "N1",
+  "strokes": 14,
+  "on": [
+   "マン"
+  ],
+  "kun": [],
+  "meanings": [
+   "Ridicule",
+   "Laziness"
+  ]
+ },
+ "我": {
+  "level": "N1",
+  "strokes": 7,
+  "on": [
+   "ガ"
+  ],
+  "kun": [
+   "われ",
+   "わ",
+   "わ.が",
+   "わが"
+  ],
+  "meanings": [
+   "Ego",
+   "I",
+   "Selfish",
+   "Our",
+   "Oneself"
+  ]
+ },
+ "看": {
+  "level": "N1",
+  "strokes": 9,
+  "on": [
+   "カン"
+  ],
+  "kun": [
+   "み.る"
+  ],
+  "meanings": [
+   "Watch Over",
+   "See"
+  ]
+ },
+ "級": {
+  "level": "N1",
+  "strokes": 9,
+  "on": [
+   "キュウ"
+  ],
+  "kun": [],
+  "meanings": [
+   "Class",
+   "Rank",
+   "Grade"
+  ]
+ },
+ "護": {
+  "level": "N1",
+  "strokes": 20,
+  "on": [
+   "ゴ"
+  ],
+  "kun": [
+   "まも.る"
+  ],
+  "meanings": [
+   "Safeguard",
+   "Protect"
+  ]
+ },
+ "鍵": {
+  "level": "N1",
+  "strokes": 17,
+  "on": [
+   "ケン"
+  ],
+  "kun": [
+   "かぎ"
+  ],
+  "meanings": [
+   "Key"
+  ]
+ },
+ "鏡": {
+  "level": "N1",
+  "strokes": 19,
+  "on": [
+   "キョウ",
+   "ケイ"
+  ],
+  "kun": [
+   "かがみ"
+  ],
+  "meanings": [
+   "Mirror",
+   "Speculum",
+   "Barrel-head",
+   "Round Rice-cake Offering"
+  ]
+ },
+ "驚": {
+  "level": "N1",
+  "strokes": 22,
+  "on": [
+   "キョウ"
+  ],
+  "kun": [
+   "おどろ.く",
+   "おどろ.かす"
+  ],
+  "meanings": [
+   "Wonder",
+   "Be Surprised",
+   "Frightened",
+   "Amazed"
+  ]
  }
 }
