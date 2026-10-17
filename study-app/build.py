@@ -42,6 +42,19 @@ if missing:
 
 # ── 단어 ──
 words = [{'w': w, 'r': r, 'ko': ko, 't': t, 'ch': ch} for (w, r, ko, t, ch) in WORDS]
+# 예문: ../vocab-app/examples/ch*.py 의 EX {"표기|읽기": [{jp, ko, form}, ...]}
+import glob, importlib.util
+EXS = {}
+for fp in sorted(glob.glob(os.path.join(VA, 'examples', 'ch*.py'))):
+    spec = importlib.util.spec_from_file_location(os.path.basename(fp)[:-3], fp)
+    m = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(m)
+    EXS.update(m.EX)
+for e in words:
+    ex = EXS.get(e['w'] + '|' + e['r'])
+    if ex:
+        e['ex'] = [{'jp': x['jp'], 'ko': x['ko'], 'form': x.get('form', '')} for x in ex]
+print("예문", sum(len(e.get('ex', [])) for e in words), "개 /", sum(1 for e in words if e.get('ex')), "단어")
 seen, dup = set(), []
 for e in words:
     k = (e['w'], e['r'])

@@ -181,6 +181,15 @@
   .feed .fw{font-size:28px;font-family:"Yu Mincho",serif;margin:6px 0 0}
   .feed .fk{font-weight:700;margin-top:2px}
   .feed .nextb{margin-top:12px}
+  .vexs{width:100%;text-align:left;margin-top:10px}
+  .vex{background:var(--bg);border-radius:10px;padding:8px 11px;margin-top:6px}
+  .vex .jp{font-family:"Yu Mincho","Hiragino Mincho ProN",serif;font-size:17px;line-height:2}
+  .vex .ko{font-size:13px;color:var(--muted)}
+  .vex .vf{display:inline-block;font-size:11.5px;color:var(--accent-d);background:var(--mark);border-radius:6px;padding:1px 7px;margin-top:3px}
+  .tw{color:var(--accent-d);font-weight:700;border-bottom:2px solid var(--accent)}
+  .vexrow{margin:-4px 0 10px;padding:0 4px}
+  .spk.exb.on{opacity:1}
+  .feed .vexs{margin-top:8px}
   .kbrk{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;margin:10px 0 4px}
   .kb{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--line);background:var(--mark);border-radius:9px;padding:4px 10px;font-size:13px;font-weight:600;color:var(--ink);cursor:pointer}
   .kb b{font-family:"Yu Mincho",serif;font-size:19px;font-weight:400}
@@ -552,6 +561,26 @@ function kBreak(word){const cs=[...new Set([...word].filter(ch=>KSET.has(ch)))];
   if(!cs.length)return "";
   return `<div class="kbrk">${cs.map(ch=>`<span class="kb" onclick="event.stopPropagation();openKanji('${ch}')"><b>${ch}</b>${shortMeaning(KMAP[ch])}</span>`).join("")}</div>`;}
 
+/* 예문: 【】 = 공부 단어(실제 활용형), 漢字(かな) = 후리가나 */
+const exTarget=s=>s.slice(s.indexOf("【")+1,s.indexOf("】"));
+function exHTML(s,blankIt){
+  if(blankIt)s=s.replace(/【[^】]*】/,"＿＿");
+  return jr(s).replace("【",'<span class="tw">').replace("】","</span>");
+}
+const exSay=s=>jkana(s).replace(/[【】]/g,"").replace(/'/g,"");
+function exBlock(w,max=2){
+  if(!w.ex||!w.ex.length)return "";
+  return `<div class="vexs">${w.ex.slice(0,max).map(e=>`<div class="vex">
+    <div class="jp">${exHTML(e.jp)} <button class="spk" onclick="event.stopPropagation();speak('${exSay(e.jp)}')">🔊</button></div>
+    <div class="ko">${e.ko}</div>${e.form?`<div class="vf">${e.form}</div>`:""}</div>`).join("")}</div>`;
+}
+function vToggleEx(btn,id){
+  const row=btn.closest(".row"),nx=row.nextElementSibling;
+  if(nx&&nx.classList.contains("vexrow")){nx.remove();btn.classList.remove("on");return;}
+  const w=WORDS.find(x=>vid(x)===id);if(!w)return;
+  row.insertAdjacentHTML("afterend",`<div class="vexrow">${exBlock(w,3)}</div>`);btn.classList.add("on");
+}
+
 /* 챕터 선택 바: 목록·카드·퀴즈 공통 */
 function renderChBar(){
   $("#vChBar").innerHTML=[...CHS,"ALL"].map(c=>{const n=c==="ALL"?WORDS.length:WORDS.filter(w=>w.ch===c).length;
@@ -593,6 +622,7 @@ function vRenderList(f=""){const L=vFiltered(f);vProgress();$("#vCount").textCon
     <div class="row ${VLEARNED.has(id)?'learned':''}">
       <span class="jp">${rubyJP(w)}</span>
       <button class="spk" onclick="speak('${w.r}')">🔊</button>
+      ${w.ex&&w.ex.length?`<button class="spk exb" onclick="vToggleEx(this,'${id}')" title="예문 보기">💬</button>`:""}
       <span class="mean">${w.ko}<span class="tagc">${w.t} · ${w.ch}</span></span>
       <span>
         <button class="mini ${VFAV.has(id)?'on':''}" onclick="vFav('${id}',this)">${VFAV.has(id)?'★':'☆'}</button>
@@ -617,9 +647,9 @@ function vRenderCard(){
   const front=vfDir==="jp"?`<div class="bigw">${w.w}</div><div class="fhint">탭하면 뜻 보기</div>`
                           :`<div class="krbig">${w.ko}</div><div class="fhint">탭하면 단어 보기</div>`;
   const back =vfDir==="jp"?`<div class="krbig">${w.ko}</div><div class="rd">${w.r}</div>${kBreak(w.w)}
-                            <button class="spk" onclick="event.stopPropagation();speak('${w.r}')">🔊 듣기</button>`
+                            <button class="spk" onclick="event.stopPropagation();speak('${w.r}')">🔊 듣기</button>${exBlock(w)}`
                           :`<div class="bigw">${rubyJP(w)}</div>${kBreak(w.w)}
-                            <button class="spk" onclick="event.stopPropagation();speak('${w.r}')">🔊 듣기</button>`;
+                            <button class="spk" onclick="event.stopPropagation();speak('${w.r}')">🔊 듣기</button>${exBlock(w)}`;
   $("#v-card").innerHTML=head+`
     <div class="navline"><button onclick="vCardMove(-1)" ${vfIdx===0?'disabled':''}>◀ 이전</button>
       <span class="count" style="margin:0">${vfIdx+1} / ${vfPool.length}</span>
@@ -639,23 +669,35 @@ function vCardSt(v){vSt=v;vStartCard();}
 function vFlipDir(){vfDir=vfDir==="jp"?"ko":"jp";vRenderCard();}
 
 /* 단어 퀴즈 — 4가지 방식 */
-const QMODES=[["mc","객관식"],["rev","뜻 보고 단어"],["type","읽기 직접 쓰기"],["listen","듣고 고르기"]];
+const QMODES=[["mc","객관식"],["rev","뜻 보고 단어"],["type","읽기 직접 쓰기"],["listen","듣고 고르기"],["ctx","예문 빈칸"],["exlisten","예문 듣기"]];
+const EXMODE=m=>m==="ctx"||m==="exlisten";
 let vScore=0,vTotal=0,vQMode="mc",vOnlyWrong=false,vQ=null;
 let VWRONG=store.get("vocab_wrong");
 try{const m=localStorage.getItem("vocab_qmode");if(QMODES.some(q=>q[0]===m))vQMode=m;}catch(e){}
-function vQuizHead(){return `<div class="filters c2 d4">${QMODES.map(([v,l])=>`<button class="chip ${v===vQMode?'active':''}" onclick="vQuizMode('${v}')">${l}</button>`).join("")}</div>
+function vQuizHead(){return `<div class="filters c3 d6">${QMODES.map(([v,l])=>`<button class="chip ${v===vQMode?'active':''}" onclick="vQuizMode('${v}')">${l}</button>`).join("")}</div>
   <div class="filters c4 d8">${TYPES.map(t=>`<button class="chip ${t===vType?'active':''}" onclick="vQuizTy('${t}')">${t==='ALL'?'전체':t}</button>`).join("")}</div>
   <div class="filters c2 d4">${STS.map(([v,l])=>`<button class="chip ${v===vSt&&!vOnlyWrong?'active':''}" onclick="vQuizSt('${v}')">${l}</button>`).join("")}
     <button class="chip ${vOnlyWrong?'active':''}" onclick="vQuizWrong()">✗ 틀린 단어 ${WORDS.filter(w=>vIn(w)&&VWRONG.has(vid(w))).length}</button></div>`;}
 function vQuizPool(){return vOnlyWrong?WORDS.filter(w=>vIn(w)&&VWRONG.has(vid(w))):vPool();}
-function vNewQuiz(){const P=vQuizPool();
+function vNewQuiz(){let P=vQuizPool();if(EXMODE(vQMode))P=P.filter(w=>w.ex&&w.ex.length);
   if(vOnlyWrong&&!P.length){$("#v-quiz").innerHTML=vQuizHead()+`<p class="empty">🎉 틀린 단어가 없어요! (퀴즈에서 틀리면 여기에 모이고, 맞히면 빠져요)</p>`;return;}
   if(!vOnlyWrong&&P.length<4){$("#v-quiz").innerHTML=vQuizHead()+`<p class="empty">단어가 4개 이상이어야 퀴즈를 낼 수 있어요.</p>`;return;}
   let c=P[Math.floor(Math.random()*P.length)];
   if(vOnlyWrong&&vQ&&P.length>1&&c===vQ.c)c=P.find(w=>w!==vQ.c);
   const m=vQMode; let ask="";
-  let body="";
-  if(m==="type"){
+  let body="",e=null;
+  if(EXMODE(m)){
+    // 예문 빈칸: 문장 속 실제 활용형 고르기 / 예문 듣기: 문장 듣고 뜻 고르기
+    e=c.ex[Math.floor(Math.random()*c.ex.length)];
+    const key=m==="ctx"?(x=>jplain(exTarget(x.jp))):(x=>x.ko);
+    const opts=shuffle([e,...vExDistractors(c,e,key)]);
+    if(m==="ctx"){ask="빈칸에 알맞은 말은?";
+      body=`<div class="gq">${exHTML(e.jp,true)}</div><div class="gqk">${e.ko}</div>
+        <div class="opts">${opts.map(o=>`<div class="opt" data-c="${o===e?1:0}" onclick="vAnswer(this)"><span class="jp">${jr(exTarget(o.jp))}</span></div>`).join("")}</div>`;}
+    else{ask="문장을 잘 듣고 뜻을 고르세요";
+      body=`<button class="spk big" onclick="speak('${exSay(e.jp)}')">🔊 다시 듣기</button>
+        <div class="opts">${opts.map(o=>`<div class="opt" data-c="${o===e?1:0}" onclick="vAnswer(this)">${o.ko}</div>`).join("")}</div>`;}
+  }else if(m==="type"){
     // 한자 단어는 표기를 보고 읽기를, 가나 단어는 뜻을 보고 단어를 쓴다
     const kana=c.w===c.r;
     ask=kana?"이 뜻의 단어를 가나(또는 로마자)로 쓰세요":"읽기를 히라가나(또는 로마자)로 쓰세요";
@@ -675,12 +717,13 @@ function vNewQuiz(){const P=vQuizPool();
     ask=prompt;
     body=show+`<div class="opts">${opts.map(o=>`<div class="opt" data-c="${o===c?1:0}" onclick="vAnswer(this)">${label(o)}</div>`).join("")}</div>`;
   }
-  vQ={c};
+  vQ={c,e};
   $("#v-quiz").innerHTML=vQuizHead()+`<div class="quiz">
     <div class="prompt">${ask}</div>${body}
     <div id="vFeed"></div>
     <div class="score" id="vScoreBox">맞힘 ${vScore} / 푼 문제 ${vTotal}</div></div>`;
   if(m==="listen")speak(c.r);
+  if(m==="exlisten")speak(exSay(e.jp));
   if(m==="type")setTimeout(()=>{const i=$("#vTypeIn");if(i)i.focus();},50);
 }
 /* 오답 보기: 같은 품사에서만 뽑아 품사로 답이 티 나지 않게.
@@ -701,6 +744,20 @@ function vDistractors(c,key,randomPick){
   }
   return out;
 }
+/* 예문 퀴즈 오답 보기: 같은 품사 단어들의 예문에서 (선택한 챕터 우선) */
+function vExDistractors(c,e,key){
+  const used=new Set([key(e)]),out=[];
+  const tiers=[w=>w.t===c.t&&vChs.has(w.ch), w=>w.t===c.t, ()=>true];
+  for(const t of tiers){
+    for(const w of shuffle(WORDS.filter(w=>w!==c&&w.ex&&w.ex.length&&t(w)))){
+      if(out.length>=3)break;
+      const x=w.ex[Math.floor(Math.random()*w.ex.length)];
+      if(!used.has(key(x))){used.add(key(x));out.push(x);}
+    }
+    if(out.length>=3)break;
+  }
+  return out;
+}
 /* 채점 후: 맞히면 잠깐 뒤 다음 문제, 틀리면 정답 풀이를 보여주고 [다음] 버튼 */
 function vResult(ok){
   const c=vQ.c,id=vid(c);vTotal++;
@@ -710,9 +767,9 @@ function vResult(ok){
   $("#vFeed").innerHTML=`<div class="feed ${ok?'good':'bad'}">
       <div class="fh">${ok?'⭕ 정답!':'❌ 아쉬워요'}</div>
       <div class="fw">${rubyJP(c)} <button class="spk" onclick="speak('${c.r}')">🔊</button></div>
-      <div class="fk">${c.ko}</div>${kBreak(c.w)}
-      ${ok?'':`<button class="chip active nextb" onclick="vNewQuiz()">다음 문제 ▶</button>`}</div>`;
-  if(ok)setTimeout(()=>{if(vQ&&vQ.c===c&&vCur==="quiz")vNewQuiz();},1300);
+      <div class="fk">${c.ko}</div>${kBreak(c.w)}${exBlock(vQ.e?{ex:[vQ.e]}:c,1)}
+      ${ok&&!vQ.e?'':`<button class="chip active nextb" onclick="vNewQuiz()">다음 문제 ▶</button>`}</div>`;
+  if(ok&&!vQ.e)setTimeout(()=>{if(vQ&&vQ.c===c&&vCur==="quiz")vNewQuiz();},1300);
   else{const b=$("#vFeed .nextb");if(b)b.focus();}
 }
 function vAnswer(el){if(el.dataset.done)return;const ok=el.dataset.c==="1";
