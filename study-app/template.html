@@ -837,7 +837,7 @@ function gTableHTML(){
 function gRenderBar(){
   $("#gTopicBar").innerHTML=GTOPICS.map(t=>`<button class="chb ${t===gTopic?'active':''}" onclick="gSelTopic('${t}')">${t}<span class="n">${G.items.filter(i=>i.topic===t).length}문형</span></button>`).join("");
   const K=gKinds();
-  $("#gKind").className="filters c"+Math.min(K.length,5);
+  $("#gKind").className="filters c"+(K.length<=5?K.length:K.length%3===0?3:4);
   $("#gKind").innerHTML=K.map(k=>`<button class="chip ${k===gKind?'active':''}" onclick="gSelKind('${k}')">${k==='ALL'?'전체':k}</button>`).join("");
 }
 function gSelTopic(t){gTopic=t;gKind="ALL";try{localStorage.setItem("grammar_topic",t);}catch(e){}gRenderBar();gSetView(gCur);}
@@ -849,7 +849,7 @@ function gRenderList(){
   const I=gItems();
   const done=G.items.filter(i=>i.topic===gTopic&&GLEARNED.has(i.id)).length, all=G.items.filter(i=>i.topic===gTopic).length;
   const intro=(gKind==="ALL"&&T.intro)?`<div class="gbox"><h3>📌 ${gTopic} 한눈에 보기</h3>
-    ${T.intro.map(([k,d,jp,ko])=>`<div class="gi"><span class="gtag" data-k="${k}">${k}</span>${d}
+    ${T.intro.map(([k,d,jp,ko])=>`<div class="gi"><span class="gtag" data-k="${k}">${k}</span>${jr(d)}
       <div class="gex"><div class="jp">${jr(jp)} ${say(jp)}</div><div class="ko">${ko}</div></div></div>`).join("")}
     ${T.tips?`<ul class="gtips">${T.tips.map(t=>`<li>${jr(t)}</li>`).join("")}</ul>`:""}</div>`:"";
   $("#g-list").innerHTML=`<div class="progress">이해 체크 ${done} / ${all}<div class="bar"><i style="width:${all?Math.round(done/all*100):0}%"></i></div></div>`
