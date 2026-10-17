@@ -18096,5 +18096,341 @@
    "Trivial",
    "Worthless"
   ]
+ },
+ "健": {
+  "level": "N1",
+  "strokes": 11,
+  "on": [
+   "ケン"
+  ],
+  "kun": [
+   "すこ.やか"
+  ],
+  "meanings": [
+   "Healthy",
+   "Health",
+   "Strength",
+   "Persistence"
+  ]
+ },
+ "傷": {
+  "level": "N1",
+  "strokes": 13,
+  "on": [
+   "ショウ"
+  ],
+  "kun": [
+   "きず",
+   "いた.む",
+   "いた.める"
+  ],
+  "meanings": [
+   "Wound",
+   "Hurt",
+   "Injure",
+   "Impair",
+   "Pain",
+   "Injury",
+   "Cut",
+   "Gash",
+   "Scar",
+   "Weak Point"
+  ]
+ },
+ "噛": {
+  "level": "N1",
+  "strokes": 15,
+  "on": [
+   "コウ",
+   "ゴウ"
+  ],
+  "kun": [
+   "か.む",
+   "か.じる"
+  ],
+  "meanings": [
+   "Chew",
+   "Bite",
+   "Gnaw"
+  ]
+ },
+ "器": {
+  "level": "N1",
+  "strokes": 15,
+  "on": [
+   "キ"
+  ],
+  "kun": [
+   "うつわ"
+  ],
+  "meanings": [
+   "Utensil",
+   "Vessel",
+   "Receptacle",
+   "Implement",
+   "Instrument",
+   "Ability",
+   "Container",
+   "Tool",
+   "Set"
+  ]
+ },
+ "嫌": {
+  "level": "N1",
+  "strokes": 13,
+  "on": [
+   "ケン",
+   "ゲン"
+  ],
+  "kun": [
+   "きら.う",
+   "きら.い",
+   "いや"
+  ],
+  "meanings": [
+   "Dislike",
+   "Detest",
+   "Hate"
+  ]
+ },
+ "嬉": {
+  "level": "N1",
+  "strokes": 15,
+  "on": [
+   "キ"
+  ],
+  "kun": [
+   "うれ.しい",
+   "たの.しむ"
+  ],
+  "meanings": [
+   "Glad",
+   "Pleased",
+   "Rejoice"
+  ]
+ },
+ "康": {
+  "level": "N1",
+  "strokes": 11,
+  "on": [
+   "コウ"
+  ],
+  "kun": [],
+  "meanings": [
+   "Ease",
+   "Peace"
+  ]
+ },
+ "憶": {
+  "level": "N1",
+  "strokes": 16,
+  "on": [
+   "オク"
+  ],
+  "kun": [],
+  "meanings": [
+   "Recollection",
+   "Think",
+   "Remember"
+  ]
+ },
+ "検": {
+  "level": "N1",
+  "strokes": 12,
+  "on": [
+   "ケン"
+  ],
+  "kun": [
+   "しら.べる"
+  ],
+  "meanings": [
+   "Examination",
+   "Investigate"
+  ]
+ },
+ "玄": {
+  "level": "N1",
+  "strokes": 5,
+  "on": [
+   "ゲン"
+  ],
+  "kun": [
+   "くろ",
+   "くろ.い"
+  ],
+  "meanings": [
+   "Mysterious",
+   "Occultness",
+   "Black",
+   "Deep",
+   "Profound"
+  ]
+ },
+ "結": {
+  "level": "N1",
+  "strokes": 12,
+  "on": [
+   "ケツ",
+   "ケチ"
+  ],
+  "kun": [
+   "むす.ぶ",
+   "ゆ.う",
+   "ゆ.わえる"
+  ],
+  "meanings": [
+   "Tie",
+   "Bind",
+   "Contract",
+   "Join",
+   "Organize",
+   "Do Up Hair",
+   "Fasten"
+  ]
+ },
+ "興": {
+  "level": "N1",
+  "strokes": 16,
+  "on": [
+   "コウ",
+   "キョウ"
+  ],
+  "kun": [
+   "おこ.る",
+   "おこ.す"
+  ],
+  "meanings": [
+   "Entertain",
+   "Revive",
+   "Retrieve",
+   "Interest",
+   "Pleasure"
+  ]
+ },
+ "貴": {
+  "level": "N1",
+  "strokes": 12,
+  "on": [
+   "キ"
+  ],
+  "kun": [
+   "たっと.い",
+   "とうと.い",
+   "たっと.ぶ",
+   "とうと.ぶ"
+  ],
+  "meanings": [
+   "Precious",
+   "Value",
+   "Prize",
+   "Esteem",
+   "Honor"
+  ]
+ },
+ "距": {
+  "level": "N1",
+  "strokes": 12,
+  "on": [
+   "キョ"
+  ],
+  "kun": [
+   "へだ.たる",
+   "けづめ"
+  ],
+  "meanings": [
+   "Long-distance",
+   "Spur",
+   "Fetlock"
+  ]
+ },
+ "輝": {
+  "level": "N1",
+  "strokes": 15,
+  "on": [
+   "キ"
+  ],
+  "kun": [
+   "かがや.く"
+  ],
+  "meanings": [
+   "Radiance",
+   "Shine",
+   "Sparkle",
+   "Gleam",
+   "Twinkle"
+  ]
+ },
+ "隠": {
+  "level": "N1",
+  "strokes": 14,
+  "on": [
+   "イン",
+   "オン"
+  ],
+  "kun": [
+   "かく.す",
+   "かく.し",
+   "かく.れる",
+   "かか.す",
+   "よ.る"
+  ],
+  "meanings": [
+   "Conceal",
+   "Hide",
+   "Cover"
+  ]
+ },
+ "離": {
+  "level": "N1",
+  "strokes": 19,
+  "on": [
+   "リ"
+  ],
+  "kun": [
+   "はな.れる",
+   "はな.す"
+  ],
+  "meanings": [
+   "Detach",
+   "Separation",
+   "Disjoin",
+   "Digress"
+  ]
+ },
+ "飾": {
+  "level": "N1",
+  "strokes": 13,
+  "on": [
+   "ショク"
+  ],
+  "kun": [
+   "かざ.る",
+   "かざ.り"
+  ],
+  "meanings": [
+   "Decorate",
+   "Ornament",
+   "Adorn",
+   "Embellish"
+  ]
+ },
+ "駆": {
+  "level": "N1",
+  "strokes": 14,
+  "on": [
+   "ク"
+  ],
+  "kun": [
+   "か.ける",
+   "か.る"
+  ],
+  "meanings": [
+   "Drive",
+   "Run",
+   "Gallop",
+   "Advance",
+   "Inspire",
+   "Impel"
+  ]
  }
 }
