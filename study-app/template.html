@@ -209,6 +209,16 @@
   .gt{font-family:"Yu Mincho","Hiragino Mincho ProN",serif;font-size:24px;flex:1;line-height:1.4}
   .gm{font-weight:800;margin:4px 0 2px}
   .gf{font-size:13px;color:var(--muted);margin-bottom:4px}
+  .fm{display:flex;flex-direction:column;gap:6px;margin:6px 0 4px}
+  .fr{display:flex;flex-wrap:wrap;align-items:center;gap:5px;line-height:1.9}
+  .fr.plain{font-size:13px;color:var(--muted)}
+  .ft.k{background:var(--mark);color:var(--ink);border:1px solid var(--line);border-radius:7px;padding:0 8px;font-size:12.5px;font-weight:600;line-height:1.9}
+  .ft.j{color:var(--accent-d);font-weight:800;font-family:"Yu Mincho","Hiragino Mincho ProN",serif;font-size:17px}
+  .fp{color:var(--muted);font-weight:800;font-size:14px}
+  .fl{font-size:11px;font-weight:700;color:#fff;background:var(--accent);border-radius:8px;padding:0 7px;line-height:1.8}
+  .fn{font-size:11.5px;color:var(--muted)}
+  .face .fm{align-items:center;margin-bottom:10px}
+  .face .fr{justify-content:center}
   .gex{padding:8px 11px;background:var(--bg);border-radius:10px;margin-top:6px}
   .gex .jp{font-size:18px;line-height:1.9}
   .gex .ko{font-size:13px;color:var(--muted)}
@@ -849,6 +859,30 @@ function gRenderBar(){
 function gSelTopic(t){gTopic=t;gKind="ALL";try{localStorage.setItem("grammar_topic",t);}catch(e){}gRenderBar();gSetView(gCur);}
 function gSelKind(k){gKind=k;gRenderBar();gSetView(gCur);}
 
+/* 접속: "동사 사전형 / 명사 + の + ため(に)" → 대안마다 한 줄, 품사는 회색 상자 · 붙는 말은 보라 글자 · + 로 연결 */
+function formHTML(f){
+  const rows=[];
+  for(const g of f.split(/\s{2,}(?=[①-⑨])/)){
+    const alts=g.split(/\s+\/\s+/);
+    // + 가 없는 대안은 다음 대안의 마지막 덩어리를 빌려 씀: "동사 사전형 / 명사 + ごとに"
+    for(let i=alts.length-2;i>=0;i--)
+      if(!/\s[+→]\s/.test(alts[i])&&/\s\+\s/.test(alts[i+1]))alts[i]+=" + "+alts[i+1].split(/\s\+\s/).pop();
+    rows.push(...alts);
+  }
+  if(rows.length===1&&!/\s[+→]\s/.test(rows[0]))return `<div class="fm"><div class="fr plain">${jr(f)}</div></div>`;
+  const tok=t=>`<span class="ft ${/[가-힣]/.test(t)?'k':'j'}">${jr(t)}</span>`;
+  return `<div class="fm">${rows.map(a=>{
+    let lab="",note="";
+    a=a.replace(/^([①-⑨])\s*/,(m,x)=>{lab=x;return "";});
+    a=a.replace(/^\(([^()]*[가-힣][^()]*)\)\s*/,(m,x)=>{lab=lab||x;return "";});
+    a=a.replace(/\s\(([^()]*[가-힣][^()]*)\)\s*$/,(m,x)=>{note=x;return "";});
+    const parts=a.split(/\s([+→])\s/);
+    return `<div class="fr">${lab?`<span class="fl">${lab}</span>`:""}${parts.map((p,i)=>i%2?`<span class="fp">${p}</span>`:tok(p)).join("")}${note?`<span class="fn">(${note})</span>`:""}</div>`;
+  }).join("")}</div>`;
+}
+
+const gMean=m=>m.replace(/\s{2,}(?=[②-⑨])/g,"<br>");
+
 /* 설명(목록) */
 function gRenderList(){
   const T=G.topics[gTopic]||{};
@@ -862,8 +896,8 @@ function gRenderList(){
     +intro+I.map(i=>`<div class="gbox" id="g-${i.id}">
       <div class="gh"><span class="gtag" data-k="${i.kind}">${i.kind}</span><span class="gt">${jr(i.title)}</span>
         <button class="mini ${GLEARNED.has(i.id)?'on':''}" onclick="gLearn('${i.id}')" title="이해했어요">${GLEARNED.has(i.id)?'✅':'⬜'}</button></div>
-      <div class="gm">${i.mean}</div>
-      <div class="gf">접속 · ${jr(i.form)}</div>
+      <div class="gm">${gMean(i.mean)}</div>
+      <div class="gf">접속</div>${formHTML(i.form)}
       ${i.ex.map(([jp,ko])=>`<div class="gex"><div class="jp">${jr(jp)} ${say(jp)}</div><div class="ko">${ko}</div></div>`).join("")}
       ${i.note?`<div class="gnote">💡 ${jr(i.note)}</div>`:""}
       ${i.kind==="특별경어"?gTableHTML():""}
@@ -884,7 +918,7 @@ function gRenderCard(){
   const c=gfPool[gfIdx];let front,back;
   if(c.item){const i=c.item;
     front=`<span class="gtag" data-k="${i.kind}">${i.kind}</span><div class="bigw" style="font-size:34px;margin-top:8px">${jr(i.title)}</div><div class="fhint">탭하면 뜻·예문 보기</div>`;
-    back=`<div class="fc-label">뜻</div><div class="gm" style="font-size:18px">${i.mean}</div><div class="gf">${jr(i.form)}</div>
+    back=`<div class="fc-label">뜻</div><div class="gm" style="font-size:18px">${gMean(i.mean)}</div><div class="fc-label" style="background:var(--muted)">접속</div>${formHTML(i.form)}
       <div class="gex" style="width:100%"><div class="jp">${jr(i.ex[0][0])} ${say(i.ex[0][0])}</div><div class="ko">${i.ex[0][1]}</div></div>`;
   }else{const r=c.row,cell=x=>x==="—"?"—":x.split("・").map(jr).join("・");
     front=`<span class="gtag" data-k="특별경어">특별 경어</span><div class="bigw" style="font-size:36px;margin-top:8px">${jr(r[0])}</div><div class="gm">${r[3]}</div><div class="fhint">존경어 · 겸양어는?</div>`;
