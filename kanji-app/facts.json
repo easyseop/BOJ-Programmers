@@ -18917,5 +18917,210 @@
    "Develop",
    "Nurture"
   ]
+ },
+ "匂": {
+  "level": "N1",
+  "strokes": 4,
+  "on": [],
+  "kun": [
+   "にお.う",
+   "にお.い",
+   "にお.わせる"
+  ],
+  "meanings": [
+   "Fragrant",
+   "Stink",
+   "Glow",
+   "Insinuate",
+   "(kokuji)"
+  ]
+ },
+ "喉": {
+  "level": "N1",
+  "strokes": 12,
+  "on": [
+   "コウ"
+  ],
+  "kun": [
+   "のど"
+  ],
+  "meanings": [
+   "Throat",
+   "Voice"
+  ]
+ },
+ "暇": {
+  "level": "N1",
+  "strokes": 13,
+  "on": [
+   "カ"
+  ],
+  "kun": [
+   "ひま",
+   "いとま"
+  ],
+  "meanings": [
+   "Spare Time",
+   "Rest",
+   "Leisure",
+   "Time",
+   "Leave Of Absence"
+  ]
+ },
+ "派": {
+  "level": "N1",
+  "strokes": 9,
+  "on": [
+   "ハ"
+  ],
+  "kun": [],
+  "meanings": [
+   "Faction",
+   "Group",
+   "Party",
+   "Clique",
+   "Sect",
+   "School"
+  ]
+ },
+ "激": {
+  "level": "N1",
+  "strokes": 16,
+  "on": [
+   "ゲキ"
+  ],
+  "kun": [
+   "はげ.しい"
+  ],
+  "meanings": [
+   "Violent",
+   "Get Excited",
+   "Enraged",
+   "Chafe",
+   "Incite"
+  ]
+ },
+ "煮": {
+  "level": "N1",
+  "strokes": 12,
+  "on": [
+   "シャ"
+  ],
+  "kun": [
+   "に.る",
+   "に",
+   "に.える",
+   "に.やす"
+  ],
+  "meanings": [
+   "Boil",
+   "Cook"
+  ]
+ },
+ "端": {
+  "level": "N1",
+  "strokes": 14,
+  "on": [
+   "タン"
+  ],
+  "kun": [
+   "はし",
+   "は",
+   "はた",
+   "ばた",
+   "はな"
+  ],
+  "meanings": [
+   "Edge",
+   "Origin",
+   "End",
+   "Point",
+   "Border",
+   "Verge",
+   "Cape"
+  ]
+ },
+ "箸": {
+  "level": "N1",
+  "strokes": 15,
+  "on": [
+   "チョ",
+   "チャク"
+  ],
+  "kun": [
+   "はし"
+  ],
+  "meanings": [
+   "Chopsticks"
+  ]
+ },
+ "脱": {
+  "level": "N1",
+  "strokes": 11,
+  "on": [
+   "ダツ"
+  ],
+  "kun": [
+   "ぬ.ぐ",
+   "ぬ.げる"
+  ],
+  "meanings": [
+   "Undress",
+   "Removing",
+   "Escape From",
+   "Get Rid Of",
+   "Be Left Out",
+   "Take Off"
+  ]
+ },
+ "貼": {
+  "level": "N1",
+  "strokes": 12,
+  "on": [
+   "テン",
+   "チョウ"
+  ],
+  "kun": [
+   "は.る",
+   "つ.く"
+  ],
+  "meanings": [
+   "Stick",
+   "Paste",
+   "Apply"
+  ]
+ },
+ "賑": {
+  "level": "N1",
+  "strokes": 14,
+  "on": [
+   "シン"
+  ],
+  "kun": [
+   "にぎ.わい",
+   "にぎ.やか",
+   "にぎ.わす",
+   "にぎ.わう"
+  ],
+  "meanings": [
+   "Flourish",
+   "Be Bustling",
+   "Prosperity"
+  ]
+ },
+ "較": {
+  "level": "N1",
+  "strokes": 13,
+  "on": [
+   "カク",
+   "コウ"
+  ],
+  "kun": [
+   "くら.べる"
+  ],
+  "meanings": [
+   "Contrast",
+   "Compare"
+  ]
  }
 }
